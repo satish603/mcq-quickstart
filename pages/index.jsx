@@ -69,10 +69,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       <NextSeo
-        title="Practice KGMU & SGPGI Nursing Officer Questions (Free MCQ Test)"
-        description="Free KGMU & SGPGI Nursing Officer/Staff Nurse questions with explanations, previous papers, review mode, and peek without negative marks."
-        canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'}/`}
-      />
+          title="Practice KGMU & SGPGI Nursing Officer Questions (Free MCQ Test)"
+          description="Free KGMU & SGPGI Nursing Officer/Staff Nurse questions with explanations, previous papers, review mode, and peek without negative marks."
+          canonical={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://kgmu-sgpgi-nursing.vercel.app/'}/`}
+          additionalMetaTags={[
+            {
+              name: 'google-site-verification',
+              content: 'nwePx4eC2pygwgel2m6gyg3nrYaSBe-nOPXsJvR_4K4',
+            },
+          ]}
+        />
 
       {/* Top Bar */}
       <header className="sticky top-0 z-10 border-b border-gray-200 bg-white/80 backdrop-blur dark:bg-gray-900/80 dark:border-gray-800">

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { paperList } from '../data/paperList';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kgmu-sgpgi-nursing.vercel.app/';
 const canonical = `${siteUrl}/kgmu-sgpgi-nursing-officer-questions`;
 
 export default function KGMU_SGPGI_Landing() {

@@ -5,7 +5,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { paperList } from '../../data/paperList';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kgmu-sgpgi-nursing.vercel.app/';
 
 export default function PaperSEOPage({ paper, questionsPreview, canonical }) {
   const router = useRouter();
