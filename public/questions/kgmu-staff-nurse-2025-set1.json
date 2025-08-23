@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "text": "When helping a stroke patient nurse should assist:",
+    "options": [
+      "On weak side",
+      "On strong side",
+      "From behind",
+      "From back"
+    ],
+    "answerIndex": 0,
+    "explanation": "Support on the weak side helps stabilize the patient and prevent falls since the stronger side can still offer some self-support."
+  },
+  {
+    "id": 2,
+    "text": "To avoid pulling the urinary catheter nurse should tape the catheter on patient’s:",
+    "options": [
+      "Upper thigh",
+      "Lower thigh",
+      "Hind leg",
+      "Foot"
+    ],
+    "answerIndex": 0,
+    "explanation": "Taping the catheter to the upper thigh secures it and prevents tension or accidental dislodgment, reducing trauma to the urethra."
+  },
+  {
+    "id": 3,
+    "text": "Sixteen-year-old primigravida admitted with severe preeclampsia — which info is most important:",
+    "options": [
+      "Urinary output every hour",
+      "Vaginal discharge",
+      "Uterine tone",
+      "Blood pressure every 6 hours"
+    ],
+    "answerIndex": 0,
+    "explanation": "In severe preeclampsia, monitoring urine output is critical as it reflects kidney function and risk of complications like HELLP syndrome or eclampsia."
+  },
+  {
+    "id": 4,
+    "text": "Best nursing action for unconscious patient during morning care:",
+    "options": [
+      "Cleanse face first",
+      "Place on back",
+      "Turn head to side",
+      "Talk to the patient"
+    ],
+    "answerIndex": 2,
+    "explanation": "Turning the head to the side prevents aspiration during oral hygiene or when fluid is present in the mouth."
+  },
+  {
+    "id": 5,
+    "text": "Nurse's first action for patient with cardiac arrest:",
+    "options": [
+      "Initiate cardiac monitoring",
+      "Provide IV access",
+      "Establish open airway",
+      "Obtain a pulse oximetry reading"
+    ],
+    "answerIndex": 2,
+    "explanation": "In BLS (Basic Life Support), the airway is prioritized first in the ABC approach (Airway, Breathing, Circulation)."
+  },
+  {
+    "id": 6,
+    "text": "Nurse caring for stroke patient with intermittent claudication should:",
+    "options": [
+      "Avoid compression stockings",
+      "Elevate legs",
+      "Bleeding legs when sitting",
+      "Walk as much as tolerated"
+    ],
+    "answerIndex": 3,
+    "explanation": "Intermittent claudication improves with gradual exercise, as it promotes collateral circulation in peripheral artery disease."
+  },
+  {
+    "id": 7,
+    "text": "Which patient observation indicates tolerance to ambulation:",
+    "options": [
+      "Fatigue",
+      "Shortness of breath",
+      "Dizziness",
+      "Walks and is not fatigued"
+    ],
+    "answerIndex": 3,
+    "explanation": "Lack of fatigue or symptoms during walking indicates good tolerance to activity."
+  },
+  {
+    "id": 8,
+    "text": "Patient who is overweight and has hypertension—best dietary change:",
+    "options": [
+      "Increase protein",
+      "Decrease sodium",
+      "Decrease cholesterol",
+      "Decrease calories"
+    ],
+    "answerIndex": 2,
+    "explanation": "While sodium reduction is important too, cholesterol lowering directly helps in managing cardiovascular risk alongside weight loss."
+  },
+  {
+    "id": 9,
+    "text": "Greatest risk within first 24 hrs after MI (Myocardial Infarction):",
+    "options": [
+      "Heart failure",
+      "Sudden death",
+      "Pulmonary embolism",
+      "Ventricular aneurysm"
+    ],
+    "answerIndex": 1,
+    "explanation": "Ventricular fibrillation or fatal arrhythmias can lead to sudden death in the first 24 hours post-MI."
+  },
+  {
+    "id": 10,
+    "text": "Best nursing diagnosis for chronic renal insufficiency:",
+    "options": [
+      "Body image disturbed",
+      "Fluid volume deficient",
+      "Skin integrity impaired",
+      "Activity intolerance"
+    ],
+    "answerIndex": 2,
+    "explanation": "Uremia and edema in chronic renal failure can impair skin integrity, increasing risk of infection and ulcers."
+  }
+]

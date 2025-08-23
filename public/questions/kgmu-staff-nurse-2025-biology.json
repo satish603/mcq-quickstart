@@ -1,0 +1,422 @@
+[
+    {
+      "id": 1,
+      "text": "Who is regarded as the father of Taxonomy?",
+      "options": ["Hutchinson", "Engler", "Linnaeus", "Theophrastus"],
+      "answerIndex": 2,
+      "explanation": "Carl Linnaeus is considered the father of modern Taxonomy because he developed the binomial nomenclature system for naming organisms."
+    },
+    {
+      "id": 2,
+      "text": "The system of classification of Angiosperms that is based on a few numbers of characters is referred to as:",
+      "options": ["Natural system", "Artificial system", "Phylogenetic system", "Genetic system"],
+      "answerIndex": 1,
+      "explanation": "An artificial system uses a small set of easily observable characters (such as leaf shape or number of petals) to group plants, without regard to evolutionary relationships."
+    },
+    {
+      "id": 3,
+      "text": "The species inhabiting the same geographical areas are:",
+      "options": ["Sibling", "Sympatric", "Allopatric", "Taxonomic"],
+      "answerIndex": 1,
+      "explanation": "Sympatric species live in the same geographical region and thus may coexist in the same habitats."
+    },
+    {
+      "id": 4,
+      "text": "Binomial nomenclature refers to:",
+      "options": ["One Latin name and one vernacular name", "One scientific name and one Latin name", "One scientific name and one vernacular name", "One generic name and one specific name"],
+      "answerIndex": 3,
+      "explanation": "Binomial nomenclature assigns each species a two-part name: the first part is the genus (generic name) and the second is the specific epithet (specific name)."
+    },
+    {
+      "id": 5,
+      "text": "Phylogeny refers to:",
+      "options": ["A group of phyla", "Life history of plants", "Genetics of animals", "Evolutionary history of species from their ancestors"],
+      "answerIndex": 3,
+      "explanation": "Phylogeny is the study of the evolutionary relationships and history of species."
+    },
+    {
+      "id": 6,
+      "text": "Which of the phyla has the highest number of species?",
+      "options": ["Arthropoda", "Annelida", "Mollusca", "Echinodermata"],
+      "answerIndex": 0,
+      "explanation": "Arthropoda is the largest animal phylum, containing insects, arachnids, crustaceans, and others, making it the most species-rich."
+    },
+    {
+      "id": 7,
+      "text": "Cyanobacteria refer to:",
+      "options": ["Autotrophic prokaryotes with characteristic Bluegreen pigments", "Bacteria infecting the cyanophycean algae", "Viruses infecting Bluegreen algae", "Cyanophycean members infecting bacteria"],
+      "answerIndex": 0,
+      "explanation": "Cyanobacteria are photosynthetic prokaryotes (formerly called blue-green algae) that contain chlorophyll and phycobilin pigments."
+    },
+    {
+      "id": 8,
+      "text": "Marchantia is a bryophyte since it does not have:",
+      "options": ["Vascular tissue", "Roots", "Independent sporophyte", "Seeds"],
+      "answerIndex": 0,
+      "explanation": "Bryophytes, such as Marchantia, lack true vascular tissue (xylem and phloem) and instead absorb water and nutrients directly through their surfaces."
+    },
+    {
+      "id": 9,
+      "text": "The fern leaves are known as:",
+      "options": ["Blades", "Sporophylls", "Lamina", "Fronds"],
+      "answerIndex": 3,
+      "explanation": "In ferns, the entire leaf structure is called a frond, which often bears sporangia on its underside."
+    },
+    {
+      "id": 10,
+      "text": "Young leaves of Cycas show:",
+      "options": ["Simple venation", "Circinate venation", "Alternate arrangement", "Opposite arrangement"],
+      "answerIndex": 1,
+      "explanation": "Cycas, a gymnosperm, produces young leaves that uncurl in a circular fashion (circinate vernation), similar to ferns."
+    },
+    {
+      "id": 11,
+      "text": "The seed of Pinus is:",
+      "options": ["Covered and non-endospermic", "Naked and non-endospermic", "Abaxially placed and covered", "Adaxially placed naked and endospermic"],
+      "answerIndex": 3,
+      "explanation": "Pine seeds are naked (not enclosed within a fruit) and bear endosperm, and they are attached adaxially (toward the upper side) on the scales of the cone."
+    },
+    {
+      "id": 12,
+      "text": "The petiole modified into the leaf-like structure is known as:",
+      "options": ["Phylloclade", "Phyllode", "Cladode", "Cladophyll"],
+      "answerIndex": 1,
+      "explanation": "A phyllode is a flattened petiole that functions like a leaf blade, as seen in some Acacia species."
+    },
+    {
+      "id": 13,
+      "text": "Scutellum is the first leaf of:",
+      "options": ["Gymnosperms", "Monocots", "Dicots", "Pteridophytes"],
+      "answerIndex": 1,
+      "explanation": "In grasses and other monocots, the scutellum is a specialized cotyledon (first leaf) that absorbs nutrients from the endosperm during germination."
+    },
+    {
+      "id": 14,
+      "text": "The nucleus is absent in:",
+      "options": ["Xylem parenchyma", "Phloem parenchyma", "Mature sieve cells", "Companion cells"],
+      "answerIndex": 2,
+      "explanation": "Mature sieve tube elements (sieve cells in gymnosperms and sieve-tube cells in angiosperms) lack a nucleus and rely on companion cells for metabolic support."
+    },
+    {
+      "id": 15,
+      "text": "The dead cells that have a mechanical function are called:",
+      "options": ["Parenchyma", "Collenchyma", "Sclerenchyma", "Companion cells"],
+      "answerIndex": 2,
+      "explanation": "Sclerenchyma cells are thick-walled, lignified, and dead at maturity, providing mechanical strength and support to plant tissues."
+    },
+    {
+      "id": 16,
+      "text": "The water potential increases due to:",
+      "options": ["Addition of solutes", "Pressure", "Evaporation", "Afforestation"],
+      "answerIndex": 1,
+      "explanation": "Applying pressure (such as positive turgor pressure within cells) increases water potential, making it less negative."
+    },
+    {
+      "id": 17,
+      "text": "Which of the following elements is required for Photolysis of water:",
+      "options": ["Magnesium", "Manganese", "Calcium", "Zinc"],
+      "answerIndex": 1,
+      "explanation": "Manganese is a key cofactor in the oxygen-evolving complex of Photosystem II, essential for splitting water molecules during photolysis."
+    },
+    {
+      "id": 18,
+      "text": "The translocation of sugars in angiosperms occurs in the form of:",
+      "options": ["Glucose", "Fructose", "Sucrose", "Lactose"],
+      "answerIndex": 2,
+      "explanation": "Plants commonly transport sugars as sucrose because it is non-reducing, easily mobilized, and less reactive than monosaccharides."
+    },
+    {
+      "id": 19,
+      "text": "Which element is essential as electron carrier:",
+      "options": ["Potassium", "Iron", "Zinc", "Calcium"],
+      "answerIndex": 1,
+      "explanation": "Iron is a central atom in cytochromes and iron-sulfur proteins, functioning as an electron carrier in respiratory and photosynthetic electron transport chains."
+    },
+    {
+      "id": 20,
+      "text": "The plants bend towards light because:",
+      "options": ["The roots send the message to the stem to do so", "The stems like sunlight", "The food material is translocated from leaves to stem causing bending", "Due to the secretion of growth-promoting substances at the tip"],
+      "answerIndex": 3,
+      "explanation": "Phototropism results from auxin redistribution to the shaded side of a stem, causing that side to elongate more and the plant to bend toward light."
+    },
+    {
+      "id": 21,
+      "text": "Pollenkit helps in the:",
+      "options": ["Nutrition of pollen", "Nutrition of insects", "Formation of pollen", "Sticking to the body of insects"],
+      "answerIndex": 3,
+      "explanation": "Pollenkit (a sticky, lipid-rich layer) surrounds pollen grains in many plants and helps them adhere to pollinators."
+    },
+    {
+      "id": 22,
+      "text": "What is the function of tapetum in a developing anther?",
+      "options": ["To obtain food material from the microspores", "To digest the microspores", "To provide food material to the developing microsporocytes", "To give protection to the inner tissues"],
+      "answerIndex": 2,
+      "explanation": "The tapetum is the innermost layer of the anther wall; it supplies nutrients and regulatory molecules to developing pollen (microsporocytes and microspores)."
+    },
+    {
+      "id": 23,
+      "text": "In a plant growing under dark condition, the leaves turn light-colored, internodes become much elongated and it is termed as:",
+      "options": ["Chlorosis", "Vernalisation", "Etiolation", "Phyllotaxy"],
+      "answerIndex": 2,
+      "explanation": "Etiolation is the growth response of plants in darkness characterized by pale (chlorotic) leaves and elongated stems."
+    },
+    {
+      "id": 24,
+      "text": "The term Homeostasis in an ecosystem refers to:",
+      "options": ["Feedback mechanism", "Self-regulatory mechanism", "Influence of production", "State of equilibrium"],
+      "answerIndex": 1,
+      "explanation": "Homeostasis in ecology refers to the ability of an ecosystem to maintain stable conditions (e.g., nutrient cycles) via self-regulating feedback mechanisms."
+    },
+    {
+      "id": 25,
+      "text": "The plants constitute the:",
+      "options": ["First trophic level", "Second trophic level", "Third trophic level", "Fourth trophic level"],
+      "answerIndex": 0,
+      "explanation": "Producers (plants) form the first trophic level because they convert solar energy into chemical energy via photosynthesis."
+    },
+    {
+      "id": 26,
+      "text": "Biome refers to:",
+      "options": ["That part of the earth and its atmosphere which inhabits living organisms", "A community of organisms interacting with one another", "The flora on land", "The flora in an ocean"],
+      "answerIndex": 1,
+      "explanation": "A biome is a large ecological region characterized by a particular climate, flora, and fauna (e.g., tropical rainforest, tundra)."
+    },
+    {
+      "id": 27,
+      "text": "Maximum energy amongst ecosystems is contributed by:",
+      "options": ["Crops", "Forests", "Coral", "Fuel gas"],
+      "answerIndex": 1,
+      "explanation": "Forests, due to their large biomass and high primary productivity, contribute the greatest total energy in most terrestrial ecosystems."
+    },
+    {
+      "id": 28,
+      "text": "The restriction enzymes are also called:",
+      "options": ["Molecular markers", "Molecular scissors", "Vectors", "Carriers"],
+      "answerIndex": 1,
+      "explanation": "Restriction enzymes cut DNA at specific sequences, functioning like 'molecular scissors' in genetic engineering."
+    },
+    {
+      "id": 29,
+      "text": "Polymerase chain reaction employs:",
+      "options": ["Primers and DNA ligase", "Primers and DNA polymerase", "DNA polymerase only", "DNA ligase only"],
+      "answerIndex": 1,
+      "explanation": "PCR requires short DNA primers and a DNA polymerase (e.g., Taq polymerase) to amplify the target DNA sequence."
+    },
+    {
+      "id": 30,
+      "text": "Bt toxin is coded by a gene named as:",
+      "options": ["cry", "bty", "tby", "dty"],
+      "answerIndex": 0,
+      "explanation": "The Bt toxin gene family is called the cry genes (crystal proteins) derived from Bacillus thuringiensis."
+    },
+    {
+      "id": 31,
+      "text": "Which of the following is not a gastrointestinal hormone?",
+      "options": ["Gastrin", "Secretin", "Cholecystokinin", "Cortisol"],
+      "answerIndex": 3,
+      "explanation": "Cortisol is a steroid hormone produced by the adrenal cortex, not by the gastrointestinal tract. Gastrin, secretin, and cholecystokinin are GI hormones."
+    },
+    {
+      "id": 32,
+      "text": "All enzymes are proteins except:",
+      "options": ["Ribozymes", "Kinase", "Dehydrogenase", "Transaminase"],
+      "answerIndex": 0,
+      "explanation": "Ribozymes are RNA molecules with catalytic activity (e.g., RNase P), demonstrating that some enzymes are RNA-based rather than protein-based."
+    },
+    {
+      "id": 33,
+      "text": "Enzymes that catalyze the removal of groups from substances by a mechanism other than hydrolysis leaving double bond is called:",
+      "options": ["Oxidoreductases", "Transferases", "Lyases", "Ligases"],
+      "answerIndex": 2,
+      "explanation": "Lyases catalyze the breaking of various chemical bonds by means other than hydrolysis and oxidation, often forming a new double bond in the process."
+    },
+    {
+      "id": 34,
+      "text": "Klinefelter’s syndrome has a sex chromosome complement of:",
+      "options": ["XY", "XYY", "XXY", "XO"],
+      "answerIndex": 2,
+      "explanation": "Klinefelter’s syndrome is characterized by the presence of an extra X chromosome in males, resulting in the karyotype XXY."
+    },
+    {
+      "id": 35,
+      "text": "In which region of the interphase chromosome does transcription take place?",
+      "options": ["Heterochromatin", "Euchromatin", "The telomere", "The centromere"],
+      "answerIndex": 1,
+      "explanation": "Euchromatin is the less condensed form of chromatin, actively transcribed into RNA. Heterochromatin is typically transcriptionally inactive."
+    },
+    {
+      "id": 36,
+      "text": "The progesterone is secreted by:",
+      "options": ["Graafin follicles", "Corpus luteum", "Interstitial cells", "Corpus Albicans"],
+      "answerIndex": 1,
+      "explanation": "After ovulation, the corpus luteum (formed from the ruptured Graafian follicle) secretes progesterone to maintain the uterine lining."
+    },
+    {
+      "id": 37,
+      "text": "Which of the following is the connective tissue?",
+      "options": ["Neurons", "Nephrons", "Blood", "Islets of Langerhans"],
+      "answerIndex": 2,
+      "explanation": "Blood is considered a specialized connective tissue because it has cells (e.g., red and white blood cells) suspended in a fluid extracellular matrix (plasma)."
+    },
+    {
+      "id": 38,
+      "text": "Which of the following is an example of highly repetitive DNA?",
+      "options": ["Alu element", "Histone gene cluster", "DNA minisatellite", "Dispersed repetitive DNA"],
+      "answerIndex": 0,
+      "explanation": "Alu sequences are short (~300 bp) interspersed elements present in hundreds of thousands of copies in the human genome, making them highly repetitive."
+    },
+    {
+      "id": 39,
+      "text": "‘Saheli’ an oral contraceptive for females was developed by:",
+      "options": ["AIIMS, Delhi", "IICB, Kolkata", "CDRI, Lucknow", "SGPGI, Lucknow"],
+      "answerIndex": 2,
+      "explanation": "The ‘Saheli’ contraceptive pill was developed by the Central Drug Research Institute (CDRI) in Lucknow."
+    },
+    {
+      "id": 40,
+      "text": "A pair of male genital pores in earthworm is present on the ventrolateral sides of the:",
+      "options": ["14th segment", "18th segment", "10th segment", "15th segment"],
+      "answerIndex": 0,
+      "explanation": "In earthworms, male genital pores are located on segment 14 on the ventrolateral sides."
+    },
+    {
+      "id": 41,
+      "text": "Pseudocolor is a characteristic feature of:",
+      "options": ["Annelids", "Arthropods", "Platyhelminthes", "Aschelminthes"],
+      "answerIndex": 2,
+      "explanation": "Many flatworms (Platyhelminthes) exhibit pseudocoelom (a false body cavity) rather than a true coelom."
+    },
+    {
+      "id": 42,
+      "text": "Example of a marine dinosaur is:",
+      "options": ["Pelycosaur", "Tyrannosaurus", "Ichthyosaur", "Pterosaur"],
+      "answerIndex": 2,
+      "explanation": "Ichthyosaurs were marine reptiles (often called “marine dinosaurs” in popular usage), adapted for life in the ocean."
+    },
+    {
+      "id": 43,
+      "text": "Sharks and Rays belong to class:",
+      "options": ["Osteichthyes", "Chondrichthyes", "Cyclostomata", "Amphibia"],
+      "answerIndex": 1,
+      "explanation": "Sharks and rays have skeletons made of cartilage rather than bone, placing them in the class Chondrichthyes."
+    },
+    {
+      "id": 44,
+      "text": "The capacity to differentiate colors lies in:",
+      "options": ["Cones", "Rods", "Pigment epithelium", "Ganglion cell layer"],
+      "answerIndex": 0,
+      "explanation": "Photoreceptor cells called cones in the retina are responsible for color vision, whereas rods detect low-light intensity."
+    },
+    {
+      "id": 45,
+      "text": "A parasitic disease which is not transmitted through the bite of insect vector:",
+      "options": ["Filariasis", "Malaria", "Leishmaniasis", "Ascariasis"],
+      "answerIndex": 3,
+      "explanation": "Ascariasis is caused by Ascaris lumbricoides (a nematode) and is transmitted via ingestion of eggs in contaminated food or water, not by insect bite."
+    },
+    {
+      "id": 46,
+      "text": "Recombination between homologous chromosomes is completed by the end of:",
+      "options": ["Zygotene", "Leptotene", "Pachytene", "Diplotene"],
+      "answerIndex": 3,
+      "explanation": "In meiosis, crossing over begins in pachytene, but chiasmata formation is visible by diplotene when recombination is effectively completed."
+    },
+    {
+      "id": 47,
+      "text": "The antibodies which are present in abundance in colostrum are:",
+      "options": ["IgG", "IgM", "IgA", "IgD"],
+      "answerIndex": 2,
+      "explanation": "IgA is the predominant immunoglobulin in colostrum and breast milk, providing passive immunity to the newborn’s gut mucosa."
+    },
+    {
+      "id": 48,
+      "text": "Organs of excretion and osmoregulation in Platyhelminthes are:",
+      "options": ["Contractile vacuoles", "Flame cells", "Nephridia", "Hepatic caecae"],
+      "answerIndex": 1,
+      "explanation": "Flame cells (protonephridia) are networks of tubules with ciliated cells that help in excretion and osmoregulation in flatworms."
+    },
+    {
+      "id": 49,
+      "text": "The maturation and development of T-lymphocytes take place in:",
+      "options": ["Thymus", "Spleen", "Lymph nodes", "MALT"],
+      "answerIndex": 0,
+      "explanation": "T-lymphocytes mature in the thymus gland, where they undergo selection processes before entering peripheral circulation."
+    },
+    {
+      "id": 50,
+      "text": "The enzyme which is responsible for replication of HIV in the macrophages of the host is:",
+      "options": ["Reverse transcriptase", "RNA Polymerase", "DNA Polymerase", "DNA Ligase"],
+      "answerIndex": 0,
+      "explanation": "HIV uses reverse transcriptase to convert its RNA genome into DNA, which then integrates into the host cell’s genome for replication."
+    },
+    {
+      "id": 51,
+      "text": "Which of the following traits was not studied by Mendel?",
+      "options": ["Flower position", "Seed color", "Flower color", "Seed size"],
+      "answerIndex": 0,
+      "explanation": "Mendel’s classic pea experiments involved traits such as seed color, seed shape, flower color, pod shape, etc., but not flower position."
+    },
+    {
+      "id": 52,
+      "text": "The body cavity of coelomates is lined by:",
+      "options": ["Mesoderm", "Ectoderm", "Endoderm", "Protoplasm"],
+      "answerIndex": 0,
+      "explanation": "A true coelom is a body cavity completely lined by mesoderm-derived tissue."
+    },
+    {
+      "id": 53,
+      "text": "In-ear, the membranous labyrinth is filled with a fluid called:",
+      "options": ["Endolymph", "Perilymph", "Plasma", "Haemolymph"],
+      "answerIndex": 0,
+      "explanation": "Endolymph fills the membranous labyrinth of the inner ear, while perilymph fills the space between the membranous and bony labyrinths."
+    },
+    {
+      "id": 54,
+      "text": "Most of the fats absorbed in the small intestine enter the:",
+      "options": ["Lacteals", "Arterioles", "Venules", "Microvilli"],
+      "answerIndex": 0,
+      "explanation": "Dietary fats (in the form of chylomicrons) are absorbed into lacteals (lymphatic capillaries) in the intestinal villi before entering the bloodstream."
+    },
+    {
+      "id": 55,
+      "text": "The wall of the internal organs such as blood vessels, stomach, and intestine contains this type of muscle tissue:",
+      "options": ["Smooth muscle fiber", "Cardiac muscle fiber", "Skeletal muscle fiber", "Neural tissue"],
+      "answerIndex": 0,
+      "explanation": "Smooth muscle is found in the walls of hollow internal organs and is under involuntary control."
+    },
+    {
+      "id": 56,
+      "text": "Testosterone, the male sex hormone is synthesized in the:",
+      "options": ["Seminiferous tubules", "Interstitial cells", "Vas deferens", "Prostate gland"],
+      "answerIndex": 1,
+      "explanation": "Testosterone is produced by Leydig (interstitial) cells located between seminiferous tubules in the testes."
+    },
+    {
+      "id": 57,
+      "text": "In humans, the right atrioventricular aperture of the heart is guarded by:",
+      "options": ["Monocuspid valve", "Bicuspid valve", "Tricuspid valve", "Tetracuspid valve"],
+      "answerIndex": 2,
+      "explanation": "The tricuspid valve, composed of three cusps, guards the right atrioventricular opening between the right atrium and right ventricle."
+    },
+    {
+      "id": 58,
+      "text": "In which part of the nephron the reabsorption of filtrate is minimum?",
+      "options": ["Proximal convoluted tubule", "Glomerulus", "Distal convoluted tubule", "Henle’s loop"],
+      "answerIndex": 1,
+      "explanation": "The glomerulus is a network of capillaries where filtration occurs, not reabsorption; minimal reabsorption happens there. Most reabsorption occurs in the tubules."
+    },
+    {
+      "id": 59,
+      "text": "The chronic use of alcohol may lead to:",
+      "options": ["Hepatitis B", "Cirrhosis", "AIDS", "Pneumonia"],
+      "answerIndex": 1,
+      "explanation": "Long-term alcohol abuse can cause liver cirrhosis, characterized by fibrosis and impaired liver function."
+    },
+    {
+      "id": 60,
+      "text": "Which organ is called the graveyard of RBCs?",
+      "options": ["Spleen", "Liver", "Pancreas", "Kidneys"],
+      "answerIndex": 0,
+      "explanation": "The spleen removes worn-out or damaged red blood cells from circulation, earning it the nickname 'graveyard of RBCs.'"
+    }
+  ]
