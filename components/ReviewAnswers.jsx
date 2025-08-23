@@ -21,6 +21,12 @@ export default function ReviewAnswers({ questions, selected, peeked = [], bookma
     return true;
   });
 
+  const answerColor = (wasPeeked, userChoice, isCorrect) => {
+    if (wasPeeked) return 'text-amber-700 dark:text-amber-300';
+    if (userChoice === undefined) return 'text-gray-500 dark:text-gray-400 italic';
+    return isCorrect ? 'text-green-700 dark:text-green-300' : 'text-rose-600 dark:text-rose-400';
+  };
+
   return (
     <div className="max-w-4xl mx-auto mt-6">
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -91,9 +97,10 @@ export default function ReviewAnswers({ questions, selected, peeked = [], bookma
               </div>
             )}
 
-            <div className="mb-2">
-              <span className="font-medium">Your answer:&nbsp;</span>
-              <span className="font-semibold">
+            {/* Your Answer (now with proper dark colors) */}
+            <div className="mb-2 text-sm">
+              <span className="font-medium text-gray-700 dark:text-gray-300">Your answer:&nbsp;</span>
+              <span className={`font-semibold ${answerColor(wasPeeked, userChoice, isCorrect)}`}>
                 {wasPeeked
                   ? 'Peeked (not counted)'
                   : userChoice !== undefined
@@ -102,15 +109,17 @@ export default function ReviewAnswers({ questions, selected, peeked = [], bookma
               </span>
             </div>
 
-            <div className="mb-2">
-              <span className="font-medium">Correct answer:&nbsp;</span>
+            {/* Correct Answer */}
+            <div className="mb-2 text-sm">
+              <span className="font-medium text-gray-700 dark:text-gray-300">Correct answer:&nbsp;</span>
               <span className="font-semibold text-green-700 dark:text-green-300">
                 {q.options[q.answerIndex]}
               </span>
             </div>
 
+            {/* Explanation */}
             {q.explanation && (
-              <div className="mt-3 rounded-xl bg-gray-50 p-4 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+              <div className="mt-3 rounded-xl bg-gray-50 p-4 text-sm text-gray-700 dark:bg-gray-800/60 dark:text-gray-200">
                 {q.explanation}
               </div>
             )}

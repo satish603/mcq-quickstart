@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "text": "Azure Data Factory is primarily used for?",
+    "options": ["Machine learning", "Data integration", "Web hosting", "Container orchestration"],
+    "answerIndex": 1,
+    "explanation": "ADF is a cloud-based ETL and data integration service." 
+  },
+  {
+    "id": 2,
+    "text": "What is a pipeline in ADF?",
+    "options": ["Data storage", "Group of activities", "Virtual network", "Data sink"],
+    "answerIndex": 1,
+    "explanation": "A pipeline is a logical grouping of activities that perform a task." 
+  },
+  {
+    "id": 3,
+    "text": "Which activity moves data from source to destination?",
+    "options": ["Copy activity", "Execute pipeline", "Lookup", "Get Metadata"],
+    "answerIndex": 0,
+    "explanation": "Copy activity copies data from a source to a sink." 
+  },
+  {
+    "id": 4,
+    "text": "ADF integration runtime provides?",
+    "options": ["Compute for activities", "Storage for data", "Monitoring only", "Network security"],
+    "answerIndex": 0,
+    "explanation": "Integration runtime offers the compute infrastructure for activity execution." 
+  },
+  {
+    "id": 5,
+    "text": "Which trigger type runs on a wall-clock schedule?",
+    "options": ["Schedule", "Tumbling window", "Event", "Manual"],
+    "answerIndex": 0,
+    "explanation": "Schedule triggers run pipelines at specified times." 
+  },
+  {
+    "id": 6,
+    "text": "What does a linked service define?",
+    "options": ["Data schema", "Connection info", "Activity type", "Pipeline parameters"],
+    "answerIndex": 1,
+    "explanation": "Linked services define connection information for data stores." 
+  },
+  {
+    "id": 7,
+    "text": "Which component represents data structure within a data store?",
+    "options": ["Dataset", "Pipeline", "Trigger", "Activity"],
+    "answerIndex": 0,
+    "explanation": "Datasets represent data structures for sources or sinks." 
+  },
+  {
+    "id": 8,
+    "text": "What feature allows executing SSIS packages in ADF?",
+    "options": ["Mapping data flows", "Wrangling data flows", "ADF Integration Runtime", "SSIS integration runtime"],
+    "answerIndex": 3,
+    "explanation": "SSIS integration runtime lets you run SSIS packages in Azure." 
+  },
+  {
+    "id": 9,
+    "text": "Which activity is used to execute a Databricks notebook?",
+    "options": ["Databricks activity", "Notebook activity", "ExecuteNotebook", "Spark activity"],
+    "answerIndex": 0,
+    "explanation": "ADF provides a Databricks activity to run notebooks." 
+  },
+  {
+    "id": 10,
+    "text": "Which feature provides a code-free ETL option?",
+    "options": ["Mapping data flows", "Copy activity", "Azure Functions", "Web activity"],
+    "answerIndex": 0,
+    "explanation": "Mapping data flows allow visually designed ETL processes." 
+  },
+  {
+    "id": 11,
+    "text": "How do you parameterize a pipeline?",
+    "options": ["Using global variables", "Using pipeline parameters", "Using datasets", "Using triggers"],
+    "answerIndex": 1,
+    "explanation": "Pipeline parameters enable dynamic values passed at runtime." 
+  },
+  {
+    "id": 12,
+    "text": "Which activity can call a REST endpoint?",
+    "options": ["Web", "Lookup", "Stored Procedure", "Filter"],
+    "answerIndex": 0,
+    "explanation": "Web activity allows calling custom REST endpoints." 
+  },
+  {
+    "id": 13,
+    "text": "What is the purpose of the Get Metadata activity?",
+    "options": ["Retrieve schema details", "Copy data", "Transform data", "Delete data"],
+    "answerIndex": 0,
+    "explanation": "Get Metadata retrieves information about data in a dataset." 
+  },
+  {
+    "id": 14,
+    "text": "Which trigger type processes past events sequentially?",
+    "options": ["Schedule", "Manual", "Tumbling window", "Event"],
+    "answerIndex": 2,
+    "explanation": "Tumbling window triggers handle fixed-size, non-overlapping time segments." 
+  },
+  {
+    "id": 15,
+    "text": "What does the Lookup activity return?",
+    "options": ["Binary data", "Scalar or tabular data", "Pipeline name", "Trigger status"],
+    "answerIndex": 1,
+    "explanation": "Lookup reads data from a data source and returns results to the pipeline." 
+  },
+  {
+    "id": 16,
+    "text": "Which feature provides visual monitoring of pipeline runs?",
+    "options": ["Monitor tab", "Azure Monitor", "Log Analytics", "Dashboard"],
+    "answerIndex": 0,
+    "explanation": "ADF Studio's Monitor tab displays pipeline run details." 
+  },
+  {
+    "id": 17,
+    "text": "What is the purpose of the ForEach activity?",
+    "options": ["Loop over items", "Filter rows", "Join datasets", "Aggregate data"],
+    "answerIndex": 0,
+    "explanation": "ForEach iterates over a collection of items." 
+  },
+  {
+    "id": 18,
+    "text": "Which activity allows conditional execution?",
+    "options": ["Until", "If Condition", "Switch", "All of the above"],
+    "answerIndex": 3,
+    "explanation": "Until, If Condition, and Switch activities enable conditional logic." 
+  },
+  {
+    "id": 19,
+    "text": "ADF can integrate with which version control system?",
+    "options": ["Git", "SVN", "Mercurial", "CVS"],
+    "answerIndex": 0,
+    "explanation": "ADF integrates with Git for source control." 
+  },
+  {
+    "id": 20,
+    "text": "Which Azure service stores ADF monitoring logs?",
+    "options": ["Azure Monitor", "Blob Storage", "Cosmos DB", "Power BI"],
+    "answerIndex": 0,
+    "explanation": "Azure Monitor can store and analyze ADF logs." 
+  }
+]

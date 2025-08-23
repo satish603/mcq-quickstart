@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "text": "Which keyword is used to inherit a class in Java?",
+    "options": ["extends", "implements", "inherit", "inherits"],
+    "answerIndex": 0,
+    "explanation": "Use extends to derive a subclass from a superclass."
+  },
+  {
+    "id": 2,
+    "text": "What is the size of an int in Java?",
+    "options": ["16 bits", "32 bits", "64 bits", "Depends on platform"],
+    "answerIndex": 1,
+    "explanation": "The int primitive in Java is 32 bits." 
+  },
+  {
+    "id": 3,
+    "text": "Which collection does not allow duplicate elements?",
+    "options": ["List", "Set", "Map", "Queue"],
+    "answerIndex": 1,
+    "explanation": "A Set enforces uniqueness of its elements." 
+  },
+  {
+    "id": 4,
+    "text": "Which keyword prevents a class from being subclassed?",
+    "options": ["final", "static", "private", "protected"],
+    "answerIndex": 0,
+    "explanation": "A final class cannot be extended." 
+  },
+  {
+    "id": 5,
+    "text": "What does JVM stand for?",
+    "options": ["Java Virtual Machine", "Java Variable Manager", "Joint Virtual Machine", "Java Vision Model"],
+    "answerIndex": 0,
+    "explanation": "JVM stands for Java Virtual Machine." 
+  },
+  {
+    "id": 6,
+    "text": "Which interface does java.lang.Runnable belong to?",
+    "options": ["java.lang", "java.util", "java.io", "java.net"],
+    "answerIndex": 0,
+    "explanation": "Runnable is in the java.lang package." 
+  },
+  {
+    "id": 7,
+    "text": "Which access modifier makes members visible only within the same package?",
+    "options": ["public", "protected", "private", "default"],
+    "answerIndex": 3,
+    "explanation": "Default access (no modifier) restricts visibility to the package." 
+  },
+  {
+    "id": 8,
+    "text": "Which class is the superclass of all classes in Java?",
+    "options": ["Object", "Class", "Base", "Root"],
+    "answerIndex": 0,
+    "explanation": "java.lang.Object is the root of the class hierarchy." 
+  },
+  {
+    "id": 9,
+    "text": "Which keyword is used to handle exceptions?",
+    "options": ["catch", "throw", "try", "finally"],
+    "answerIndex": 2,
+    "explanation": "The try block is used to wrap code that may throw an exception." 
+  },
+  {
+    "id": 10,
+    "text": "Which statement is true about String in Java?",
+    "options": ["Mutable", "Immutable", "Subclass of CharSequence", "Stored in stack"],
+    "answerIndex": 1,
+    "explanation": "String objects are immutable." 
+  },
+  {
+    "id": 11,
+    "text": "Which wrapper class converts a primitive type to an object in Java?",
+    "options": ["int", "Integer", "Object", "Wrapper"],
+    "answerIndex": 1,
+    "explanation": "Integer wraps the primitive int into an object." 
+  },
+  {
+    "id": 12,
+    "text": "Which method is used to start a thread?",
+    "options": ["run()", "start()", "execute()", "init()"],
+    "answerIndex": 1,
+    "explanation": "Calling start() begins a thread's execution." 
+  },
+  {
+    "id": 13,
+    "text": "Which package contains the List interface?",
+    "options": ["java.util", "java.lang", "java.io", "java.net"],
+    "answerIndex": 0,
+    "explanation": "List resides in the java.util package." 
+  },
+  {
+    "id": 14,
+    "text": "Which exception is unchecked?",
+    "options": ["IOException", "SQLException", "RuntimeException", "FileNotFoundException"],
+    "answerIndex": 2,
+    "explanation": "RuntimeException and its subclasses are unchecked." 
+  },
+  {
+    "id": 15,
+    "text": "Which keyword is used to create an object?",
+    "options": ["create", "new", "object", "init"],
+    "answerIndex": 1,
+    "explanation": "The new keyword instantiates objects." 
+  },
+  {
+    "id": 16,
+    "text": "What is the default value of a boolean variable?",
+    "options": ["true", "false", "0", "null"],
+    "answerIndex": 1,
+    "explanation": "Booleans default to false." 
+  },
+  {
+    "id": 17,
+    "text": "Which collection class is synchronized?",
+    "options": ["ArrayList", "HashMap", "Hashtable", "HashSet"],
+    "answerIndex": 2,
+    "explanation": "Hashtable methods are synchronized." 
+  },
+  {
+    "id": 18,
+    "text": "Which keyword is used to refer to the current object?",
+    "options": ["self", "super", "this", "current"],
+    "answerIndex": 2,
+    "explanation": "this refers to the current object." 
+  },
+  {
+    "id": 19,
+    "text": "What will happen if a constructor is declared with a return type?",
+    "options": ["Compilation error", "Runtime error", "It becomes a method", "Ignored by compiler"],
+    "answerIndex": 2,
+    "explanation": "A constructor with a return type is treated as a normal method." 
+  },
+  {
+    "id": 20,
+    "text": "Which stream is used to read binary data in Java?",
+    "options": ["FileReader", "FileWriter", "FileInputStream", "BufferedWriter"],
+    "answerIndex": 2,
+    "explanation": "FileInputStream reads raw binary data." 
+  }
+]

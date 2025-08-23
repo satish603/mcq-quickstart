@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "text": "What is ETL short for?",
+    "options": ["Extract, Transform, Load", "Evaluate, Test, Launch", "Enter, Transfer, Learn", "Extract, Transfer, Log"],
+    "answerIndex": 0,
+    "explanation": "ETL stands for Extract, Transform, Load." 
+  },
+  {
+    "id": 2,
+    "text": "Which system is best suited for large-scale batch processing?",
+    "options": ["OLTP", "Hadoop", "Redis", "MongoDB"],
+    "answerIndex": 1,
+    "explanation": "Hadoop is designed for distributed batch processing." 
+  },
+  {
+    "id": 3,
+    "text": "What is a data lake?",
+    "options": ["Structured database", "Repository for raw data", "Backup system", "Visualization tool"],
+    "answerIndex": 1,
+    "explanation": "A data lake stores raw, unprocessed data." 
+  },
+  {
+    "id": 4,
+    "text": "Which tool orchestrates workflows in data engineering?",
+    "options": ["Airflow", "Tableau", "Excel", "PowerPoint"],
+    "answerIndex": 0,
+    "explanation": "Apache Airflow is widely used to schedule and monitor workflows." 
+  },
+  {
+    "id": 5,
+    "text": "Which format is columnar?",
+    "options": ["CSV", "JSON", "Parquet", "TXT"],
+    "answerIndex": 2,
+    "explanation": "Parquet is a columnar storage format." 
+  },
+  {
+    "id": 6,
+    "text": "Kafka is primarily used for?",
+    "options": ["Batch jobs", "Message streaming", "Data cleaning", "Visualization"],
+    "answerIndex": 1,
+    "explanation": "Apache Kafka is a distributed streaming platform." 
+  },
+  {
+    "id": 7,
+    "text": "Which database is a NoSQL document store?",
+    "options": ["MySQL", "MongoDB", "PostgreSQL", "SQL Server"],
+    "answerIndex": 1,
+    "explanation": "MongoDB stores documents in BSON format." 
+  },
+  {
+    "id": 8,
+    "text": "What is data partitioning used for?",
+    "options": ["Security", "Performance and scalability", "Backup", "Visualization"],
+    "answerIndex": 1,
+    "explanation": "Partitioning data improves performance and scalability." 
+  },
+  {
+    "id": 9,
+    "text": "Which technology is commonly used for real-time processing?",
+    "options": ["HDFS", "Spark Streaming", "FTP", "Excel"],
+    "answerIndex": 1,
+    "explanation": "Spark Streaming enables real-time processing." 
+  },
+  {
+    "id": 10,
+    "text": "What is data governance?",
+    "options": ["Hardware maintenance", "Managing data availability and security", "UI design", "Code versioning"],
+    "answerIndex": 1,
+    "explanation": "Data governance involves ensuring data quality, security, and availability." 
+  },
+  {
+    "id": 11,
+    "text": "Which schema design arranges data into fact and dimension tables?",
+    "options": ["Snowflake schema", "Star schema", "Galaxy schema", "Flat schema"],
+    "answerIndex": 1,
+    "explanation": "A star schema organizes data into facts and dimensions." 
+  },
+  {
+    "id": 12,
+    "text": "What does ACID stand for?",
+    "options": ["Atomicity, Consistency, Isolation, Durability", "Access, Control, Integrity, Data", "Accuracy, Consistency, Isolation, Dependability", "Atomicity, Control, Integrity, Durability"],
+    "answerIndex": 0,
+    "explanation": "ACID properties guarantee reliable database transactions." 
+  },
+  {
+    "id": 13,
+    "text": "Which cloud service is serverless for running code?",
+    "options": ["EC2", "Lambda", "EBS", "S3"],
+    "answerIndex": 1,
+    "explanation": "AWS Lambda executes code without provisioning servers." 
+  },
+  {
+    "id": 14,
+    "text": "What does CDC stand for in data engineering?",
+    "options": ["Change Data Capture", "Central Data Control", "Cloud Data Copy", "Concurrent Data Commit"],
+    "answerIndex": 0,
+    "explanation": "CDC captures changes to data sources for replication." 
+  },
+  {
+    "id": 15,
+    "text": "Which component of Hadoop stores metadata?",
+    "options": ["NameNode", "DataNode", "ResourceManager", "NodeManager"],
+    "answerIndex": 0,
+    "explanation": "The NameNode manages metadata and namespace." 
+  },
+  {
+    "id": 16,
+    "text": "Which tool is used for distributed version control?",
+    "options": ["Git", "SVN", "Perforce", "CVS"],
+    "answerIndex": 0,
+    "explanation": "Git is a distributed version control system." 
+  },
+  {
+    "id": 17,
+    "text": "What is sharding?",
+    "options": ["Data encryption", "Splitting data across nodes", "Creating backups", "Transforming data"],
+    "answerIndex": 1,
+    "explanation": "Sharding distributes data across multiple machines." 
+  },
+  {
+    "id": 18,
+    "text": "Which service provides fully managed Apache Spark?",
+    "options": ["AWS EMR", "Azure Synapse", "Databricks", "All of the above"],
+    "answerIndex": 3,
+    "explanation": "All listed services can run managed Spark." 
+  },
+  {
+    "id": 19,
+    "text": "What is a primary key?",
+    "options": ["Unique row identifier", "Foreign key", "Index", "Constraint allowing nulls"],
+    "answerIndex": 0,
+    "explanation": "Primary keys uniquely identify rows in a table." 
+  },
+  {
+    "id": 20,
+    "text": "Which process ensures data is in a consistent format across systems?",
+    "options": ["Data normalization", "Data visualization", "Data masking", "Data archiving"],
+    "answerIndex": 0,
+    "explanation": "Normalization organizes data to reduce redundancy and inconsistency." 
+  }
+]

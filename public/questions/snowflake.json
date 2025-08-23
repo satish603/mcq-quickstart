@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "text": "Snowflake's architecture is based on which design principle?",
+    "options": ["Shared disk", "Shared nothing", "Hybrid shared architecture", "Mainframe"],
+    "answerIndex": 2,
+    "explanation": "Snowflake uses a hybrid shared-disk and shared-nothing architecture." 
+  },
+  {
+    "id": 2,
+    "text": "Which component in Snowflake stores the data?",
+    "options": ["Virtual Warehouse", "Cloud Services", "Database Storage", "Data Lake"],
+    "answerIndex": 2,
+    "explanation": "Database Storage layer in Snowflake persists the data." 
+  },
+  {
+    "id": 3,
+    "text": "What is the term for Snowflake's compute resources?",
+    "options": ["Clusters", "Warehouses", "Nodes", "Instances"],
+    "answerIndex": 1,
+    "explanation": "Snowflake refers to compute clusters as virtual warehouses." 
+  },
+  {
+    "id": 4,
+    "text": "Which SQL command suspends a warehouse to stop billing?",
+    "options": ["PAUSE WAREHOUSE", "STOP WAREHOUSE", "ALTER WAREHOUSE ... SUSPEND", "DROP WAREHOUSE"],
+    "answerIndex": 2,
+    "explanation": "ALTER WAREHOUSE warehouse_name SUSPEND suspends the warehouse." 
+  },
+  {
+    "id": 5,
+    "text": "Snowflake supports which file format for bulk loading?",
+    "options": ["CSV", "JSON", "Parquet", "All of the above"],
+    "answerIndex": 3,
+    "explanation": "Snowflake can load CSV, JSON, Parquet and others via COPY." 
+  },
+  {
+    "id": 6,
+    "text": "Which feature enables time travel queries in Snowflake?",
+    "options": ["Data Streams", "Fail-safe", "Time Travel", "Cloning"],
+    "answerIndex": 2,
+    "explanation": "Time Travel allows querying historical data." 
+  },
+  {
+    "id": 7,
+    "text": "How are queries executed in Snowflake?",
+    "options": ["On the client", "On virtual warehouses", "On storage layer", "Through UDFs"],
+    "answerIndex": 1,
+    "explanation": "Virtual warehouses provide compute for query execution." 
+  },
+  {
+    "id": 8,
+    "text": "Which command creates a zero-copy clone of a table?",
+    "options": ["COPY TABLE", "CLONE TABLE", "CREATE TABLE ... CLONE", "DUPLICATE TABLE"],
+    "answerIndex": 2,
+    "explanation": "CREATE TABLE clone_name CLONE source_table creates a zero-copy clone." 
+  },
+  {
+    "id": 9,
+    "text": "Snowflake stages are used for what purpose?",
+    "options": ["Data loading/unloading", "User management", "Security policies", "Query optimization"],
+    "answerIndex": 0,
+    "explanation": "Stages provide locations for data files to load into Snowflake." 
+  },
+  {
+    "id": 10,
+    "text": "What is the retention period for standard time travel?",
+    "options": ["1 day", "7 days", "30 days", "90 days"],
+    "answerIndex": 1,
+    "explanation": "Standard time travel retains data up to 7 days." 
+  },
+  {
+    "id": 11,
+    "text": "Which command lists warehouses in your account?",
+    "options": ["SHOW WAREHOUSES", "LIST WAREHOUSES", "DESCRIBE WAREHOUSES", "GET WAREHOUSES"],
+    "answerIndex": 0,
+    "explanation": "SHOW WAREHOUSES displays all warehouses." 
+  },
+  {
+    "id": 12,
+    "text": "Snowpipe is used for what functionality?",
+    "options": ["Batch loading", "Continuous data loading", "Data masking", "Data transformation"],
+    "answerIndex": 1,
+    "explanation": "Snowpipe supports continuous loading of data as it arrives." 
+  },
+  {
+    "id": 13,
+    "text": "Which role has full access to all objects in Snowflake?",
+    "options": ["SYSADMIN", "ACCOUNTADMIN", "SECURITYADMIN", "USERADMIN"],
+    "answerIndex": 1,
+    "explanation": "ACCOUNTADMIN is the top-level role with full permissions." 
+  },
+  {
+    "id": 14,
+    "text": "How does Snowflake charge for storage?",
+    "options": ["Per query", "Per user", "Per TB per month", "Flat monthly fee"],
+    "answerIndex": 2,
+    "explanation": "Storage is billed based on average bytes stored per month." 
+  },
+  {
+    "id": 15,
+    "text": "What does the RESULT_CACHE store?",
+    "options": ["Table data", "Query results", "Configuration files", "User passwords"],
+    "answerIndex": 1,
+    "explanation": "Result cache stores results of queries for reuse." 
+  },
+  {
+    "id": 16,
+    "text": "Which feature allows sharing data with other Snowflake accounts?",
+    "options": ["Data Exchange", "Secure Views", "Reader Accounts", "All of the above"],
+    "answerIndex": 3,
+    "explanation": "Snowflake enables sharing via data exchange, secure views, and reader accounts." 
+  },
+  {
+    "id": 17,
+    "text": "Which command grants privileges on a table?",
+    "options": ["GIVE", "GRANT", "ALLOW", "PERMIT"],
+    "answerIndex": 1,
+    "explanation": "Use GRANT to assign privileges to roles." 
+  },
+  {
+    "id": 18,
+    "text": "What is a secure view in Snowflake?",
+    "options": ["Encrypted view", "View accessible only through secure connections", "View that hides underlying data", "View requiring MFA"],
+    "answerIndex": 2,
+    "explanation": "Secure views prevent users from accessing underlying base objects." 
+  },
+  {
+    "id": 19,
+    "text": "Which clause is used to copy data from a stage?",
+    "options": ["IMPORT", "LOAD", "COPY INTO", "TRANSFER"],
+    "answerIndex": 2,
+    "explanation": "COPY INTO loads data from a stage into a table." 
+  },
+  {
+    "id": 20,
+    "text": "Snowflake supports which cloud providers?",
+    "options": ["AWS", "Azure", "Google Cloud", "All of the above"],
+    "answerIndex": 3,
+    "explanation": "Snowflake is available on AWS, Azure, and Google Cloud." 
+  }
+]

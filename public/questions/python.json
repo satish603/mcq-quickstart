@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "text": "Which keyword is used to define a function in Python?",
+    "options": ["func", "def", "function", "lambda"],
+    "answerIndex": 1,
+    "explanation": "Functions are defined using the def keyword." 
+  },
+  {
+    "id": 2,
+    "text": "What is the output of len({'a':1,'b':2,'c':3})?",
+    "options": ["3", "2", "1", "Error"],
+    "answerIndex": 0,
+    "explanation": "len on a dict returns the number of keys." 
+  },
+  {
+    "id": 3,
+    "text": "Which data type is immutable?",
+    "options": ["list", "set", "tuple", "dict"],
+    "answerIndex": 2,
+    "explanation": "Tuples cannot be changed after creation." 
+  },
+  {
+    "id": 4,
+    "text": "Which operator is used for floor division?",
+    "options": ["/", "//", "%", "**"],
+    "answerIndex": 1,
+    "explanation": "// performs floor division." 
+  },
+  {
+    "id": 5,
+    "text": "What is the keyword for creating an anonymous function?",
+    "options": ["def", "lambda", "anon", "func"],
+    "answerIndex": 1,
+    "explanation": "lambda creates small anonymous functions." 
+  },
+  {
+    "id": 6,
+    "text": "Which method adds an item to the end of a list?",
+    "options": ["append", "add", "push", "insert"],
+    "answerIndex": 0,
+    "explanation": "append adds an element to the list end." 
+  },
+  {
+    "id": 7,
+    "text": "How do you start a virtual environment using venv?",
+    "options": ["venv start", "python -m venv env", "pip venv", "env activate"],
+    "answerIndex": 1,
+    "explanation": "Use python -m venv env to create a virtual environment." 
+  },
+  {
+    "id": 8,
+    "text": "Which keyword is used for exception handling?",
+    "options": ["catch", "handle", "except", "error"],
+    "answerIndex": 2,
+    "explanation": "except specifies code to run when an exception occurs." 
+  },
+  {
+    "id": 9,
+    "text": "What will print(type(3.0)) output?",
+    "options": ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'number'>"],
+    "answerIndex": 1,
+    "explanation": "3.0 is a float in Python." 
+  },
+  {
+    "id": 10,
+    "text": "Which library is commonly used for data manipulation?",
+    "options": ["numpy", "pandas", "matplotlib", "scipy"],
+    "answerIndex": 1,
+    "explanation": "pandas provides high-level data structures for analysis." 
+  },
+  {
+    "id": 11,
+    "text": "What is the result of ' '.join(['a','b','c'])?",
+    "options": ["abc", "a b c", "['a b c']", "Error"],
+    "answerIndex": 1,
+    "explanation": "join concatenates list elements with spaces." 
+  },
+  {
+    "id": 12,
+    "text": "Which module handles regular expressions?",
+    "options": ["regex", "re", "match", "pattern"],
+    "answerIndex": 1,
+    "explanation": "Python's re module supports regex operations." 
+  },
+  {
+    "id": 13,
+    "text": "Which statement creates a generator?",
+    "options": ["list comprehension", "yield", "return", "map"],
+    "answerIndex": 1,
+    "explanation": "Functions using yield produce generators." 
+  },
+  {
+    "id": 14,
+    "text": "What is the file extension for compiled Python bytecode?",
+    "options": [".pyc", ".py", ".pyo", ".pyw"],
+    "answerIndex": 0,
+    "explanation": "Python stores bytecode in .pyc files." 
+  },
+  {
+    "id": 15,
+    "text": "Which built-in function returns the absolute value?",
+    "options": ["abs", "fabs", "absolute", "absval"],
+    "answerIndex": 0,
+    "explanation": "abs() computes absolute value." 
+  },
+  {
+    "id": 16,
+    "text": "Which keyword declares a global variable inside a function?",
+    "options": ["global", "nonlocal", "var", "scope"],
+    "answerIndex": 0,
+    "explanation": "Use global to modify a module-level variable." 
+  },
+  {
+    "id": 17,
+    "text": "What does list(range(3)) return?",
+    "options": [[0,1,2], "[0,1,2]", "0..2", "[1,2,3]"],
+    "answerIndex": 1,
+    "explanation": "range(3) generates numbers 0 through 2." 
+  },
+  {
+    "id": 18,
+    "text": "Which operator checks object identity?",
+    "options": ["==", "is", "===", "like"],
+    "answerIndex": 1,
+    "explanation": "is compares object identity." 
+  },
+  {
+    "id": 19,
+    "text": "Which statement is used to handle resources and ensure clean-up?",
+    "options": ["try/except", "with", "cleanup", "dispose"],
+    "answerIndex": 1,
+    "explanation": "with ensures resources are properly managed." 
+  },
+  {
+    "id": 20,
+    "text": "Which built-in type represents sequences of bytes?",
+    "options": ["bytearray", "bytes", "str", "memory"],
+    "answerIndex": 1,
+    "explanation": "bytes is an immutable sequence of bytes." 
+  }
+]
