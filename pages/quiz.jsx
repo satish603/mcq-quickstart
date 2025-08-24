@@ -1,5 +1,5 @@
 // pages/quiz.jsx
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import 'tailwindcss/tailwind.css';
 
@@ -32,9 +32,9 @@ export default function Quiz() {
 
   // state
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [selected, setSelected] = useState([]);   // index or undefined
-  const [peeked, setPeeked] = useState([]);       // boolean[]
-  const [bookmarked, setBookmarked] = useState([]); // boolean[]
+  const [selected, setSelected] = useState([]);      // index or undefined
+  const [peeked, setPeeked] = useState([]);          // boolean[]
+  const [bookmarked, setBookmarked] = useState([]);  // boolean[]
 
   // timer (null = not initialized yet)
   const [timeLeft, setTimeLeft] = useState(null);
@@ -52,7 +52,7 @@ export default function Quiz() {
   const filePath = paperMeta ? paperMeta.file : null;
   const randomize = random === '1' || random === 'true';
 
-  // load questions
+  // ----- load questions -----
   useEffect(() => {
     if (!filePath) {
       setLoading(false);
@@ -72,8 +72,7 @@ export default function Quiz() {
           : Array.isArray(data)
           ? data
           : [];
-        let final = arr;
-        if (randomize) final = shuffle(final);
+        const final = randomize ? shuffle(arr) : arr;
 
         setQuizSet(final);
         setSelected(Array(final.length).fill(undefined));
@@ -109,15 +108,63 @@ export default function Quiz() {
   }, [initialTimeSec, timeLeft]);
 
   // countdown (only after time initialized)
+  const hasSavedRef = useRef(false);
+  const calc = useCallback(() => {
+    const attempted = selected.reduce(
+      (acc, cur, idx) => (!peeked[idx] && cur !== undefined ? acc + 1 : acc),
+      0
+    );
+    const correct = selected.reduce(
+      (acc, cur, idx) =>
+        !peeked[idx] && cur === quizSet[idx].answerIndex ? acc + 1 : acc,
+      0
+    );
+    const wrong = attempted - correct;
+    const negative = wrong * Number(NEGATIVE_MARK || 0);
+    const score = correct - negative;
+    return { attempted, correct, wrong, negative, score };
+  }, [selected, peeked, quizSet, NEGATIVE_MARK]);
+
+  const saveScore = useCallback(() => {
+    if (hasSavedRef.current) return;
+    if (!quizSet.length) return;
+
+    const meta = calc();
+    const payload = {
+      userId,
+      paper,
+      score: meta.score,
+      meta: {
+        ...meta,
+        total: quizSet.length,
+        mode,
+        randomize,
+        durationSec: initialTimeSec,
+        timeLeftSec: timeLeft ?? 0,
+        elapsedSec: Math.max(0, (initialTimeSec || 0) - (timeLeft ?? 0)),
+      },
+    };
+
+    fetch('/api/save-score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+
+    hasSavedRef.current = true;
+  }, [userId, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft]);
+
   useEffect(() => {
-    if (timeLeft === null) return;      // not started yet
-    if (timeLeft <= 0) {                // ended
+    if (timeLeft === null) return; // not started
+    if (timeLeft <= 0) {
+      // TIMEOUT: mark finished and save immediately
       setIsFinished(true);
+      saveScore();
       return;
     }
     const id = setInterval(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearInterval(id);
-  }, [timeLeft]);
+  }, [timeLeft, saveScore]);
 
   // selection: lock after first choice; block if peeked
   const handleOptionSelect = (optionIndex) => {
@@ -145,9 +192,18 @@ export default function Quiz() {
     });
   };
 
+  const handleSubmit = () => {
+    // SUBMIT: mark finished and save immediately
+    setIsFinished(true);
+    saveScore();
+  };
+
   const handleNext = () => {
-    if (currentIdx < quizSet.length - 1) setCurrentIdx((i) => i + 1);
-    else setIsFinished(true);
+    if (currentIdx < quizSet.length - 1) {
+      setCurrentIdx((i) => i + 1);
+    } else {
+      handleSubmit(); // last question -> submit
+    }
   };
 
   const handlePrev = () => {
@@ -204,40 +260,9 @@ export default function Quiz() {
     setCurrentIdx(matches[nextPos]);
   };
 
-  // scoring
-  const calc = () => {
-    const attempted = selected.reduce(
-      (acc, cur, idx) => (!peeked[idx] && cur !== undefined ? acc + 1 : acc),
-      0
-    );
-    const correct = selected.reduce(
-      (acc, cur, idx) =>
-        !peeked[idx] && cur === quizSet[idx].answerIndex ? acc + 1 : acc,
-      0
-    );
-    const wrong = attempted - correct;
-    const negative = wrong * Number(NEGATIVE_MARK || 0);
-    const score = correct - negative;
-    return { attempted, correct, wrong, negative, score };
-  };
-
-  // save score ONLY when finished
-  useEffect(() => {
-    if (!quizSet.length) return;
-    if (!isFinished) return;
-    const { score } = calc();
-    fetch('/api/save-score', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, paper, score }),
-    }).catch(() => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFinished, quizSet.length]);
-
   const progress = quizSet.length ? ((currentIdx + 1) / quizSet.length) * 100 : 0;
 
   // -------- UI --------
-
   if (loading) {
     return (
       <div className="min-h-screen grid place-items-center bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200">
