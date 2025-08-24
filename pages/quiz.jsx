@@ -2,42 +2,54 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import 'tailwindcss/tailwind.css';
+
 import QuizQuestion from '../components/QuizQuestion';
 import Timer from '../components/Timer';
 import ResultSummary from '../components/ResultSummary';
 import ProgressBar from '../components/ProgressBar';
 import ThemeToggle from '../components/ThemeToggle';
 import QuestionMapDrawer from '../components/QuestionMapDrawer';
+
 import { paperList } from '../data/paperList';
+import { getNegativeMark, MODE_PRESETS } from '../data/papers.config';
 
 export default function Quiz() {
   const router = useRouter();
-  const { paper, time, userId } = router.query;
+  const { paper, time, userId, mode = 'medium' } = router.query;
 
+  // data + ui
   const [quizSet, setQuizSet] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // state
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [selected, setSelected] = useState([]);
-  const [peeked, setPeeked] = useState([]);
-  const [bookmarked, setBookmarked] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(time ? parseInt(time, 10) * 60 : 0);
+  const [selected, setSelected] = useState([]);   // index or undefined
+  const [peeked, setPeeked] = useState([]);       // boolean[]
+  const [bookmarked, setBookmarked] = useState([]); // boolean[]
+
+  // timer (null = not initialized yet)
+  const [timeLeft, setTimeLeft] = useState(null);
   const [isFinished, setIsFinished] = useState(false);
 
+  // map/search
   const [mapOpen, setMapOpen] = useState(false);
-
-  // search-in-paper
   const [query, setQuery] = useState('');
-  const [matches, setMatches] = useState([]);       // array of indices
+  const [matches, setMatches] = useState([]);
   const [matchCursor, setMatchCursor] = useState(0);
 
-  const NEGATIVE_MARK = 0.25;
-
+  // config
+  const NEGATIVE_MARK = useMemo(() => getNegativeMark(String(paper || '')), [paper]);
   const paperMeta = useMemo(() => paperList.find((p) => p.id === paper), [paper]);
   const filePath = paperMeta ? paperMeta.file : null;
 
+  // load questions
   useEffect(() => {
-    if (!filePath) return;
+    if (!filePath) {
+      setLoading(false);
+      setQuizSet([]);
+      setTimeLeft(null);
+      return;
+    }
     setLoading(true);
     fetch(filePath)
       .then((res) => {
@@ -45,18 +57,48 @@ export default function Quiz() {
         return res.json();
       })
       .then((data) => {
-        const arr = Array.isArray(data.questions) ? data.questions : data; // support both shapes
+        const arr = Array.isArray(data?.questions)
+          ? data.questions
+          : Array.isArray(data)
+          ? data
+          : [];
         setQuizSet(arr);
         setSelected(Array(arr.length).fill(undefined));
         setPeeked(Array(arr.length).fill(false));
         setBookmarked(Array(arr.length).fill(false));
+        setCurrentIdx(0);
+        setTimeLeft(null); // will be set by mode/custom after load
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err);
+        setQuizSet([]);
+        setTimeLeft(null);
+      })
       .finally(() => setLoading(false));
   }, [filePath]);
 
+  // compute time from mode/custom after questions load
+  const initialTimeSec = useMemo(() => {
+    if (!quizSet.length) return 0;
+    if (String(mode) === 'custom') {
+      const mins = Math.max(1, Math.min(180, parseInt(time || 10, 10)));
+      return mins * 60;
+    }
+    const perQ = MODE_PRESETS[String(mode)]?.perQSec ?? 60; // default 60s/q
+    return perQ * quizSet.length;
+  }, [quizSet.length, mode, time]);
+
+  // apply initial time once
   useEffect(() => {
-    if (timeLeft <= 0) {
+    if (timeLeft === null && initialTimeSec > 0) {
+      setTimeLeft(initialTimeSec);
+    }
+  }, [initialTimeSec, timeLeft]);
+
+  // countdown (only after time initialized)
+  useEffect(() => {
+    if (timeLeft === null) return;      // not started yet
+    if (timeLeft <= 0) {                // ended
       setIsFinished(true);
       return;
     }
@@ -64,8 +106,10 @@ export default function Quiz() {
     return () => clearInterval(id);
   }, [timeLeft]);
 
+  // selection: lock after first choice; block if peeked
   const handleOptionSelect = (optionIndex) => {
     if (peeked[currentIdx]) return;
+    if (selected[currentIdx] !== undefined) return; // lock after first select
     setSelected((prev) => {
       const copy = [...prev];
       copy[currentIdx] = optionIndex;
@@ -73,7 +117,9 @@ export default function Quiz() {
     });
   };
 
+  // peek only before answering; clears selection; excludes from scoring
   const handlePeek = () => {
+    if (selected[currentIdx] !== undefined) return;
     setPeeked((prev) => {
       const copy = [...prev];
       copy[currentIdx] = true;
@@ -90,6 +136,7 @@ export default function Quiz() {
     if (currentIdx < quizSet.length - 1) setCurrentIdx((i) => i + 1);
     else setIsFinished(true);
   };
+
   const handlePrev = () => {
     if (currentIdx > 0) setCurrentIdx((i) => i - 1);
   };
@@ -102,7 +149,7 @@ export default function Quiz() {
     });
   };
 
-  // search logic
+  // search inside paper
   useEffect(() => {
     if (!query || query.trim().length < 2) {
       setMatches([]);
@@ -144,32 +191,39 @@ export default function Quiz() {
     setCurrentIdx(matches[nextPos]);
   };
 
+  // scoring
   const calc = () => {
     const attempted = selected.reduce(
-      (acc, cur, idx) => (!peeked[idx] && cur !== undefined ? acc + 1 : acc), 0
+      (acc, cur, idx) => (!peeked[idx] && cur !== undefined ? acc + 1 : acc),
+      0
     );
     const correct = selected.reduce(
-      (acc, cur, idx) => (!peeked[idx] && cur === quizSet[idx].answerIndex ? acc + 1 : acc), 0
+      (acc, cur, idx) =>
+        !peeked[idx] && cur === quizSet[idx].answerIndex ? acc + 1 : acc,
+      0
     );
     const wrong = attempted - correct;
-    const negative = wrong * NEGATIVE_MARK;
+    const negative = wrong * Number(NEGATIVE_MARK || 0);
     const score = correct - negative;
     return { attempted, correct, wrong, negative, score };
   };
 
+  // save score ONLY when finished
   useEffect(() => {
-    if (isFinished || timeLeft <= 0) {
-      const { score } = calc();
-      fetch('/api/save-score', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, paper, score }),
-      }).catch(console.error);
-    }
+    if (!quizSet.length) return;
+    if (!isFinished) return;
+    const { score } = calc();
+    fetch('/api/save-score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, paper, score }),
+    }).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFinished, timeLeft]);
+  }, [isFinished, quizSet.length]);
 
   const progress = quizSet.length ? ((currentIdx + 1) / quizSet.length) * 100 : 0;
+
+  // -------- UI --------
 
   if (loading) {
     return (
@@ -195,7 +249,7 @@ export default function Quiz() {
     );
   }
 
-  if (isFinished || timeLeft <= 0) {
+  if (isFinished) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-6 px-4">
         <ResultSummary
@@ -211,7 +265,7 @@ export default function Quiz() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-      {/* Sticky header with breadcrumb + timer + theme + search + map */}
+      {/* Sticky header */}
       <div className="sticky top-0 z-20 border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur">
         <div className="mx-auto max-w-5xl px-4 py-3 flex flex-col gap-2">
           <div className="flex items-center justify-between gap-3">
@@ -221,6 +275,8 @@ export default function Quiz() {
               <span>{paperMeta?.name ?? 'Quiz'}</span>
               <span className="mx-1">/</span>
               <span>Q{currentIdx + 1}</span>
+              <span className="mx-2 text-gray-400">•</span>
+              <span>Mode: <strong className="capitalize">{String(mode)}</strong></span>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -230,7 +286,13 @@ export default function Quiz() {
               >
                 Map
               </button>
-              <Timer timeLeft={timeLeft} />
+              {timeLeft !== null ? (
+                <Timer timeLeft={timeLeft} />
+              ) : (
+                <div className="px-4 py-2 rounded-full text-xs text-gray-500 dark:text-gray-400">
+                  Preparing timer…
+                </div>
+              )}
               <ThemeToggle />
             </div>
           </div>
@@ -281,6 +343,9 @@ export default function Quiz() {
       {/* Body */}
       <div className="mx-auto max-w-5xl p-4">
         <div className="rounded-3xl bg-white dark:bg-gray-900 p-6 shadow-sm ring-1 ring-gray-200/60 dark:ring-gray-800">
+          <div className="mb-3 text-sm text-gray-600 dark:text-gray-300">
+            Negative marking: <strong>{NEGATIVE_MARK}</strong> (peeked questions excluded)
+          </div>
           <QuizQuestion
             question={quizSet[currentIdx]}
             questionIndex={currentIdx}
@@ -293,7 +358,7 @@ export default function Quiz() {
             isPeeked={peeked[currentIdx]}
             isBookmarked={bookmarked[currentIdx]}
             onToggleBookmark={toggleBookmark}
-            highlight={query}               // <-- highlight search text
+            highlight={query}
           />
         </div>
       </div>

@@ -13,14 +13,16 @@ export default function QuizQuestion({
   isPeeked,
   isBookmarked,
   onToggleBookmark,
-  highlight = '', // <-- new
+  highlight = '',
 }) {
   if (!question) return null;
 
-  const letters = ['A', 'B', 'C', 'D'];
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
   const options = Array.isArray(question.options) ? question.options : [];
   const correctIdx = question.answerIndex;
+  const answered = selectedOption != null;
 
+  // split explanation into clear bullet lines
   const explanationLines = useMemo(() => {
     const exp = question.explanation;
     if (!exp) return [];
@@ -28,6 +30,7 @@ export default function QuizQuestion({
     return (String(exp).match(/[^.!?]+[.!?]*/g) || []).map((s) => s.trim());
   }, [question.explanation]);
 
+  // keyboard support
   const handleKeyDown = useCallback(
     (e) => {
       if (isPeeked || !options.length) return;
@@ -50,8 +53,9 @@ export default function QuizQuestion({
     [isPeeked, options.length, selectedOption, onSelectOption, onNext]
   );
 
-  // highlight helper
-  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  // --- safe highlighter (escapes HTML, wraps hits with <mark>) ---
+  const esc = (s) =>
+    String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const hi = useCallback(
     (s) => {
       if (!highlight || highlight.length < 2) return esc(s);
@@ -63,6 +67,19 @@ export default function QuizQuestion({
     },
     [highlight]
   );
+
+  // --- styles ---
+  const base =
+    'w-full text-left p-4 rounded-2xl border transition ring-offset-2 focus:outline-none focus:ring-2 ' +
+    'bg-white/90 dark:bg-gray-900/70 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800';
+
+  const ringSelected = 'ring-indigo-400';
+  const cardCorrect = 'border-green-500 bg-green-50 dark:bg-green-900/25';
+  const cardWrong = 'border-rose-500 bg-rose-50 dark:bg-rose-900/25';
+  const cardMuted = 'opacity-60';
+
+  // when answered or peeked, we “grade” visually
+  const graded = answered || isPeeked;
 
   return (
     <div className="text-gray-900 dark:text-gray-100">
@@ -84,7 +101,7 @@ export default function QuizQuestion({
         </button>
       </div>
 
-      {/* text */}
+      {/* question text */}
       <div
         className="mb-3 text-base sm:text-lg"
         dangerouslySetInnerHTML={{ __html: hi(question.text) }}
@@ -115,17 +132,21 @@ export default function QuizQuestion({
         {options.map((opt, idx) => {
           const isSelected = selectedOption === idx;
           const isCorrect = idx === correctIdx;
-          const base =
-            'w-full text-left p-4 rounded-2xl border transition ring-offset-2 focus:outline-none focus:ring-2';
-          const notPeekedStyle = isSelected
-            ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 dark:border-indigo-400'
-            : 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800';
 
-          const peekedStyle = isPeeked
-            ? isCorrect
-              ? 'border-green-600 bg-green-50 dark:bg-green-900/30'
-              : 'opacity-60 border-gray-200 dark:border-gray-700'
-            : '';
+          let cls = base;
+          if (graded) {
+            if (isPeeked) {
+              // after peek: only correct gets highlighted, others muted
+              cls += isCorrect ? ` ${cardCorrect}` : ` ${cardMuted}`;
+            } else if (answered) {
+              // after selection: selected turns green/red, others stay neutral
+              if (isSelected && isCorrect) cls += ` ${cardCorrect}`;
+              else if (isSelected && !isCorrect) cls += ` ${cardWrong}`;
+              else cls += '';
+            }
+          } else if (isSelected) {
+            cls += ` ${ringSelected}`;
+          }
 
           return (
             <button
@@ -134,7 +155,7 @@ export default function QuizQuestion({
               aria-checked={isSelected && !isPeeked}
               disabled={isPeeked}
               onClick={() => !isPeeked && onSelectOption(idx)}
-              className={[base, isPeeked ? peekedStyle : notPeekedStyle].join(' ')}
+              className={cls}
             >
               <div className="flex items-start gap-3">
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs font-bold dark:border-gray-600">
@@ -144,8 +165,19 @@ export default function QuizQuestion({
                   className="flex-1"
                   dangerouslySetInnerHTML={{ __html: hi(opt) }}
                 />
-                {!isPeeked && isSelected && (
+                {!graded && isSelected && (
                   <span className="text-indigo-600 dark:text-indigo-300 font-semibold">Selected</span>
+                )}
+                {graded && !isPeeked && answered && isSelected && (
+                  <span
+                    className={`font-semibold ${
+                      isSelected && idx === correctIdx
+                        ? 'text-green-700 dark:text-green-300'
+                        : 'text-rose-700 dark:text-rose-300'
+                    }`}
+                  >
+                    {idx === correctIdx ? '✔ Correct' : '✖ Wrong'}
+                  </span>
                 )}
                 {isPeeked && isCorrect && (
                   <span className="text-green-700 dark:text-green-300 font-semibold">✔</span>
@@ -171,6 +203,7 @@ export default function QuizQuestion({
             className="py-2 px-4 rounded-xl bg-amber-500 text-white hover:bg-amber-600 disabled:opacity-50"
             onClick={onPeek}
             disabled={isPeeked}
+            title="Reveal answer (no negative marking for this question)"
           >
             Show Answer
           </button>
@@ -183,12 +216,28 @@ export default function QuizQuestion({
         </div>
       </div>
 
-      {/* peek panel */}
-      {isPeeked && (
+      {/* feedback / explanation panel */}
+      {(answered || isPeeked) && (
         <div className="mt-4 rounded-2xl border border-green-200 bg-green-50 p-4 dark:bg-green-900/20 dark:border-green-900/40">
           <div className="mb-1 font-semibold">
-            Correct Answer: {options[correctIdx]}
+            Correct Answer:{' '}
+            <span
+              dangerouslySetInnerHTML={{ __html: hi(options[correctIdx] ?? '') }}
+            />
           </div>
+
+          {answered && !isPeeked && (
+            <div
+              className={`text-sm ${
+                selectedOption === correctIdx
+                  ? 'text-green-700 dark:text-green-300'
+                  : 'text-rose-700 dark:text-rose-300'
+              }`}
+            >
+              {selectedOption === correctIdx ? 'Great job!' : ""}
+            </div>
+          )}
+
           {explanationLines.length > 0 && (
             <div className="mt-2 text-gray-800 dark:text-gray-200">
               <div className="font-semibold">Explanation:</div>
@@ -199,9 +248,12 @@ export default function QuizQuestion({
               </ul>
             </div>
           )}
-          <div className="mt-3 inline-block rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-400/20 dark:text-amber-300">
-            Peeked — this question will not affect your score
-          </div>
+
+          {isPeeked && (
+            <div className="mt-3 inline-block rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-400/20 dark:text-amber-300">
+              Peeked — this question will not affect your score
+            </div>
+          )}
         </div>
       )}
     </div>

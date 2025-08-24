@@ -7,6 +7,7 @@ import ScoreHistory from '../components/ScoreHistory';
 import ThemeToggle from '../components/ThemeToggle';
 import { NextSeo } from 'next-seo';
 import { SITE_NAME, TAGLINE, SITE_URL, TENANT, GSC_VERIFICATION } from '../lib/siteConfig';
+import { MODE_PRESETS } from '../data/papers.config';
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +16,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('quiz'); // 'quiz' | 'scores'
   const [userId, setUserId] = useState('');
   const [selectedPaper, setSelectedPaper] = useState('');
-  const [time, setTime] = useState(10);
+  const [mode, setMode] = useState('medium');       // easy | medium | hard | custom
+  const [customMinutes, setCustomMinutes] = useState(10);
 
   // scores state
   const [scores, setScores] = useState([]);
@@ -23,12 +25,22 @@ export default function Home() {
 
   // hydrate from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('mcq_user_id');
-    if (saved) setUserId(saved);
+    const savedUID = localStorage.getItem('mcq_user_id');
+    if (savedUID) setUserId(savedUID);
+    const savedMode = localStorage.getItem('mcq_mode');
+    if (savedMode) setMode(savedMode);
+    const savedCustom = localStorage.getItem('mcq_custom_minutes');
+    if (savedCustom) setCustomMinutes(parseInt(savedCustom, 10) || 10);
   }, []);
   useEffect(() => {
     if (userId) localStorage.setItem('mcq_user_id', userId);
   }, [userId]);
+  useEffect(() => {
+    localStorage.setItem('mcq_mode', mode);
+  }, [mode]);
+  useEffect(() => {
+    localStorage.setItem('mcq_custom_minutes', String(customMinutes));
+  }, [customMinutes]);
 
   // paper options
   const papers = useMemo(() => paperList ?? [], []);
@@ -37,16 +49,22 @@ export default function Home() {
     if (!selectedPaper && papers.length > 0) setSelectedPaper(papers[0].id);
   }, [papers, selectedPaper]);
 
-  const numericTime = Number.isFinite(Number(time))
-    ? Math.max(1, Math.min(180, parseInt(time || 0, 10)))
-    : 10;
-  const canStart = Boolean(userId.trim()) && Boolean(selectedPaper) && numericTime >= 1;
+  const canStart =
+    Boolean(userId.trim()) &&
+    Boolean(selectedPaper) &&
+    (mode !== 'custom' || (Number.isFinite(+customMinutes) && +customMinutes >= 1 && +customMinutes <= 180));
 
   const handleStart = () => {
     if (!canStart) return;
-    router.push(
-      `/quiz?paper=${selectedPaper}&time=${numericTime}&userId=${encodeURIComponent(userId)}`
-    );
+    const params = new URLSearchParams({
+      paper: selectedPaper,
+      userId: userId,
+      mode: mode,
+    });
+    if (mode === 'custom') {
+      params.set('time', String(Math.max(1, Math.min(180, parseInt(customMinutes || 0, 10)))));
+    }
+    router.push(`/quiz?${params.toString()}`);
   };
 
   const fetchScores = async () => {
@@ -82,6 +100,25 @@ export default function Home() {
       ? 'Practice IT interview questions with explanations. Topic-wise sets (DSA, SQL, OS, DBMS), review mode, map & search, peek without negative marks.'
       : 'Free KGMU & SGPGI Nursing Officer/Staff Nurse questions with explanations, previous papers, review mode, and peek without negative marks.';
 
+  const ModePill = ({ value, label, hint }) => {
+    const active = mode === value;
+    return (
+      <button
+        type="button"
+        onClick={() => setMode(value)}
+        className={`rounded-2xl px-3 py-2 text-sm font-medium transition ring-1 ${
+          active
+            ? 'bg-indigo-600 text-white ring-indigo-600'
+            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 ring-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:ring-gray-700 dark:hover:bg-gray-700'
+        }`}
+        aria-pressed={active}
+      >
+        {label}
+        {hint && <span className="ml-1 opacity-75">· {hint}</span>}
+      </button>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       <NextSeo
@@ -89,9 +126,7 @@ export default function Home() {
         description={seoDesc}
         canonical={`${SITE_URL}/`}
         additionalMetaTags={[
-          ...(GSC_VERIFICATION
-            ? [{ name: 'google-site-verification', content: GSC_VERIFICATION }]
-            : []),
+          ...(GSC_VERIFICATION ? [{ name: 'google-site-verification', content: GSC_VERIFICATION }] : []),
         ]}
         openGraph={{ url: `${SITE_URL}/`, title: `${seoTitle} | ${SITE_NAME}`, description: seoDesc }}
       />
@@ -111,7 +146,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT: badges + theme toggle (always visible toggle) */}
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
               Next.js
@@ -160,12 +194,7 @@ export default function Home() {
             </label>
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-gray-400 dark:text-gray-500"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
+                <svg className="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5Zm0 2c-4 0-8 2-8 6v1h16v-1c0-4-4-6-8-6Z" />
                 </svg>
               </div>
@@ -189,19 +218,15 @@ export default function Home() {
           <section className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left: Select Paper */}
             <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200/60 dark:bg-gray-900 dark:ring-gray-800">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                Select Your Question Paper
-              </h2>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">Select Your Question Paper</h2>
               <p className="text-sm text-gray-500 mt-1 dark:text-gray-400">
-                Choose a set and a duration, then hit Start.
+                Choose a set and a <strong>mode</strong>, then hit Start.
               </p>
 
-              <div className="mt-5 space-y-4">
+              <div className="mt-5 space-y-5">
                 {/* Paper */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">
-                    Paper Set
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Paper Set</label>
                   <div className="relative">
                     <select
                       className="w-full appearance-none rounded-2xl border border-gray-300 bg-white px-4 py-2.5 pr-10 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
@@ -218,42 +243,48 @@ export default function Home() {
                         ))}
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                      <svg
-                        className="h-5 w-5 text-gray-400 dark:text-gray-500"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
+                      <svg className="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.184l3.71-3.953a.75.75 0 1 1 1.08 1.04l-4.24 4.52a.75.75 0 0 1-1.08 0l-4.24-4.52a.75.75 0 0 1 .02-1.06Z" />
                       </svg>
                     </div>
                   </div>
                 </div>
 
-                {/* Timer */}
+                {/* Mode selector (replaces Timer) */}
                 <div>
-                  <div className="flex items-center justify-between">
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
-                      Timer (mins)
-                    </label>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">1–180</span>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Mode</label>
+                  <div className="flex flex-wrap gap-2">
+                    <ModePill value="easy" label="Easy" hint="45s/q" />
+                    <ModePill value="medium" label="Medium" hint="60s/q" />
+                    <ModePill value="hard" label="Hard" hint="75s/q" />
+                    <ModePill value="custom" label="Custom" />
                   </div>
-                  <input
-                    type="number"
-                    min="1"
-                    max="180"
-                    value={numericTime}
-                    onChange={(e) => setTime(e.target.value)}
-                    className="mt-1 w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-                    aria-label="Timer in minutes"
-                  />
-                </div>
 
-                {/* Hints */}
-                <ul className="text-xs text-gray-500 space-y-1 dark:text-gray-400">
-                  <li>• You can peek an answer without negative marking.</li>
-                  <li>• Peeked questions are excluded from scoring.</li>
-                </ul>
+                  {mode === 'custom' && (
+                    <div className="mt-3">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                          Total Time (minutes)
+                        </label>
+                        <span className="text-xs text-gray-400 dark:text-gray-500">1–180</span>
+                      </div>
+                      <input
+                        type="number"
+                        min="1"
+                        max="180"
+                        value={customMinutes}
+                        onChange={(e) => setCustomMinutes(e.target.value)}
+                        className="mt-1 w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                        aria-label="Custom total time in minutes"
+                      />
+                    </div>
+                  )}
+
+                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    Modes set time per question: <strong>Easy 45s</strong>, <strong>Medium 60s</strong>, <strong>Hard 75s</strong>.
+                    Custom lets you set a total time.
+                  </p>
+                </div>
 
                 {/* Start Button */}
                 <button
@@ -293,12 +324,7 @@ export default function Home() {
 
         {activeTab === 'scores' && (
           <section className="mt-6">
-            <ScoreHistory
-              userId={userId}
-              rows={scores}
-              loading={loadingScores}
-              onRefresh={fetchScores}
-            />
+            <ScoreHistory userId={userId} rows={scores} loading={loadingScores} onRefresh={fetchScores} />
           </section>
         )}
       </main>
