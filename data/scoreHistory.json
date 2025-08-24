@@ -4,5 +4,17 @@
     "paper": "snowflake",
     "score": -1.25,
     "timestamp": "2025-08-24T08:24:13.889Z"
+  },
+  {
+    "userId": "testuser",
+    "paper": "snowflake",
+    "score": -0.25,
+    "timestamp": "2025-08-24T08:45:08.670Z"
+  },
+  {
+    "userId": "testuser",
+    "paper": "snowflake",
+    "score": 1.5,
+    "timestamp": "2025-08-24T09:08:00.062Z"
   }
 ]

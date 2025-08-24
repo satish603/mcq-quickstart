@@ -22,6 +22,46 @@ const shuffle = (arr) => {
   return a;
 };
 
+// -------- stable key helpers (no index involved) --------
+const stableKey = (q) => {
+  if (q && q.id != null) return `id:${q.id}`;
+  const text = String(q?.text || '');
+  const opts = Array.isArray(q?.options) ? q.options.join('||') : '';
+  const raw = `${text}|||${opts}`;
+  // djb2 xor hash
+  let h = 5381;
+  for (let i = 0; i < raw.length; i++) h = ((h << 5) + h) ^ raw.charCodeAt(i);
+  return `h:${(h >>> 0).toString(36)}`;
+};
+const makeOrder = (arr) => arr.map(stableKey);
+const makeSig = (order) => order.join('|');
+
+// -------- encode/decode so we never keep `null` in state --------
+const encodeSelected = (arr) => (Array.isArray(arr) ? arr.map((v) => (v == null ? -1 : v)) : []);
+const decodeSelected = (arr, len) => {
+  const a = Array.isArray(arr) ? arr : [];
+  const out = new Array(len);
+  for (let i = 0; i < len; i++) {
+    const v = a[i];
+    out[i] = v == null || v === -1 ? undefined : v;
+  }
+  return out;
+};
+const coerceBoolArray = (arr, len) => {
+  const out = new Array(len);
+  for (let i = 0; i < len; i++) out[i] = !!(arr && arr[i]);
+  return out;
+};
+
+const loadSaved = (key) => {
+  try {
+    const s = localStorage.getItem(key);
+    return s ? JSON.parse(s) : null;
+  } catch {
+    return null;
+  }
+};
+
 export default function Quiz() {
   const router = useRouter();
   const { paper, time, userId, mode = 'medium', random } = router.query;
@@ -32,11 +72,12 @@ export default function Quiz() {
 
   // state
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [selected, setSelected] = useState([]);      // index or undefined
-  const [peeked, setPeeked] = useState([]);          // boolean[]
-  const [bookmarked, setBookmarked] = useState([]);  // boolean[]
+  const [selected, setSelected] = useState([]);     // number | undefined (never null)
+  const [peeked, setPeeked] = useState([]);         // boolean[]
+  const [bookmarked, setBookmarked] = useState([]); // boolean[]
+  const [order, setOrder] = useState([]);           // stable keys
 
-  // timer (null = not initialized yet)
+  // timer
   const [timeLeft, setTimeLeft] = useState(null);
   const [isFinished, setIsFinished] = useState(false);
 
@@ -52,63 +93,137 @@ export default function Quiz() {
   const filePath = paperMeta ? paperMeta.file : null;
   const randomize = random === '1' || random === 'true';
 
-  // ----- load questions -----
+  // session keys/flags
+  const sessionKey = useMemo(() => {
+    if (!userId || !paper) return null;
+    return `mcq_session:${userId}:${paper}:${mode}:${randomize ? '1' : '0'}`;
+  }, [userId, paper, mode, randomize]);
+  const scoredRef = useRef(false);
+  const resumedRef = useRef(false);
+
+  // load questions (with saved order restoration if present)
   useEffect(() => {
     if (!filePath) {
       setLoading(false);
       setQuizSet([]);
+      setOrder([]);
       setTimeLeft(null);
       return;
     }
     setLoading(true);
+
     fetch(filePath)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load question set');
         return res.json();
       })
       .then((data) => {
-        const arr = Array.isArray(data?.questions)
+        const rawArr = Array.isArray(data?.questions)
           ? data.questions
           : Array.isArray(data)
           ? data
           : [];
-        const final = randomize ? shuffle(arr) : arr;
+
+        // Try to restore exact order from saved session (if randomize)
+        let final = rawArr;
+        let finalOrder = makeOrder(rawArr);
+
+        if (randomize) {
+          const saved = sessionKey ? loadSaved(sessionKey) : null;
+
+          if (
+            saved &&
+            saved.version === 2 &&
+            saved.total === rawArr.length &&
+            Array.isArray(saved.order)
+          ) {
+            // build dict by stableKey for rawArr
+            const dict = new Map(rawArr.map((q) => [stableKey(q), q]));
+            const attempt = saved.order.map((k) => dict.get(k)).filter(Boolean);
+
+            if (attempt.length === rawArr.length) {
+              final = attempt;
+              finalOrder = [...saved.order]; // exact same order keys as saved
+            } else {
+              final = shuffle(rawArr);
+              finalOrder = makeOrder(final);
+            }
+          } else {
+            final = shuffle(rawArr);
+            finalOrder = makeOrder(final);
+          }
+        }
 
         setQuizSet(final);
-        setSelected(Array(final.length).fill(undefined));
-        setPeeked(Array(final.length).fill(false));
-        setBookmarked(Array(final.length).fill(false));
+        setOrder(finalOrder);
+        setSelected(new Array(final.length).fill(undefined));
+        setPeeked(new Array(final.length).fill(false));
+        setBookmarked(new Array(final.length).fill(false));
         setCurrentIdx(0);
-        setTimeLeft(null); // will be set by mode/custom after load
+        setTimeLeft(null); // will be set by mode/custom or resume
+        resumedRef.current = false;
       })
       .catch((err) => {
         console.error(err);
         setQuizSet([]);
+        setOrder([]);
         setTimeLeft(null);
       })
       .finally(() => setLoading(false));
-  }, [filePath, randomize]);
+  }, [filePath, randomize, sessionKey]);
 
-  // compute time from mode/custom after questions load
+  // initial total time
   const initialTimeSec = useMemo(() => {
     if (!quizSet.length) return 0;
     if (String(mode) === 'custom') {
       const mins = Math.max(1, Math.min(180, parseInt(time || 10, 10)));
       return mins * 60;
     }
-    const perQ = MODE_PRESETS[String(mode)]?.perQSec ?? 60; // default 60s/q
+    const perQ = MODE_PRESETS[String(mode)]?.perQSec ?? 60;
     return perQ * quizSet.length;
   }, [quizSet.length, mode, time]);
 
-  // apply initial time once
+  // attempt resume (after quizSet+order ready)
   useEffect(() => {
-    if (timeLeft === null && initialTimeSec > 0) {
+    if (!sessionKey || !quizSet.length || !order.length) return;
+
+    try {
+      const saved = loadSaved(sessionKey);
+      if (!saved || saved.version !== 2) return;
+
+      const sameLen = saved.total === quizSet.length;
+      const sameSig = saved.orderSig === makeSig(order);
+      const notExpired = Date.now() - (saved.ts || 0) < 7 * 24 * 60 * 60 * 1000;
+
+      if (sameLen && sameSig && notExpired) {
+        const sel = Array.isArray(saved.selectedIdxs)
+          ? decodeSelected(saved.selectedIdxs, quizSet.length)
+          : decodeSelected(saved.selected, quizSet.length); // backward-compat
+
+        setSelected(sel);
+        setPeeked(coerceBoolArray(saved.peeked, quizSet.length));
+        setBookmarked(coerceBoolArray(saved.bookmarked, quizSet.length));
+        setCurrentIdx(Math.min(Math.max(0, saved.currentIdx || 0), quizSet.length - 1));
+
+        const base = Number(saved.initialTimeSec || initialTimeSec || 0);
+        const t = Math.min(Math.max(0, Number(saved.timeLeft ?? base)), base || initialTimeSec || 0);
+        setTimeLeft(Number.isFinite(t) ? t : initialTimeSec);
+
+        resumedRef.current = true;
+      }
+    } catch {
+      // ignore
+    }
+  }, [sessionKey, quizSet.length, order, initialTimeSec]);
+
+  // set initial time once if not resumed
+  useEffect(() => {
+    if (timeLeft === null && initialTimeSec > 0 && !resumedRef.current) {
       setTimeLeft(initialTimeSec);
     }
   }, [initialTimeSec, timeLeft]);
 
-  // countdown (only after time initialized)
-  const hasSavedRef = useRef(false);
+  // scoring
   const calc = useCallback(() => {
     const attempted = selected.reduce(
       (acc, cur, idx) => (!peeked[idx] && cur !== undefined ? acc + 1 : acc),
@@ -125,10 +240,72 @@ export default function Quiz() {
     return { attempted, correct, wrong, negative, score };
   }, [selected, peeked, quizSet, NEGATIVE_MARK]);
 
-  const saveScore = useCallback(() => {
-    if (hasSavedRef.current) return;
-    if (!quizSet.length) return;
+  // persist session (sanitize before writing)
+  const saveSession = useCallback(
+    (override = {}) => {
+      if (!sessionKey || !quizSet.length) return;
+      try {
+        const selRaw = override.selected ?? selected;
+        const selectedIdxs = encodeSelected(selRaw);
+        const payload = {
+          version: 2,
+          ts: Date.now(),
+          userId,
+          paper,
+          mode,
+          randomize,
+          total: quizSet.length,
+          order,
+          orderSig: makeSig(order),
+          selectedIdxs,                           // canonical (numbers or -1)
+          selected: selectedIdxs.map((v) => (v === -1 ? null : v)), // legacy-friendly
+          peeked: override.peeked ?? peeked,
+          bookmarked: override.bookmarked ?? bookmarked,
+          currentIdx: override.currentIdx ?? currentIdx,
+          timeLeft: override.timeLeft ?? timeLeft,
+          initialTimeSec,
+        };
+        localStorage.setItem(sessionKey, JSON.stringify(payload));
+      } catch {
+        // storage may be unavailable
+      }
+    },
+    [
+      sessionKey,
+      userId,
+      paper,
+      mode,
+      randomize,
+      quizSet.length,
+      order,
+      selected,
+      peeked,
+      bookmarked,
+      currentIdx,
+      timeLeft,
+      initialTimeSec,
+    ]
+  );
 
+  // throttle timer saves (every ~15 ticks)
+  const tickRef = useRef(0);
+  useEffect(() => {
+    if (timeLeft === null || timeLeft <= 0) return;
+    tickRef.current = (tickRef.current + 1) % 15;
+    if (tickRef.current === 0) saveSession();
+  }, [timeLeft, saveSession]);
+
+  // save on unload
+  useEffect(() => {
+    const handler = () => saveSession();
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [saveSession]);
+
+  // finalize & score
+  const hasSavedRef = useRef(false);
+  const saveScore = useCallback(() => {
+    if (scoredRef.current || !quizSet.length) return;
     const meta = calc();
     const payload = {
       userId,
@@ -144,20 +321,21 @@ export default function Quiz() {
         elapsedSec: Math.max(0, (initialTimeSec || 0) - (timeLeft ?? 0)),
       },
     };
-
     fetch('/api/save-score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     }).catch(() => {});
+    scoredRef.current = true;
+    try {
+      if (sessionKey) localStorage.removeItem(sessionKey);
+    } catch {}
+  }, [userId, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
 
-    hasSavedRef.current = true;
-  }, [userId, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft]);
-
+  // countdown
   useEffect(() => {
-    if (timeLeft === null) return; // not started
+    if (timeLeft === null) return;
     if (timeLeft <= 0) {
-      // TIMEOUT: mark finished and save immediately
       setIsFinished(true);
       saveScore();
       return;
@@ -166,56 +344,60 @@ export default function Quiz() {
     return () => clearInterval(id);
   }, [timeLeft, saveScore]);
 
-  // selection: lock after first choice; block if peeked
+  // handlers
   const handleOptionSelect = (optionIndex) => {
+    // guard
+    if (!quizSet[currentIdx]) return;
     if (peeked[currentIdx]) return;
+
+    // (state never contains null, only number|undefined)
     if (selected[currentIdx] !== undefined) return; // lock after first select
-    setSelected((prev) => {
-      const copy = [...prev];
-      copy[currentIdx] = optionIndex;
-      return copy;
-    });
+
+    const nextSel = [...selected];
+    nextSel[currentIdx] = optionIndex;
+    setSelected(nextSel);
+    saveSession({ selected: nextSel });
   };
 
-  // peek only before answering; clears selection; excludes from scoring
   const handlePeek = () => {
     if (selected[currentIdx] !== undefined) return;
-    setPeeked((prev) => {
-      const copy = [...prev];
-      copy[currentIdx] = true;
-      return copy;
-    });
-    setSelected((prev) => {
-      const copy = [...prev];
-      copy[currentIdx] = undefined;
-      return copy;
-    });
+    const nextPeek = [...peeked];
+    nextPeek[currentIdx] = true;
+    const nextSel = [...selected];
+    nextSel[currentIdx] = undefined;
+    setPeeked(nextPeek);
+    setSelected(nextSel);
+    saveSession({ peeked: nextPeek, selected: nextSel });
   };
 
   const handleSubmit = () => {
-    // SUBMIT: mark finished and save immediately
     setIsFinished(true);
     saveScore();
   };
 
   const handleNext = () => {
     if (currentIdx < quizSet.length - 1) {
-      setCurrentIdx((i) => i + 1);
+      const next = currentIdx + 1;
+      setCurrentIdx(next);
+      saveSession({ currentIdx: next });
     } else {
-      handleSubmit(); // last question -> submit
+      handleSubmit();
     }
   };
 
   const handlePrev = () => {
-    if (currentIdx > 0) setCurrentIdx((i) => i - 1);
+    if (currentIdx > 0) {
+      const prev = currentIdx - 1;
+      setCurrentIdx(prev);
+      saveSession({ currentIdx: prev });
+    }
   };
 
   const toggleBookmark = () => {
-    setBookmarked((prev) => {
-      const copy = [...prev];
-      copy[currentIdx] = !copy[currentIdx];
-      return copy;
-    });
+    const next = [...bookmarked];
+    next[currentIdx] = !next[currentIdx];
+    setBookmarked(next);
+    saveSession({ bookmarked: next });
   };
 
   // search inside paper
@@ -262,7 +444,7 @@ export default function Quiz() {
 
   const progress = quizSet.length ? ((currentIdx + 1) / quizSet.length) * 100 : 0;
 
-  // -------- UI --------
+  // UI
   if (loading) {
     return (
       <div className="min-h-screen grid place-items-center bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200">
@@ -340,7 +522,7 @@ export default function Quiz() {
             </div>
           </div>
 
-          {/* search-in-paper */}
+          {/* search */}
           <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <input
@@ -418,6 +600,7 @@ export default function Quiz() {
         onJump={(i) => {
           setCurrentIdx(i);
           setMapOpen(false);
+          saveSession({ currentIdx: i });
         }}
       />
     </div>
