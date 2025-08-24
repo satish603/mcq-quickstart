@@ -1,0 +1,125 @@
+[
+  {
+    "id": 24,
+    "text": "Select the most appropriate idiom that can substitute the underlined segment in the given sentence: \"The project is finally perfect; every detail has been meticulously checked.\" 11",
+    "options": [
+      "as right as rain",
+      "a perfect storm",
+      "a dime a dozen",
+      "a picture is worth a thousand words"
+    ],
+    "answerIndex": 0,
+    "explanation": "The idiom \"as right as rain\" means something is in excellent condition or perfectly correct, which fits the context of a project being finally perfect. It conveys a sense of thoroughness and flawlessness. Explanation of (a) ✔ as right as rain – Correct; implies everything is in ideal condition. (b) ✘ a perfect storm – Refers to a disastrous situation, not suitable here. (c) ✘ a dime a dozen – Means very common, opposite of being perfect. (d) ✘ a picture is worth a thousand words – Refers to visual communication, not relevant here.",
+    "section": "english",
+    "type": "language",
+    "difficulty": "easy",
+    "tags": [
+      "english",
+      "idioms"
+    ]
+  },
+  {
+    "id": 26,
+    "text": "Select the most appropriate articles to fill in the blanks: \"He wrote _____ interesting book on _____ history of India.\"",
+    "options": [
+      "an; a",
+      "an; the",
+      "a; a",
+      "the; a"
+    ],
+    "answerIndex": 1,
+    "explanation": "“An” is used before vowel sounds, and “interesting” begins with a vowel sound, so “an interesting book” is correct. “The” is used before specific or well-known nouns, and “the history of India” refers to a specific history, so “the” is appropriate. 12 Explanation of (a) ✘ an; a – Incorrect article before “history,” which needs specificity. (b) ✔ an; the – Correct combination based on sound and specificity. (c) ✘ a; a – Wrong before “interesting” (vowel sound) and “history” (specific). (d) ✘ the; a – Wrong article before “interesting.”",
+    "section": "english",
+    "type": "language",
+    "difficulty": "medium",
+    "tags": [
+      "english",
+      "grammar"
+    ]
+  },
+  {
+    "id": 27,
+    "text": "Select the most appropriate ANTONYM of the given word: \"Iteration\"",
+    "options": [
+      "Ennui",
+      "Redundancy",
+      "Diversity",
+      "Prosaism"
+    ],
+    "answerIndex": 2,
+    "explanation": "Iteration means repetition or repeated action/process. The opposite of repetition is diversity, which implies variety or lack of sameness. Other options either relate to monotony or are synonymous with repetition. Explanation of (a) ✘ Ennui – Means boredom; not a direct antonym of repetition. (b) ✘ Redundancy – Similar to iteration in context of excess repetition. (c) ✔ Diversity – Correct; implies variation, opposite of repetition. (d) ✘ Prosaism – Means dull or unimaginative; not the opposite of iteration.",
+    "section": "english",
+    "type": "language",
+    "difficulty": "easy",
+    "tags": [
+      "english",
+      "vocab"
+    ]
+  },
+  {
+    "id": 28,
+    "text": "Select the option that can be used as a one-word substitute for the given group of words: \"A word or phrase that reads the same backward as forward\"",
+    "options": [
+      "Homonym",
+      "Palindrome",
+      "Anagram",
+      "Acronym"
+    ],
+    "answerIndex": 1,
+    "explanation": "A palindrome is a word, number, or phrase that reads the same backward as forward, such as “madam” or “level.” It retains symmetry in reading and is widely used in linguistic puzzles. Explanation of (a) ✘ Homonym – Words that sound alike but have different meanings. (b) ✔ Palindrome – Correct; same reading in both directions. (c) ✘ Anagram – Rearranged letters to form a new word. (d) ✘ Acronym – Word formed from initial letters of a phrase. 13",
+    "section": "english",
+    "type": "language",
+    "difficulty": "medium",
+    "tags": [
+      "english",
+      "one-word"
+    ]
+  },
+  {
+    "id": 29,
+    "text": "Select the INCORRECTLY spelt word:",
+    "options": [],
+    "answerIndex": 1,
+    "explanation": "The correct spelling is Kaleidoscope, not Kalidoscope. All other options are correctly spelled: • Liaison: Correct – means communication or cooperation between people. • Ineffable: Correct – means too great to be described in words. • Juxtaposition: Correct – means placing things side by side for contrast. Explanation of (a) ✘ Liaison – Correct spelling. (b) ✔ Kalidoscope – Incorrect spelling; should be “Kaleidoscope.” (c) ✘ Ineffable – Correct spelling. (d) ✘ Juxtaposition – Correct spelling.",
+    "section": "english",
+    "type": "language",
+    "difficulty": "easy",
+    "tags": [
+      "english",
+      "spellings"
+    ]
+  },
+  {
+    "id": 30,
+    "text": "Select the most appropriate ANTONYM of the given word: \"Adequate\"",
+    "options": [],
+    "answerIndex": 1,
+    "explanation": "“Adequate” means enough or satisfactory in quality or quantity. The opposite of “adequate” is “insufficient”, which means not enough. Explanation of (a) ✘ Acceptable – Synonym of adequate, not an antonym. (b) ✔ Insufficient – Correct antonym; means lacking adequacy. (c) ✘ Competent – Refers to ability, not quantity. (d) ✘ Sufficient – Synonym of adequate.",
+    "section": "english",
+    "type": "language",
+    "difficulty": "easy",
+    "tags": [
+      "english",
+      "vocab"
+    ]
+  },
+  {
+    "id": 31,
+    "text": "Which Article of the Indian Constitution is related to the protection of certain rights regarding freedom of speech and expression?",
+    "options": [
+      "Article 21",
+      "Article 19",
+      "Article 16",
+      "Article 13"
+    ],
+    "answerIndex": 1,
+    "explanation": "Article 19(1)(a) grants the right to freedom of speech and expression. It’s a Fundamental Right under Part III of the Constitution. This article safeguards democratic expression and personal liberty. Explanation of (a) ✘ Article 21 – Related to life and personal liberty. (b) ✔ Article 19 – Correct, covers freedom of speech. (c) ✘ Article 16 – Deals with equality in public employment. (d) ✘ Article 13 – Concerns laws inconsistent with Fundamental Rights. 14",
+    "section": "english",
+    "type": "language",
+    "difficulty": "medium",
+    "tags": [
+      "english",
+      "grammar"
+    ]
+  }
+]

@@ -13,9 +13,18 @@ import QuestionMapDrawer from '../components/QuestionMapDrawer';
 import { paperList } from '../data/paperList';
 import { getNegativeMark, MODE_PRESETS } from '../data/papers.config';
 
+const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
 export default function Quiz() {
   const router = useRouter();
-  const { paper, time, userId, mode = 'medium' } = router.query;
+  const { paper, time, userId, mode = 'medium', random } = router.query;
 
   // data + ui
   const [quizSet, setQuizSet] = useState([]);
@@ -41,6 +50,7 @@ export default function Quiz() {
   const NEGATIVE_MARK = useMemo(() => getNegativeMark(String(paper || '')), [paper]);
   const paperMeta = useMemo(() => paperList.find((p) => p.id === paper), [paper]);
   const filePath = paperMeta ? paperMeta.file : null;
+  const randomize = random === '1' || random === 'true';
 
   // load questions
   useEffect(() => {
@@ -62,10 +72,13 @@ export default function Quiz() {
           : Array.isArray(data)
           ? data
           : [];
-        setQuizSet(arr);
-        setSelected(Array(arr.length).fill(undefined));
-        setPeeked(Array(arr.length).fill(false));
-        setBookmarked(Array(arr.length).fill(false));
+        let final = arr;
+        if (randomize) final = shuffle(final);
+
+        setQuizSet(final);
+        setSelected(Array(final.length).fill(undefined));
+        setPeeked(Array(final.length).fill(false));
+        setBookmarked(Array(final.length).fill(false));
         setCurrentIdx(0);
         setTimeLeft(null); // will be set by mode/custom after load
       })
@@ -75,7 +88,7 @@ export default function Quiz() {
         setTimeLeft(null);
       })
       .finally(() => setLoading(false));
-  }, [filePath]);
+  }, [filePath, randomize]);
 
   // compute time from mode/custom after questions load
   const initialTimeSec = useMemo(() => {
@@ -277,6 +290,11 @@ export default function Quiz() {
               <span>Q{currentIdx + 1}</span>
               <span className="mx-2 text-gray-400">•</span>
               <span>Mode: <strong className="capitalize">{String(mode)}</strong></span>
+              {randomize && (
+                <span className="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300">
+                  random
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2">
               <button

@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "userId": "testuser",
+    "paper": "nursing-clinical",
+    "score": 0,
+    "timestamp": "2025-08-24T05:27:51.664Z"
+  },
+  {
+    "userId": "testuser",
+    "paper": "nursing-clinical",
+    "score": 0,
+    "timestamp": "2025-08-24T05:27:51.666Z"
+  }
+]

@@ -1,0 +1,192 @@
+[
+  {
+    "id": 1,
+    "text": "Four letter-cluster pairs have been given, out of which three are alike in some manner and one is different. Select the one that is different.",
+    "options": [
+      "CH : KP",
+      "HM : PU",
+      "BG : JO",
+      "DF : U"
+    ],
+    "answerIndex": 3,
+    "explanation": "In options (a), (b), and (c), each letter of the pair is moved forward by +8 in the alphabet: • CH → C+8 = K, H+8 = P • HM → H+8 = P, M+8 = U • BG → B+8 = J, G+8 = O But in option (d), D+8 = L, F+8 = N ≠ U — the second pair is incomplete and does not follow the +8 logic. So, option (d) is different. Explanation of (a) ✘ CH : KP – ✔ Matches the +8 shift logic in both letters. (b) ✘ HM : PU – ✔ Also follows +8 forward shift rule correctly. (c) ✘ BG : JO – ✔ Same pattern with +8 forward alphabet shift. (d) ✔ DF : U – ✘ Does not match the transformation; second pair is incomplete or incorrect.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "alphabet-series",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 2,
+    "text": "Count the symbols from the given sequence that are immediately preceded by an even number and immediately followed by an even number. (Left) 7 # 1 & 5 0 % @ 2 2 8 * 9 3 ^ 4 $ 6 (Right)",
+    "options": [
+      "One",
+      "Two",
+      "Three",
+      "None"
+    ],
+    "answerIndex": 1,
+    "explanation": "We need to identify symbols that have even numbers before and after them. Even digits: 0, 2, 4, 6, 8 From the sequence: •   % is between 0 and 2 → ✔ • $ is between 4 and 6 → ✔ These are the only two valid symbols fulfilling the condition. Explanation of (a) ✘ One – Only one symbol is not sufficient. (b) ✔ Two – Correct: % and $ meet the criteria. (c) ✘ Three – Overcounted; no third valid symbol. (d) ✘ None – Incorrect; two symbols do fulfill the condition. 1",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "alphabet-series",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 3,
+    "text": "In a certain coded language: A + B → A is sister of B A – B → A is brother of B A × B → A is wife of B A ÷ B → A is father of B If the expression is L – M ÷ N + O × P, then how is L related to P?",
+    "options": [
+      "Father of wife’s father",
+      "Brother of wife’s mother",
+      "Father of wife’s mother",
+      "Brother of wife’s father"
+    ],
+    "answerIndex": 3,
+    "explanation": "L – M → L is brother of M M ÷ N → M is father of N N + O → N is sister of O O × P → O is wife of P So, L is the brother of M → M is father of N → N is sister of O → O is wife of P → L is brother of P’s father-in-law → Brother of wife’s father Explanation of (a) ✘ Father of wife’s father – That would be grandfather-in-law; not accurate. (b) ✘ Brother of wife’s mother – Incorrect path in relation. (c) ✘ Father of wife’s mother – Again, incorrect based on the expression. (d) ✔ Brother of wife’s father – Correct relationship interpretation.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "medium",
+    "tags": [
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 4,
+    "text": "Based on alphabetical positional order, three of the following letter groups follow the same logic. Identify the one that does not belong.",
+    "options": [
+      "BFM",
+      "RVD",
+      "HLS",
+      "QUB"
+    ],
+    "answerIndex": 1,
+    "explanation": "Look at positions: BFM → 2, 6, 13 → +4, +7 HLS → 8, 12, 19 → +4, +7 QUB → 17, 21, 2 → (circular) +4, +7 RVD → 18, 22, 4 → does not follow +4, +7 So, RVD breaks the +4, +7 logic. Explanation of (a) ✘ BFM – ✔ Maintains +4, +7 letter position logic. (b) ✔ RVD – ✘ Does not follow the same letter gap pattern. (c) ✘ HLS – ✔ Follows the +4, +7 consistent sequence. (d) ✘ QUB – ✔ Maintains the logic cyclically in alphabet. 2",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "alphabet-series",
+      "arrangement",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 5,
+    "text": "Choose the set of trigrams that follow the same pattern as the given ones: RT - PW - QS TV - RY - SU",
+    "options": [
+      "LN - JQ - KQ",
+      "UW - SZ - TV",
+      "SU - QX - RV",
+      "JL - HO - IM"
+    ],
+    "answerIndex": 1,
+    "explanation": "Let’s check the pattern: RT → R to T = +2 PW → P to W = +7 QS → Q to S = +2 Same in TV - RY - SU → +2, +7, +2 Now check: UW → U to W = +2 SZ → S to Z = +7 TV → T to V = +2 ✔ Pattern matches Explanation of (a) ✘ LN - JQ - KQ – Does not follow +2, +7, +2 pattern. (b) ✔ UW - SZ - TV – Follows the exact +2, +7, +2 logic. (c) ✘ SU - QX - RV – Random sequence; not consistent. (d) ✘ JL - HO - IM – Pattern mismatch; incorrect logic.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "alphabet-series",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 7,
+    "text": "In a certain code language, ‘PLOT’ is coded as ‘8475’ and ‘OPOT’ is coded as ‘5871’. What is the code for the letter ‘Q’?",
+    "options": [
+      "2.7",
+      "3.8",
+      "4.5",
+      "1.1"
+    ],
+    "answerIndex": 3,
+    "explanation": "Looking at the given codes, we compare the letters in ‘PLOT’ and ‘OPOT’. Every letter is assigned a digit: P → 8, L → 4, O → 5, T → 7, etc. Since 'Q' is not present in either word, it must have a unique mapping not shared with others. Given option (d) as the only odd one out, it is the correct one based on code pattern extension. Explanation of (a) ✘ 2.7 – No matching logic from the code pattern. (b) ✘ 3.8 – Not related to the existing mapping. (c) ✘ 4.5 – Code already used for other letters. (d) ✔ 1.1 – Unique code not assigned earlier.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "medium",
+    "tags": [
+      "alphabet-series",
+      "analogy-odd-one",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 9,
+    "text": "A, B, C, D and E are sitting around a circular table. Some information is given: D is sitting to the immediate right of A. A is facing the center. Between A and E, only one person sits. C is not a neighbor of A. Who are the immediate neighbors of B?",
+    "options": [
+      "Only (iii)",
+      "Only (iv)",
+      "(i) and (iv)",
+      "(i) and (ii)"
+    ],
+    "answerIndex": 3,
+    "explanation": "Using the circular arrangement and given directions: D is to the immediate right of A → facing center → actual left position E is seated with only one person between A and E C is not beside A → C must be opposite From the placement, B’s neighbors come out to be C and E. Statements (i) and (ii) are correct regarding B’s neighbors. Explanation of (a) ✘ Only (iii) – Incorrect person assumed as neighbor. (b) ✘ Only (iv) – Incomplete; only one neighbor correct. (c) ✘ (i) and (iv) – One incorrect included. (d) ✔ (i) and (ii) – Both neighbors correctly identified.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "arrangement",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 10,
+    "text": "From the given sequence of letters, numbers, and symbols: (Left) 2 & 7 % 4 $ 3 5 6 # 1 * 2 & 8 @ 3 9 # 7 (Right) How many such symbols are there which are immediately preceded by an odd number but not immediately followed by an even number?",
+    "options": [
+      "None",
+      "One",
+      "Three",
+      "Two"
+    ],
+    "answerIndex": 1,
+    "explanation": "We analyze the sequence to find symbols which: – Have an odd number before – Do NOT have an even number after From the sequence: Check each symbol meeting the above condition: Only one symbol qualifies this condition. Explanation of (a) ✘ None – One symbol clearly qualifies. (b) ✔ One – Correct count based on the pattern. (c) ✘ Three – Overestimated. (d) ✘ Two – One extra included; incorrect count. 5",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "hard",
+    "tags": [
+      "alphabet-series",
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 51,
+    "text": "Which of the following diseases is characterised by Quotidian fever? 22",
+    "options": [
+      "Malaria",
+      "Dengue",
+      "Chikungunya",
+      "Filariasis"
+    ],
+    "answerIndex": 0,
+    "explanation": "Quotidian fever refers to a daily recurrence of fever, typically observed in malaria, especially Plasmodium falciparum or Plasmodium vivax infections. The fever pattern is often cyclical—occurring every 24 hours in quotidian type, aligning with the life cycle of the parasite. This cyclic fever with chills and rigors is a hallmark sign of malarial infection. Explanation of (a) ✔ Malaria – Correct; certain strains show daily or cyclical fever patterns such as quotidian fever. (b) ✘ Dengue – Fever usually lasts several days continuously and is not typically quotidian. (c) ✘ Chikungunya – Characterized by high-grade fever and joint pain, but not a daily fever pattern. (d) ✘ Filariasis – May show nocturnal periodic fever but not quotidian in nature.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "medium",
+    "tags": [
+      "logical-reasoning"
+    ]
+  },
+  {
+    "id": 97,
+    "text": "Which is a teaching-learning method for sharpening the psychomotor skills of a student in which the teacher gives all details of a procedure which she performs in front of students?",
+    "options": [
+      "Group discussion",
+      "Demonstration",
+      "Seminar",
+      "Symposium"
+    ],
+    "answerIndex": 1,
+    "explanation": "A demonstration is a teaching-learning method used to develop psychomotor skills, especially in fields like nursing, medicine, and technical education. In this method, the teacher performs a procedure step- by-step, explaining each part clearly while students observe. It is highly effective for skill-based learning and helps students replicate the procedure accurately during practice. Explanation of (a) ✘ Group discussion – Involves exchange of ideas; focuses on cognitive and communication skills, not psychomotor. (b) ✔ Demonstration – Correct; specifically designed to teach practical procedures and skills through live modeling. (c) ✘ Seminar – Primarily oral presentations followed by discussion; not suited for demonstrating skills. (d) ✘ Symposium – Series of speeches or presentations on a topic; not interactive or skill-based.",
+    "section": "reasoning",
+    "type": "pattern",
+    "difficulty": "medium",
+    "tags": [
+      "alphabet-series",
+      "logical-reasoning"
+    ]
+  }
+]

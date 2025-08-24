@@ -18,6 +18,7 @@ export default function Home() {
   const [selectedPaper, setSelectedPaper] = useState('');
   const [mode, setMode] = useState('medium');       // easy | medium | hard | custom
   const [customMinutes, setCustomMinutes] = useState(10);
+  const [randomOrder, setRandomOrder] = useState(false);
 
   // scores state
   const [scores, setScores] = useState([]);
@@ -31,6 +32,8 @@ export default function Home() {
     if (savedMode) setMode(savedMode);
     const savedCustom = localStorage.getItem('mcq_custom_minutes');
     if (savedCustom) setCustomMinutes(parseInt(savedCustom, 10) || 10);
+    const savedRandom = localStorage.getItem('mcq_random_order');
+    if (savedRandom) setRandomOrder(savedRandom === '1');
   }, []);
   useEffect(() => {
     if (userId) localStorage.setItem('mcq_user_id', userId);
@@ -41,6 +44,9 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('mcq_custom_minutes', String(customMinutes));
   }, [customMinutes]);
+  useEffect(() => {
+    localStorage.setItem('mcq_random_order', randomOrder ? '1' : '0');
+  }, [randomOrder]);
 
   // paper options
   const papers = useMemo(() => paperList ?? [], []);
@@ -64,6 +70,7 @@ export default function Home() {
     if (mode === 'custom') {
       params.set('time', String(Math.max(1, Math.min(180, parseInt(customMinutes || 0, 10)))));
     }
+    if (randomOrder) params.set('random', '1');
     router.push(`/quiz?${params.toString()}`);
   };
 
@@ -250,7 +257,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Mode selector (replaces Timer) */}
+                {/* Mode selector */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Mode</label>
                   <div className="flex flex-wrap gap-2">
@@ -286,6 +293,27 @@ export default function Home() {
                   </p>
                 </div>
 
+                {/* Random order toggle */}
+                <div className="flex items-center justify-between rounded-2xl border border-gray-200 p-3 dark:border-gray-800">
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                      Random order
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Shuffle question order (great for practice).
+                    </div>
+                  </div>
+                  <label className="inline-flex cursor-pointer items-center gap-2">
+                    <span className="sr-only">Toggle random order</span>
+                    <input
+                      type="checkbox"
+                      checked={randomOrder}
+                      onChange={(e) => setRandomOrder(e.target.checked)}
+                      className="h-5 w-5 accent-indigo-600"
+                    />
+                  </label>
+                </div>
+
                 {/* Start Button */}
                 <button
                   onClick={handleStart}
@@ -312,12 +340,6 @@ export default function Home() {
                 <li>• <strong>Peek</strong> shows the correct answer & explanation and <em>excludes</em> that question from scoring.</li>
                 <li>• Toggle <strong>Dark Mode</strong> anytime (top-right) — it’s saved for next time.</li>
               </ul>
-
-              <div className="mt-6 rounded-2xl bg-white/10 p-4">
-                <p className="text-sm opacity-90">
-                  Tip: Use <kbd>↑/↓</kbd> or <kbd>←/→</kbd> to move between options. Press <kbd>Enter</kbd> to go Next.
-                </p>
-              </div>
             </div>
           </section>
         )}

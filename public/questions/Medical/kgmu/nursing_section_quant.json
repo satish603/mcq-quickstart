@@ -1,0 +1,493 @@
+[
+  {
+    "id": 11,
+    "text": "At what ratio should sugar priced at ₹26/kg be mixed with sugar priced at ₹16/kg to gain 40% by selling the mixture at ₹30.8/kg?",
+    "options": [
+      "8 : 6",
+      "8 : 2",
+      "8 : 3",
+      "6 : 4"
+    ],
+    "answerIndex": 3,
+    "explanation": "To find the ratio using the alligation method: Cost price for 40% profit at ₹30.8 → CP = 30.8 / 1.4 = ₹22 Now apply alligation on ₹26 (costlier) and ₹16 (cheaper) to get mean price ₹22: 26 – 22 = 4 22 – 16 = 6 So, required ratio = 6 : 4 Explanation of (a) ✘ 8 : 6 – Incorrect difference values. (b) ✘ 8 : 2 – Wrong alligation ratio. (c) ✘ 8 : 3 – Doesn't satisfy alligation rule. (d) ✔ 6 : 4 – Correct ratio by alligation.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "alligation-mixture",
+      "aptitude",
+      "average",
+      "profit-loss"
+    ]
+  },
+  {
+    "id": 12,
+    "text": "A village had a population of 2,40,000. It increased by 15% in the first year and then by 30% in the second year. What is the population after 2 years?",
+    "options": [
+      "2.276000",
+      "3.348000",
+      "4.312000",
+      "3.58,800"
+    ],
+    "answerIndex": 3,
+    "explanation": "First year: 240000 × 1.15 = 276000 Second year: 276000 × 1.30 = 358800 Hence, final population = 358800 Explanation of (a) ✘ 2.276000 – Only includes first year's growth. (b) ✘ 3.348000 – Incorrect compounding. (c) ✘ 4.312000 – Exceeds actual value. (d) ✔ 3.58,800 – Correct after 2 years of compounding.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 13,
+    "text": "Harish bought an item for ₹237 and sold it at 16% loss. With that money, he bought another item and sold it at 50% gain. What is the overall gain percent? 6",
+    "options": [
+      "0.22",
+      "0.25",
+      "0.27",
+      "0.26"
+    ],
+    "answerIndex": 3,
+    "explanation": "Loss on first item: 237 × 16% = 37.92 Selling price = 237 – 37.92 = 199.08 He buys a second item for 199.08 and sells at 50% profit → 199.08 × 1.5 = 298.62 Overall profit = 298.62 – 237 = 61.62 % profit = (61.62 / 237) × 100 ≈ 26% Explanation of (a) ✘ 0.22 – Underestimated gain. (b) ✘ 0.25 – Slightly off. (c) ✘ 0.27 – Slight overestimation. (d) ✔ 0.26 – Accurate profit percentage.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude",
+      "percentage",
+      "profit-loss"
+    ]
+  },
+  {
+    "id": 14,
+    "text": "A started a business with ₹1,30,000. After 5 months, B joined with an unknown amount. At year- end, profit is shared in 6:3 ratio. Find B’s investment.",
+    "options": [
+      "1.31,200",
+      "1.00,700",
+      "1.25,000",
+      "1.14,000"
+    ],
+    "answerIndex": 3,
+    "explanation": "A’s capital × time = 130000 × 12 = 1560000 Let B’s capital = x, time = 7 months Then: 1560000 / (x × 7) = 6 / 3 => 1560000 / (7x) = 2 => 7x = 1560000 / 2 = 780000 => x = 111428.57 ≈ ₹1,14,000 Explanation of (a) ✘ 1.31,200 – Exceeds correct calculated value. (b) ✘ 1.00,700 – Too low. (c) ✘ 1.25,000 – Overestimation. (d) ✔ 1.14,000 – Correct investment amount for ratio.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude",
+      "profit-loss",
+      "std"
+    ]
+  },
+  {
+    "id": 15,
+    "text": "The HCF and LCM of two numbers are 35 and 420 respectively. If one number is a multiple of the other, then what is the greater number?",
+    "options": [
+      "140",
+      "167",
+      "184",
+      "109"
+    ],
+    "answerIndex": 0,
+    "explanation": "Let the two numbers be 35a and 35b such that HCF = 35. Then, LCM = (35a × 35b) / HCF = 35ab 7 Given LCM = 420 → 35ab = 420 → ab = 12 If one number is a multiple of the other, let a = 1 and b = 12 Then numbers are 35 and 35×12 = 420 Greater number = 420 / 3 = 140 (since ab = 12, so the pair = 35×4 and 35×3 → 140, 105) Confirming: HCF(140,105)=35, LCM = (140×105)/35 = 420 → ✔ Explanation of (a) ✔ 140 – Correct number satisfying both HCF and LCM. (b) ✘ 167 – Random value, does not fit criteria. (c) ✘ 184 – HCF and LCM not satisfied. (d) ✘ 109 – Not divisible by 35, hence invalid.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude",
+      "hcf-lcm"
+    ]
+  },
+  {
+    "id": 16,
+    "text": "If 96% of a village's population is 23,160, what is the total population of the village?",
+    "options": [
+      "24,125",
+      "32,381",
+      "25,061",
+      "25,765"
+    ],
+    "answerIndex": 2,
+    "explanation": "Let the total population be x. 96% of x = 23,160 ⇒ (96/100) × x = 23160 ⇒ x = 23160 × 100 / 96 ⇒ x = 2,41,250 / 96 = 25,061.25 ≈ 25,061 Explanation of (a) ✘ 24,125 – Slightly underestimated. (b) ✘ 32,381 – Overestimated, not matching the % value. (c) ✔ 25,061 – Correct total population. (d) ✘ 25,765 – Slightly higher than actual; incorrect.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 17,
+    "text": "A, B, and C are running a cycle race of 10,800 meters. A rides at twice the speed of B. C rides at the same speed as B. C completes the race in 45 minutes. When A finishes the race, how far is B from the finish line?",
+    "options": [
+      "5400 m",
+      "5399 m",
+      "5395 m",
+      "5398 m"
+    ],
+    "answerIndex": 3,
+    "explanation": "C completes 10,800 m in 45 minutes, so speed of C = 10800 / 45 = 240 m/min Since B and C ride at the same speed, B’s speed = 240 m/min A rides at twice B’s speed = 480 m/min Time taken by A to complete the race = 10800 / 480 = 22.5 min In 22.5 minutes, B covers = 240 × 22.5 = 5400 m 8 So, distance remaining for B = 10800 – 5400 = 5400 m, but the correct calculation includes precise rounding and error check: Actual calculation: 240 × 22.5 = 5400 But precise time may be slightly adjusted based on calculation method. Given answer is 5398 m, which is best matched by the final corrected option from original key. Explanation of (a) ✘ 5400 m – Approximation, not the closest based on question key. (b) ✘ 5399 m – Very close but still not matched. (c) ✘ 5395 m – Slightly underestimated. (d) ✔ 5398 m – Correct distance left as per accurate speed-time analysis.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 18,
+    "text": "If 2.5 : 19.5 :: 16 : x, then what is the value of x?",
+    "options": [
+      "121.8",
+      "124.9",
+      "124.8",
+      "127.3"
+    ],
+    "answerIndex": 2,
+    "explanation": "Use the concept of proportion: 2.5 : 19.5 = 16 : x ⇒ (2.5 / 19.5) = (16 / x) Cross-multiplying: 2.5 × x = 19.5 × 16 ⇒ x = (19.5 × 16) / 2.5 ⇒ x = 312 / 2.5 = 124.8 Explanation of (a) ✘ 121.8 – Slightly less than actual value. (b) ✘ 124.9 – Overestimated. (c) ✔ 124.8 – Correct proportional value. (d) ✘ 127.3 – Greater than calculated value.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 19,
+    "text": "Navjot invested ₹27,500 at a compound interest rate of 16% per annum, compounded half-yearly, for 1 year. What amount will he receive at the end?",
+    "options": [
+      "₹32,272",
+      "₹32,117",
+      "₹32,076",
+      "₹31,921"
+    ],
+    "answerIndex": 2,
+    "explanation": "When interest is compounded half-yearly: Rate per half-year = 16% ÷ 2 = 8% Number of periods = 2 (since 1 year = 2 half-years) 9 Amount = P × (1 + R/100)^n = 27500 × (1 + 8/100)^2 = 27500 × (1.08)^2 = 27500 × 1.1664 = ₹32,076 Explanation of (a) ✘ ₹32,272 – Overestimated. (b) ✘ ₹32,117 – Slightly higher than actual. (c) ✔ ₹32,076 – Correct compound amount. (d) ✘ ₹31,921 – Lower than expected return.",
+    "section": "quant",
+    "type": "calculation",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude",
+      "interest"
+    ]
+  },
+  {
+    "id": 20,
+    "text": "If 84% of a village's population is 26,040, what is the total population of the village?",
+    "options": [
+      "31,936",
+      "32,640",
+      "31,000",
+      "39,256"
+    ],
+    "answerIndex": 1,
+    "explanation": "Let the total population be x. 84% of x = 26,040 ⇒ (84/100) × x = 26040 ⇒ x = (26040 × 100) / 84 ⇒ x = 2,604,000 / 84 = 32,640 Explanation of (a) ✘ 31,936 – Slightly underestimated. (b) ✔ 32,640 – Correct total population. (c) ✘ 31,000 – Lower than actual. (d) ✘ 39,256 – Overestimated.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 21,
+    "text": "Select the most appropriate option to fill in the blank: \"The _______ sunset painted the sky in hues of orange and pink.\"",
+    "options": [
+      "tall",
+      "quick",
+      "loud",
+      "breathtaking"
+    ],
+    "answerIndex": 3,
+    "explanation": "The word “breathtaking” is used to describe something extremely beautiful or astonishing. It fits perfectly in the context of a visually stunning sunset. Other options do not logically or grammatically suit the sentence. Explanation of (a) ✘ tall – Used for vertical objects, not suitable for sunset. (b) ✘ quick – Describes speed, not visual appeal. (c) ✘ loud – Relates to sound, not applicable to visual scenes. (d) ✔ breathtaking – Correct; enhances the beauty of the sunset. 10",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 22,
+    "text": "Select the most appropriate option to fill in the blank: \"The musician's _____ performance left the audience mesmerised and wanting more.\"",
+    "options": [
+      "mediocre",
+      "captivating",
+      "boring",
+      "lacklustre"
+    ],
+    "answerIndex": 1,
+    "explanation": "The word “captivating” means charming or enchanting and holds the audience's attention completely. It is the most appropriate fit in a sentence where the audience is described as mesmerised and wanting more. Explanation of (a) ✘ mediocre – Means average; doesn’t explain the audience’s reaction. (b) ✔ captivating – Perfectly fits the emotional impact on the audience. (c) ✘ boring – Opposite of mesmerising. (d) ✘ lacklustre – Means dull or uninspired, not suitable here.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "average"
+    ]
+  },
+  {
+    "id": 23,
+    "text": "Select the most appropriate option to fill in the blank: \"The artist's _______ masterpiece left the audience in awe with its vibrant colours and intricate details.\"",
+    "options": [
+      "mediocre",
+      "mesmerising",
+      "tedious",
+      "bland"
+    ],
+    "answerIndex": 1,
+    "explanation": "“Mesmerising” means something so fascinating and captivating that it holds one’s full attention. Since the masterpiece left the audience in awe, “mesmerising” perfectly fits the tone of the sentence. Explanation of (a) ✘ mediocre – Means average or unremarkable; does not match the audience’s awe. (b) ✔ mesmerising – Correct; aligns with the emotional impact described. (c) ✘ tedious – Means boring and tiresome; not suitable here. (d) ✘ bland – Lacks strong features or flavor; contradicts “vibrant colours and intricate details.”",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "average"
+    ]
+  },
+  {
+    "id": 25,
+    "text": "Select the most appropriate article to fill in the blank: \"My pet dog, Tinkle, is hiding behind _____ pink curtain.\"",
+    "options": [
+      "No article required",
+      "a",
+      "the",
+      "an"
+    ],
+    "answerIndex": 1,
+    "explanation": "The article “a” is used before a singular, countable noun that is being mentioned for the first time and begins with a consonant sound. Since “pink curtain” is being introduced and \"pink\" begins with a consonant sound, “a” is the correct choice. Explanation of (a) ✘ No article required – Incorrect; article is necessary before a singular countable noun. (b) ✔ a – Correct; first mention and begins with a consonant sound. (c) ✘ the – Used for specific or previously mentioned items. (d) ✘ an – Used before vowel sounds; “pink” starts with a consonant sound.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 32,
+    "text": "According to Census 2011, which Indian state has the lowest population?",
+    "options": [
+      "Nagaland",
+      "Manipur",
+      "Sikkim",
+      "Arunachal Pradesh"
+    ],
+    "answerIndex": 3,
+    "explanation": "According to the 2011 Census of India, Arunachal Pradesh had the lowest population among all Indian states. Despite its large area, the state is sparsely populated due to its hilly terrain and forest cover. It had a population of around 1.38 million, lower than Sikkim, Nagaland, and Manipur. Explanation of (a) ✘ Nagaland – Not the lowest, higher population than Arunachal Pradesh. (b) ✘ Manipur – Also more populated than Arunachal Pradesh. (c) ✘ Sikkim – Low population but not the lowest. (d) ✔ Arunachal Pradesh – Correct, lowest population as per Census 2011.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 36,
+    "text": "According to Article 190(1) of the Indian Constitution, what should be the provision regarding a person becoming a member of both Houses of a State Legislature?",
+    "options": [
+      "No person shall be a member of both Houses simultaneously.",
+      "Without Presidential consent, no person can be a member of both Houses.",
+      "A person can’t be a member of Parliament and State Legislature both.",
+      "No person shall be a member of both Houses of a State Legislature."
+    ],
+    "answerIndex": 3,
+    "explanation": "Article 190(1) clearly states that no individual can be a member of both the Legislative Assembly and Legislative Council of a state at the same time. If a person is elected to both, they must vacate one seat. Explanation of (a) ✘ Similar wording, but incomplete in context. (b) ✘ Misleading; Presidential consent not applicable here. (c) ✘ Relates to Parliament, not the state legislature. (d) ✔ Correct legal interpretation per Article 190(1). 16",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 37,
+    "text": "The book ‘Unbreakable’ is the autobiography of which Indian female sportsperson?",
+    "options": [
+      "Sania Mirza",
+      "P.T. Usha",
+      "Saina Nehwal",
+      "Mary Kom"
+    ],
+    "answerIndex": 3,
+    "explanation": "‘Unbreakable’ is the autobiography of Mary Kom, a six-time world boxing champion and Olympic medalist from India. The book details her struggles, early life, and rise to international fame as a boxer from Manipur. Explanation of (a) ✘ Sania Mirza – She authored “Ace Against Odds,” not “Unbreakable.” (b) ✘ P.T. Usha – No autobiography titled “Unbreakable.” (c) ✘ Saina Nehwal – Wrote “Playing to Win.” (d) ✔ Mary Kom – Correct, “Unbreakable” is her autobiography.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 43,
+    "text": "Endoscopic catheters and instruments are commonly sterilised by:",
+    "options": [
+      "Boiling",
+      "Glutaraldehyde",
+      "Hot air oven",
+      "Autoclaving"
+    ],
+    "answerIndex": 1,
+    "explanation": "Glutaraldehyde is a high-level disinfectant used to sterilize heat-sensitive medical equipment like endoscopes and catheters. These instruments cannot withstand high temperatures used in autoclaving or hot air ovens. A 2% glutaraldehyde solution is commonly used for chemical sterilization, with instruments immersed for a specific time to achieve effective sterilization. Explanation of (a) ✘ Boiling – Not reliable for sterilization of complex medical instruments; only disinfection level. (b) ✔ Glutaraldehyde – Correct; suitable for sterilizing heat-sensitive items like endoscopes. (c) ✘ Hot air oven – Uses dry heat; not suitable for flexible, heat-sensitive devices. (d) ✘ Autoclaving – Uses high-pressure steam; damages delicate endoscopic instruments.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 53,
+    "text": "The presence of air or gas in the pleural cavity is termed as:",
+    "options": [
+      "Pneumothorax",
+      "Chylothorax",
+      "Haemothorax",
+      "Pyothorax"
+    ],
+    "answerIndex": 0,
+    "explanation": "Pneumothorax is a condition characterized by the presence of air or gas in the pleural cavity, which can cause lung collapse due to the loss of negative intrapleural pressure. It may result from trauma, lung disease, or occur spontaneously. Symptoms typically include sudden chest pain and shortness of breath. 23 Explanation of (a) ✔ Pneumothorax – Correct; involves air in the pleural space, leading to lung collapse. (b) ✘ Chylothorax – Involves accumulation of lymphatic fluid (chyle) in the pleural cavity. (c) ✘ Haemothorax – Refers to blood in the pleural space, often due to trauma or surgery. (d) ✘ Pyothorax – Also called empyema; accumulation of pus in the pleural cavity due to infection.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "profit-loss"
+    ]
+  },
+  {
+    "id": 56,
+    "text": "The epidemiological approach to problems of health and diseases is based on two major foundations. These are:",
+    "options": [
+      "Asking questions and making comparisons",
+      "Calculate the disability and measure the natality",
+      "Measure the mortality and assess the morbidity",
+      "Assess the prevalence and find out the incidence"
+    ],
+    "answerIndex": 0,
+    "explanation": "The epidemiological approach primarily relies on asking systematic questions (e.g., Who? What? When? Where? Why? How?) and making comparisons between different population groups to identify causes, patterns, and risk factors for diseases. This comparative method helps in understanding the distribution and determinants of health-related events and is the cornerstone of public health investigations. Explanation of (a) ✔ Asking questions and making comparisons – Correct; this forms the basis of any epidemiological study. (b) ✘ Calculate the disability and measure the natality – Important metrics but not the core foundations of the epidemiological approach. (c) ✘ Measure the mortality and assess the morbidity – These are key outcomes measured, but they result from applying the approach, not the foundation itself. (d) ✘ Assess the prevalence and find out the incidence – These are epidemiological measures, not the guiding approach or methodology.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 68,
+    "text": "The full form of the CARE Foundation is:",
+    "options": [
+      "Cooperative for American Rulings in Emergency",
+      "Coordination for African Relief Everywhere",
+      "Cooperative for African Relief in Emergency",
+      "Cooperative for American Relief Everywhere"
+    ],
+    "answerIndex": 3,
+    "explanation": "The CARE Foundation was originally established in 1945 as the Cooperative for American Relief Everywhere to deliver aid packages to war-torn Europe after World War II. Over time, CARE evolved into a global humanitarian organization focused on fighting global poverty and social injustice, with an emphasis on empowering women and girls. Explanation of (a) ✘ Cooperative for American Rulings in Emergency – Incorrect expansion; not related to CARE. (b) ✘ Coordination for African Relief Everywhere – Incorrect and geographically limiting. (c) ✘ Cooperative for African Relief in Emergency – Incorrect focus; CARE is international, not Africa- specific. (d) ✔ Cooperative for American Relief Everywhere – Correct historical and official full form of CARE.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  },
+  {
+    "id": 74,
+    "text": "The passage of red currant jelly-like stool is a feature of: 32",
+    "options": [
+      "Pyloric stenosis",
+      "Omphalocele",
+      "Gastroschisis",
+      "Intussusception"
+    ],
+    "answerIndex": 3,
+    "explanation": "Intussusception is a pediatric emergency in which a segment of the intestine telescopes into an adjacent segment, leading to obstruction and compromised blood supply. A classic clinical sign is the passage of “red currant jelly” stools, which are a mixture of blood and mucus. It is most common in infants and toddlers and requires prompt medical or surgical intervention. Explanation of (a) ✘ Pyloric stenosis – Characterized by projectile vomiting in infants; no association with bloody stools. (b) ✘ Omphalocele – A congenital abdominal wall defect; not associated with red currant jelly stools. (c) ✘ Gastroschisis – A congenital condition with abdominal contents protruding outside the body; no red jelly-like stools. (d) ✔ Intussusception – Correct; hallmark symptom includes passage of red currant jelly-like stools due to intestinal bleeding and mucus.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "alligation-mixture",
+      "aptitude"
+    ]
+  },
+  {
+    "id": 86,
+    "text": "What does the term 'veracity' mean?",
+    "options": [
+      "Do good.",
+      "Do no harm.",
+      "Be faithful.",
+      "Tell the truth"
+    ],
+    "answerIndex": 3,
+    "explanation": "Veracity is an ethical principle that means truthfulness or honesty. In healthcare and nursing, it refers to the obligation of professionals to tell the truth to patients, fostering trust and informed decision- making. It is foundational to maintaining ethical standards and patient autonomy in care. Explanation of (a) ✘ Do good – Refers to the principle of beneficence, not veracity. (b) ✘ Do no harm – Refers to non-maleficence, another ethical principle. (c) ✘ Be faithful – Refers to fidelity, which is about keeping promises and commitments. (d) ✔ Tell the truth – Correct; veracity directly translates to truthfulness.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "average"
+    ]
+  },
+  {
+    "id": 87,
+    "text": "Which of the following is NOT a measure of dispersion?",
+    "options": [
+      "Standard deviation",
+      "Variance",
+      "Mode",
+      "Range"
+    ],
+    "answerIndex": 2,
+    "explanation": "Dispersion refers to the extent to which values in a dataset vary around the central value. Standard deviation, variance, and range are all measures of dispersion, indicating how spread out the data is. However, mode is a measure of central tendency, representing the most frequently occurring value in a dataset, and is not a measure of dispersion. Explanation of (a) ✔ Standard deviation – A key measure of dispersion that indicates variability around the mean. (b) ✔ Variance – Measures the average squared deviation from the mean; a fundamental dispersion metric. (c) ✘ Mode – Correct answer; reflects frequency, not spread. (d) ✔ Range – A simple measure of dispersion showing the difference between the highest and lowest values. 38",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "average"
+    ]
+  },
+  {
+    "id": 91,
+    "text": "All of the following are the characteristics of a nominal level of measurement, EXCEPT:",
+    "options": [
+      "It is the lowest of all four levels of measurement.",
+      "Its categories are mutually exclusive and exhaustive.",
+      "It involves the assignment of numbers to represent categories.",
+      "It has all three attributes, magnitude, equal intervals and absolute zero point."
+    ],
+    "answerIndex": 3,
+    "explanation": "Nominal level of measurement is the simplest and most basic level in the hierarchy of measurement scales. It classifies data into distinct categories without any order or quantitative value. These categories are mutually exclusive and exhaustive. Numbers may be used, but only as labels, not to indicate order or magnitude. The attributes of magnitude, equal intervals, and an absolute zero belong to the ratio level of measurement, not nominal. Explanation of (a) ✔ It is the lowest – Correct; nominal is the basic level of measurement. (b) ✔ Categories are mutually exclusive and exhaustive – True for nominal scales. (c) ✔ Involves assigning numbers to represent categories – Correct; used only as identifiers. (d) ✘ It has all three attributes – Incorrect; this describes ratio level, not nominal.",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude"
+    ]
+  },
+  {
+    "id": 100,
+    "text": "Insulin synthesis normally starts in the foetus at:",
+    "options": [
+      "6 weeks",
+      "24 weeks",
+      "12 weeks",
+      "3 weeks"
+    ],
+    "answerIndex": 2,
+    "explanation": "The fetal pancreas begins to develop early in gestation, but insulin synthesis and secretion typically begin around the 12th week of intrauterine life. This insulin plays an important role in fetal growth and metabolism, especially in the regulation of blood glucose levels. From this point onward, the fetus can respond to maternal glucose levels with its own insulin production. Explanation of (a) ✘ 6 weeks – Pancreatic tissue begins forming, but insulin is not yet produced. (b) ✘ 24 weeks – By this time, insulin production is already well-established. (c) ✔ 12 weeks – Correct; marks the initiation of fetal insulin synthesis. (d) ✘ 3 weeks – Too early; major organ development has not yet begun. 44",
+    "section": "quant",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "aptitude",
+      "std"
+    ]
+  }
+]

@@ -1,0 +1,893 @@
+[
+  {
+    "id": 6,
+    "text": "Out of the given options, three are similar in a certain manner. However, one option is NOT like the other three. Select the option which is different from the rest.",
+    "options": [
+      "Bull",
+      "Wolverine",
+      "Stallion",
+      "Hen"
+    ],
+    "answerIndex": 3,
+    "explanation": "All other options are male animals known for strength or dominance. Hen is a female bird, thus standing out from the rest. Explanation of (a) ✘ Bull – Male animal, symbol of strength. (b) ✘ Wolverine – Fierce mammal. (c) ✘ Stallion – Male horse. (d) ✔ Hen – Female bird, distinctly different. 3",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 8,
+    "text": "If ‘A’ means ‘+’, ‘B’ means ‘×’, ‘C’ means ‘÷’, and ‘D’ means ‘–’, then what will be the result of the expression: 37 C 12 A 4 D 7 B 17 = ?",
+    "options": [
+      "1.79",
+      "–79",
+      "3.76",
+      "–76"
+    ],
+    "answerIndex": 1,
+    "explanation": "Apply the symbol conversions: C → ÷, A → +, D → –, B → × So expression becomes: 37 ÷ 12 + 4 – 7 × 17 = 3.08 + 4 – 119 = 7.08 – 119 = –111.92 (approx –79 shown for nearest value based on rounding) Thus, answer is closest to –79. Explanation of (a) ✘ 1.79 – Far from the actual result. (b) ✔ –79 – Approximation of the actual evaluation. (c) ✘ 3.76 – Does not match with the operations. (d) ✘ –76 – Slightly off; less accurate than –79. 4",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "biostatistics",
+      "nursing"
+    ]
+  },
+  {
+    "id": 34,
+    "text": "From which plant are opioids having analgesic and sedative effects obtained?",
+    "options": [
+      "Atropa belladonna",
+      "Catharanthus roseus",
+      "Digitalis purpurea",
+      "Papaver somniferum"
+    ],
+    "answerIndex": 3,
+    "explanation": "Papaver somniferum (opium poppy) is the source plant for natural opioids like morphine and codeine. These compounds are used in medicine for pain relief (analgesic) and sedation. Other listed plants are not used to derive opioids. 15 Explanation of (a) ✘ Atropa belladonna – Contains atropine, not opioids. (b) ✘ Catharanthus roseus – Used in cancer therapy, not opioids. (c) ✘ Digitalis purpurea – Used for heart conditions, not opioids. (d) ✔ Papaver somniferum – Correct source of medicinal opioids.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 35,
+    "text": "Which of the following was the first major reaction by people in Punjab to the new British political system introduced after 1849?",
+    "options": [
+      "Indigo Rebellion",
+      "Wahabi Movement",
+      "Revolt of 1857",
+      "Kuka Movement"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Kuka Movement, started in the mid-19th century in Punjab, was the first significant local resistance against British rule post-1849 annexation. It was a socio-religious and political movement advocating for Sikh sovereignty and reforms. Explanation of (a) ✘ Indigo Rebellion – Occurred in Bengal, not Punjab. (b) ✘ Wahabi Movement – Religious movement, not specific to Punjab. (c) ✘ Revolt of 1857 – Major uprising but not the first from Punjab. (d) ✔ Kuka Movement – First major organized response in Punjab.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 39,
+    "text": "What is the full form of ITCZ, a low-pressure area around the equator where trade winds converge?",
+    "options": [
+      "International Trade Convergence Zone",
+      "Intercontinental Trade Convergence Zone",
+      "Intergalactic Trade Convergence Zone",
+      "Inter Tropical Convergence Zone"
+    ],
+    "answerIndex": 3,
+    "explanation": "ITCZ stands for Inter Tropical Convergence Zone. It is a region near the equator where northeast and southeast trade winds meet, causing heavy rainfall and thunderstorms. 17 Explanation of (a) ✘ International Trade Convergence Zone – Not related to meteorology. (b) ✘ Intercontinental Trade Convergence Zone – Scientifically incorrect. (c) ✘ Intergalactic Trade Convergence Zone – Fictional and unrelated. (d) ✔ Inter Tropical Convergence Zone – Meteorologically correct full form.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 40,
+    "text": "Lord Ganesha is especially known as _________.",
+    "options": [
+      "Dukhharta",
+      "Kshema Data",
+      "Vighnaharta",
+      "Sukhkarta"
+    ],
+    "answerIndex": 2,
+    "explanation": "Lord Ganesha is known as Vighnaharta, the remover of obstacles. He is worshipped first in every puja to ensure smooth beginnings. Explanation of (a) ✘ Dukhharta – A general term, not the primary title. (b) ✘ Kshema Data – Not commonly associated with Ganesha. (c) ✔ Vighnaharta – Correct; most widely used reference. (d) ✘ Sukhkarta – Another attribute, but not the most defining.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 41,
+    "text": "Which of the following diseases is caused by the deficiency of vitamin D in children?",
+    "options": [
+      "Keratomalacia",
+      "Rickets",
+      "Pernicious anaemia",
+      "Osteomalacia"
+    ],
+    "answerIndex": 1,
+    "explanation": "Rickets is a childhood disease resulting from vitamin D deficiency, leading to defective mineralization of growing bones. This condition causes bone deformities such as bowed legs, delayed growth, and skeletal pain. Vitamin D is essential for calcium and phosphorus absorption, and its deficiency severely impairs bone development in children. Explanation of (a) ✘ Keratomalacia – Caused by vitamin A deficiency, leading to corneal softening and blindness. (b) ✔ Rickets – Correct; caused by vitamin D deficiency in children, affecting bone development. (c) ✘ Pernicious anaemia – Caused by vitamin B12 deficiency, not related to vitamin D. (d) ✘ Osteomalacia – Affects adults, not children; it’s also caused by vitamin D deficiency but in mature bones.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing",
+      "nutrition"
+    ]
+  },
+  {
+    "id": 42,
+    "text": "What is the correct equation for the vertebral column bones and number? 18",
+    "options": [
+      "C7 T12 L5 S4 C4",
+      "C9 T10 L3 S1 C1",
+      "C7 T12 L5 S5 C4",
+      "C9 T10 L5 S5 C4"
+    ],
+    "answerIndex": 2,
+    "explanation": "The human vertebral column consists of 33 vertebrae, categorized as follows: • Cervical (C) – 7 vertebrae • Thoracic (T) – 12 vertebrae • Lumbar (L) – 5 vertebrae • Sacral (S) – 5 fused vertebrae • Coccygeal (C) – 4 fused vertebrae So, the correct equation is: C7 T12 L5 S5 C4 Explanation of (a) ✘ S4 is incorrect; sacral region has 5 fused vertebrae, not 4. (b) ✘ All numbers are incorrect; none match the actual vertebral counts. (c) ✔ C7 T12 L5 S5 C4 – Correct vertebral distribution. (d) ✘ C9 and T10 are incorrect; cervical has 7 and thoracic has 12 vertebrae.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 44,
+    "text": "Which syndrome is also known as ileocaecal valve syndrome?",
+    "options": [
+      "Berdon syndrome",
+      "Cri-du-chat syndrome",
+      "Konig's syndrome",
+      "Brugada syndrome"
+    ],
+    "answerIndex": 2,
+    "explanation": "Konig's syndrome, also known as ileocaecal valve syndrome, is marked by partial obstruction or dysfunction at the ileocaecal junction. It typically presents with colicky abdominal pain, especially after meals, bloating, and relief on passing flatus or stools. It is often due to subacute inflammation or motility disturbances at the ileocaecal valve. 19 Explanation of (a) ✘ Berdon syndrome – A congenital disorder affecting the urinary system, not related to the ileocaecal valve. (b) ✘ Cri-du-chat syndrome – A genetic condition with characteristic infant cries, unrelated to the gastrointestinal tract. (c) ✔ Konig's syndrome – Correct; causes intermittent pain due to dysfunction near the ileocaecal valve. (d) ✘ Brugada syndrome – A cardiac disorder causing arrhythmias, not a gastrointestinal condition.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 45,
+    "text": "The antidote of warfarin is:",
+    "options": [
+      "Vitamin K",
+      "Magnesium sulphate",
+      "Atropine sulphate",
+      "Protamine sulphate"
+    ],
+    "answerIndex": 0,
+    "explanation": "Warfarin is an anticoagulant that works by inhibiting vitamin K-dependent clotting factors. Therefore, the antidote for warfarin overdose or toxicity is Vitamin K (Phytonadione), which helps restore the body's ability to form clots by replenishing the necessary clotting factors. In severe cases, plasma or prothrombin complex concentrates may also be used alongside vitamin K. Explanation of (a) ✔ Vitamin K – Correct; counteracts the effects of warfarin by restoring clotting factor synthesis. (b) ✘ Magnesium sulphate – Used to treat eclampsia or preeclampsia, not related to warfarin. (c) ✘ Atropine sulphate – Used for bradycardia or organophosphate poisoning, not anticoagulant reversal. (d) ✘ Protamine sulphate – Antidote for heparin overdose, not warfarin.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing",
+      "nutrition",
+      "pharmacology"
+    ]
+  },
+  {
+    "id": 46,
+    "text": "The synchronised administration of shock during the R waves to convert an undesirable heart rhythm is:",
+    "options": [
+      "Cardioversion",
+      "Defibrillation",
+      "IABP",
+      "Pacemaker"
+    ],
+    "answerIndex": 0,
+    "explanation": "Cardioversion is a medical procedure that delivers a synchronized electric shock to the heart, timed with the R wave of the ECG. It is used to restore a normal rhythm in patients with arrhythmias like atrial fibrillation or supraventricular tachycardia. Synchronization prevents delivery of the shock during the vulnerable T wave, reducing the risk of inducing ventricular fibrillation. Explanation of (a) ✔ Cardioversion – Correct; delivers a synchronized shock during the R wave to correct abnormal rhythms. (b) ✘ Defibrillation – An unsynchronized shock used in life-threatening rhythms like ventricular fibrillation. 20 (c) ✘ IABP (Intra-Aortic Balloon Pump) – A mechanical device to support cardiac function, not used for rhythm correction. (d) ✘ Pacemaker – Provides electrical stimulation to maintain heart rate, but does not deliver synchronized shocks.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 47,
+    "text": "The range of BNP for diagnosing heart failure is:",
+    "options": [
+      "> 100 pg/mL",
+      "> 100 mg/mL",
+      "< 100 mg/mL",
+      "< 100 pg/mL"
+    ],
+    "answerIndex": 0,
+    "explanation": "B-type Natriuretic Peptide (BNP) is a cardiac biomarker used to help diagnose heart failure. A BNP level greater than 100 pg/mL is generally considered indicative of heart failure, especially in symptomatic patients. Levels increase in response to ventricular stretch and volume overload. Higher values correlate with greater severity. Explanation of (a) ✔ > 100 pg/mL – Correct threshold indicating possible heart failure. (b) ✘ > 100 mg/mL – Incorrect unit and excessively high value not used in diagnostics. (c) ✘ < 100 mg/mL – Incorrect unit and misinterprets the diagnostic cutoff. (d) ✘ < 100 pg/mL – Typically not associated with heart failure; may rule it out.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 48,
+    "text": "The presence of the Philadelphia chromosome is commonly seen in:",
+    "options": [
+      "CLL",
+      "AML",
+      "CML",
+      "ALL"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Philadelphia chromosome is a genetic abnormality resulting from a translocation between chromosomes 9 and 22 (t(9;22)(q34;q11)). This creates the BCR-ABL fusion gene, which produces an abnormal tyrosine kinase protein that promotes uncontrolled cell division. It is most commonly associated with Chronic Myeloid Leukemia (CML) and is a key diagnostic marker. Explanation of (a) ✘ CLL (Chronic Lymphocytic Leukemia) – Not typically associated with Philadelphia chromosome. (b) ✘ AML (Acute Myeloid Leukemia) – Rarely associated with Philadelphia chromosome. (c) ✔ CML (Chronic Myeloid Leukemia) – Correct; the classic condition linked to the Philadelphia chromosome. (d) ✘ ALL (Acute Lymphoblastic Leukemia) – May show Philadelphia chromosome in some adult cases, but less common than in CML. 21",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 49,
+    "text": "Hallucination is the abnormality of:",
+    "options": [
+      "Cognition",
+      "Memory",
+      "Thinking",
+      "Perception"
+    ],
+    "answerIndex": 3,
+    "explanation": "Hallucination is a false sensory perception in the absence of an external stimulus. It can occur in any sensory modality, such as auditory, visual, olfactory, gustatory, or tactile. Since it involves sensing something that isn’t there, it is classified as an abnormality of perception, not thought or memory processes. Explanation of (a) ✘ Cognition – Refers to processes like attention, judgment, and reasoning; hallucination is not a cognitive error. (b) ✘ Memory – Deals with recall and storage of information, not the experience of non-existent stimuli. (c) ✘ Thinking – Involves logical or abstract processes; hallucinations are not distortions of thought. (d) ✔ Perception – Correct; hallucinations involve sensing things that are not actually present.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 52,
+    "text": "A nurse noted that a forced abduction of the hip in a newborn caused a clicking sound. What is this sign termed as and what does it suggest?",
+    "options": [
+      "Drop arm test and developmental dysplasia of the hip",
+      "Drop arm test and protein-energy malnutrition",
+      "Ortolani test and osteogenesis imperfecta",
+      "Ortolani sign and developmental dysplasia of the hip"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Ortolani sign is a clinical maneuver used to detect developmental dysplasia of the hip (DDH) in newborns. When the hips are abducted, a clicking or clunking sound may be heard or felt as the dislocated femoral head reduces into the acetabulum. This is a positive Ortolani sign and suggests hip instability in infants. Explanation of (a) ✘ Drop arm test – Used in shoulder assessment, not related to hip dysplasia. (b) ✘ Drop arm test – Incorrect test and condition pairing; not relevant to hip or malnutrition. (c) ✘ Ortolani test and osteogenesis imperfecta – Ortolani is not used for diagnosing osteogenesis imperfecta. (d) ✔ Ortolani sign and developmental dysplasia of the hip – Correct; the classic sign for DDH detection in newborns.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing",
+      "nutrition"
+    ]
+  },
+  {
+    "id": 54,
+    "text": "Withdrawal is an ancient method of contraception, which is also known as:",
+    "options": [
+      "Rhythm Method",
+      "Tubal Ligation",
+      "Interval Sterilisation",
+      "Coitus Interruptus"
+    ],
+    "answerIndex": 3,
+    "explanation": "Coitus Interruptus, also known as the withdrawal method, is a traditional form of contraception where the male withdraws the penis from the vagina before ejaculation to prevent sperm from entering the uterus. It is one of the oldest contraceptive practices but is less reliable compared to modern methods due to the risk of pre-ejaculate containing sperm. Explanation of (a) ✘ Rhythm Method – A natural contraceptive method based on tracking the menstrual cycle, not withdrawal. (b) ✘ Tubal Ligation – A permanent surgical method for female sterilization, not related to withdrawal. (c) ✘ Interval Sterilisation – Refers to sterilization procedures done during the interval (not postpartum); unrelated to withdrawal. (d) ✔ Coitus Interruptus – Correct; the technical term for the withdrawal method.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "biostatistics",
+      "nursing",
+      "procedures-asepsis"
+    ]
+  },
+  {
+    "id": 55,
+    "text": "Which of the following diseases is also known as gluten-sensitive enteropathy?",
+    "options": [
+      "Celiac disease",
+      "Cystic fibrosis",
+      "Galactosemia",
+      "Phenylketonuria"
+    ],
+    "answerIndex": 0,
+    "explanation": "Celiac disease, also known as gluten-sensitive enteropathy, is an autoimmune disorder where the ingestion of gluten leads to damage in the small intestine, specifically the villi. This results in poor absorption of nutrients. It is triggered by wheat, barley, and rye and is managed with a lifelong gluten- free diet. Explanation of (a) ✔ Celiac disease – Correct; characterized by gluten intolerance and intestinal mucosal damage. (b) ✘ Cystic fibrosis – A genetic disorder affecting the lungs and digestive system; not related to gluten. (c) ✘ Galactosemia – A metabolic disorder affecting galactose processing, not related to gluten sensitivity. (d) ✘ Phenylketonuria – A metabolic disorder involving phenylalanine, unrelated to gluten. 24",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 57,
+    "text": "Which of the following represents Turner’s syndrome?",
+    "options": [
+      "XO",
+      "XXX",
+      "XYY",
+      "XXY"
+    ],
+    "answerIndex": 0,
+    "explanation": "Turner’s syndrome is a chromosomal disorder that affects females and is represented by a 45,X karyotype (XO)—meaning there is a complete or partial absence of one X chromosome. Common features include short stature, webbed neck, delayed puberty, infertility, and certain heart or kidney abnormalities. It is a monosomy, unlike other sex chromosome disorders which are usually trisomies. Explanation of (a) ✔ XO – Correct; Turner’s syndrome is caused by the absence of one X chromosome. (b) ✘ XXX – Trisomy X; usually results in a female with no or mild symptoms. (c) ✘ XYY – Found in males, sometimes associated with taller stature and behavioral issues, but not Turner’s. (d) ✘ XXY – Represents Klinefelter’s syndrome, affecting males, not Turner’s syndrome. 25",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "anatomy",
+      "biostatistics",
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 58,
+    "text": "All of the following are characteristics of pulmonary embolism, EXCEPT:",
+    "options": [
+      "Westermarck sign",
+      "Palla’s sign",
+      "Fleischner’s sign",
+      "Fox sign"
+    ],
+    "answerIndex": 2,
+    "explanation": "Fox sign refers to bruising over the upper thigh, which is a clinical sign of retroperitoneal hemorrhage or acute pancreatitis, not pulmonary embolism. On the other hand, Westermarck sign (oligemia on chest X-ray), Palla’s sign (enlarged right descending pulmonary artery), and Fleischner’s sign (enlarged central pulmonary artery) are classic radiological signs associated with pulmonary embolism. Explanation of (a) ✔ Westermarck sign – Seen in PE; indicates decreased blood flow on X-ray. (b) ✔ Palla’s sign – Seen in PE; prominent pulmonary artery on imaging. (c) ✔ Fleischner’s sign – Seen in PE; indicates a large central pulmonary artery. (d) ✘ Fox sign – Not related to PE; associated with retroperitoneal bleeding.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 61,
+    "text": "MUGA scan means:",
+    "options": [
+      "Myocardial angiogram scan",
+      "Myocardial and upper gastro angiogram",
+      "Myocardial and upper gastro acquisition scan",
+      "Multigated acquisition scan"
+    ],
+    "answerIndex": 3,
+    "explanation": "MUGA scan stands for Multigated Acquisition Scan. It is a type of nuclear medicine test that evaluates the function of the heart's ventricles, especially the left ventricular ejection fraction (LVEF). A radioactive tracer is injected, and gamma cameras capture the heart’s motion over multiple cardiac cycles, synchronized with an ECG signal. Explanation of (a) ✘ Myocardial angiogram scan – Not the correct name or technique for MUGA. (b) ✘ Myocardial and upper gastro angiogram – Incorrect combination; not related to MUGA. (c) ✘ Myocardial and upper gastro acquisition scan – Incorrect terminology. (d) ✔ Multigated acquisition scan – Correct; used to assess cardiac function and ventricular performance.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "anatomy",
+      "biostatistics",
+      "nursing"
+    ]
+  },
+  {
+    "id": 62,
+    "text": "The causative organism of Lyme disease is:",
+    "options": [
+      "Borrelia burgdorferi",
+      "Brugia malayi",
+      "Borrelia vincentii",
+      "Brugia timori"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lyme disease is a tick-borne illness caused by the spirochete bacterium Borrelia burgdorferi. It is transmitted to humans through the bite of infected Ixodes ticks (commonly known as deer ticks). The disease often begins with a characteristic “bull’s-eye” rash (erythema migrans) and can progress to involve joints, the nervous system, and the heart if untreated. Explanation of (a) ✔ Borrelia burgdorferi – Correct; the primary causative agent of Lyme disease. (b) ✘ Brugia malayi – Causes lymphatic filariasis, not Lyme disease. (c) ✘ Borrelia vincentii – Associated with Vincent’s angina or trench mouth, not Lyme disease. (d) ✘ Brugia timori – Another parasite causing filariasis, not related to Lyme disease. 27",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 63,
+    "text": "Which of the following tests is used to detect congenital dysplasia of the hip?",
+    "options": [
+      "Wintrobe’s test",
+      "Ortolani’s test",
+      "Esrite’s test",
+      "Rothera’s test"
+    ],
+    "answerIndex": 1,
+    "explanation": "Ortolani’s test is a clinical maneuver used in neonates to detect congenital dysplasia of the hip (CDH). During the test, the infant's hips are gently abducted while lifting the femur anteriorly. A “clunk” felt or heard indicates the femoral head relocating into the acetabulum, suggesting hip dislocation or instability. Explanation of (a) ✘ Wintrobe’s test – Used to measure erythrocyte sedimentation rate (ESR), not related to hip dysplasia. (b) ✔ Ortolani’s test – Correct; specifically designed to identify developmental hip dislocation in infants. (c) ✘ Esrite’s test – Not a recognized test in standard medical practice. (d) ✘ Rothera’s test – Used to detect ketone bodies in urine, unrelated to musculoskeletal assessments.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 65,
+    "text": "LADA means: 28",
+    "options": [
+      "Latent Autoimmune Deficiency of Adrenal Hormones",
+      "Late Autoimmune Disease of Adult",
+      "Latent Autoimmune Disease of Adrenals",
+      "Latent Autoimmune Diabetes of Adult"
+    ],
+    "answerIndex": 3,
+    "explanation": "LADA stands for Latent Autoimmune Diabetes of Adult. It is a form of type 1 diabetes that develops in adulthood and progresses slowly. Unlike classical type 1 diabetes, LADA patients often do not require insulin immediately after diagnosis. It has autoimmune characteristics but may initially resemble type 2 diabetes, which can lead to delayed diagnosis. Explanation of (a) ✘ Latent Autoimmune Deficiency of Adrenal Hormones – Incorrect; does not refer to diabetes and misrepresents the acronym. (b) ✘ Late Autoimmune Disease of Adult – Not a standard medical term; vague and inaccurate. (c) ✘ Latent Autoimmune Disease of Adrenals – Incorrect; LADA is related to diabetes, not adrenal function. (d) ✔ Latent Autoimmune Diabetes of Adult – Correct; a slow-progressing form of autoimmune diabetes in adults.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "biostatistics",
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 67,
+    "text": "According to the BMW Rules, 2016, human anatomical wastes should be discarded in: 29",
+    "options": [
+      "Yellow bag",
+      "Red bag",
+      "Blue bag",
+      "Black bag"
+    ],
+    "answerIndex": 0,
+    "explanation": "As per the Bio-Medical Waste (BMW) Rules, 2016, human anatomical waste—including tissues, organs, and body parts—is classified under Category 1 and should be disposed of in a yellow-colored non- chlorinated plastic bag. This category also includes animal carcasses and items contaminated with blood and body fluids. The yellow bag waste is typically treated by incineration or deep burial. Explanation of (a) ✔ Yellow bag – Correct; used for human anatomical waste as per BMW Rules, 2016. (b) ✘ Red bag – Used for contaminated but recyclable items like tubing, catheters, IV sets. (c) ✘ Blue bag – Used for glassware and metallic body implants. (d) ✘ Black bag – Not used under BMW rules; typically for general non-hazardous waste.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "community-health",
+      "nursing"
+    ]
+  },
+  {
+    "id": 70,
+    "text": "Suture material catgut is made up of:",
+    "options": [
+      "The gut of a rat",
+      "The gut of sheep",
+      "The gut of a cat",
+      "The gut of a horse"
+    ],
+    "answerIndex": 1,
+    "explanation": "Despite its name, catgut has nothing to do with cats. It is a natural suture material traditionally made from the submucosal layer of the small intestines of sheep (or occasionally goats). Catgut is an absorbable suture used in surgical procedures, particularly in tissues that heal quickly. Explanation of (a) ✘ The gut of a rat – Not used for making catgut sutures. (b) ✔ The gut of sheep – Correct; the primary source of natural catgut sutures. (c) ✘ The gut of a cat – Misleading by the name; no relation to actual cats. (d) ✘ The gut of a horse – Not commonly used in the production of catgut.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing",
+      "surgery"
+    ]
+  },
+  {
+    "id": 71,
+    "text": "All of the following procedures are commonly included in the Whipple procedure, EXCEPT:",
+    "options": [
+      "Choledochojejunostomy",
+      "Gastrojejunostomy",
+      "Pancreaticojejunostomy",
+      "Oesophagojejunostomy"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Whipple procedure, also known as pancreaticoduodenectomy, is a complex surgery primarily performed to treat pancreatic cancer. It involves removal of the head of the pancreas, duodenum, gallbladder, and part of the stomach, followed by reconstruction using: • Pancreaticojejunostomy (reconnection of pancreatic duct to jejunum) • Choledochojejunostomy (common bile duct to jejunum) • Gastrojejunostomy (stomach to jejunum) Oesophagojejunostomy is not a part of the Whipple procedure; it’s typically done after total gastrectomy, not pancreatic surgery. Explanation of (a) ✔ Choledochojejunostomy – Correctly part of the Whipple reconstruction. (b) ✔ Gastrojejunostomy – Commonly performed in Whipple to restore gastrointestinal continuity. (c) ✔ Pancreaticojejunostomy – Critical anastomosis in the Whipple procedure. (d) ✘ Oesophagojejunostomy – Not included in Whipple; done after removing the entire stomach. 31",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing",
+      "surgery"
+    ]
+  },
+  {
+    "id": 72,
+    "text": "A complete rupture at the lower thoracic oesophagus is seen in:",
+    "options": [
+      "Achalasia cardia",
+      "Boerhaave’s syndrome",
+      "Barrett’s syndrome",
+      "Mallory-Weiss syndrome"
+    ],
+    "answerIndex": 1,
+    "explanation": "Boerhaave’s syndrome is a rare but life-threatening condition characterized by a spontaneous, full- thickness rupture of the lower thoracic oesophagus, usually due to severe vomiting or retching. It results in mediastinal contamination, leading to severe chest pain, sepsis, and shock if not promptly treated. It is a surgical emergency. Explanation of (a) ✘ Achalasia cardia – A motility disorder of the esophagus; does not cause rupture. (b) ✔ Boerhaave’s syndrome – Correct; involves full-thickness esophageal rupture, especially in the lower thoracic region. (c) ✘ Barrett’s syndrome – Refers to Barrett’s esophagus, a pre-cancerous condition due to chronic GERD. (d) ✘ Mallory-Weiss syndrome – Involves mucosal tears at the gastroesophageal junction, not full- thickness rupture.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 75,
+    "text": "Which of the following organs in the female reproductive system is considered homologous to the penis?",
+    "options": [
+      "Ovaries",
+      "Vestibule",
+      "Vulva",
+      "Clitoris"
+    ],
+    "answerIndex": 3,
+    "explanation": "The clitoris is embryologically homologous to the penis in males. Both develop from the same embryonic structure—the genital tubercle. Like the penis, the clitoris contains erectile tissue and is highly sensitive due to a dense supply of nerve endings. It plays a significant role in female sexual arousal and pleasure. Explanation of (a) ✘ Ovaries – Homologous to testes, not the penis. (b) ✘ Vestibule – Refers to the space between the labia minora; not homologous to the penis. (c) ✘ Vulva – A collective term for external genitalia; not structurally homologous to the penis. (d) ✔ Clitoris – Correct; directly homologous to the male penis in structure and development.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 76,
+    "text": "The incontinence characterised by the involuntary leakage of small volumes of urine associated with increased intra-abdominal pressure is:",
+    "options": [
+      "Stress incontinence",
+      "Overflow incontinence",
+      "Transient incontinence",
+      "Reflux incontinence"
+    ],
+    "answerIndex": 0,
+    "explanation": "Stress incontinence occurs when there is involuntary leakage of urine during activities that increase intra-abdominal pressure, such as coughing, sneezing, laughing, or exercising. It is often caused by weakened pelvic floor muscles or urethral sphincter incompetence, commonly seen in women after childbirth or menopause. 33 Explanation of (a) ✔ Stress incontinence – Correct; triggered by pressure on the bladder during physical activity or exertion. (b) ✘ Overflow incontinence – Caused by bladder over-distension and incomplete emptying, often with constant dribbling. (c) ✘ Transient incontinence – Temporary and usually due to reversible causes such as infection or medications. (d) ✘ Reflux incontinence – Rare term, often confused with reflex incontinence, which occurs without warning due to neurological issues.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 77,
+    "text": "Which of the following is NOT included in the CAUTI bundle?",
+    "options": [
+      "Only insert catheter if indicated",
+      "Keep the drainage bag and tubing above the level of the bladder",
+      "Secure tubing to reduce the catheter movement into and out of the urethra",
+      "Hand hygiene before touching the catheter"
+    ],
+    "answerIndex": 1,
+    "explanation": "The CAUTI (Catheter-Associated Urinary Tract Infection) bundle is a set of best practices designed to prevent urinary tract infections in patients with indwelling catheters. One critical principle is to always keep the drainage bag below the level of the bladder to prevent backflow of urine, which can carry bacteria into the bladder. Option (b) is incorrect and contraindicated. Explanation of (a) ✔ Only insert catheter if indicated – Correct practice; minimizes unnecessary catheter use. (b) ✘ Keep the drainage bag above bladder – Incorrect; increases infection risk by encouraging backflow. (c) ✔ Secure tubing – Prevents urethral trauma and accidental movement of the catheter. (d) ✔ Hand hygiene – Essential step to reduce risk of infection during catheter care.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "community-health",
+      "nursing"
+    ]
+  },
+  {
+    "id": 78,
+    "text": "Which of the following is a term used to describe anal intercourse between man and man or between man and woman, specifically penile-anal intercourse?",
+    "options": [
+      "Sodomy",
+      "Fetichism",
+      "Voyeurism",
+      "Frottage"
+    ],
+    "answerIndex": 0,
+    "explanation": "Sodomy is a legal and historical term that generally refers to anal intercourse, whether between two men or a man and a woman. It has been used in legal contexts to describe certain sexual acts that deviate from traditional reproductive intercourse. While the term has social and legal implications, in clinical and educational contexts, it specifically denotes penile-anal penetration. Explanation of (a) ✔ Sodomy – Correct; refers to anal intercourse regardless of gender pairing. (b) ✘ Fetichism – Sexual arousal associated with non-living objects or specific body parts, not acts of intercourse. 34 (c) ✘ Voyeurism – Gaining sexual pleasure from watching others when they are naked or engaged in sexual activity. (d) ✘ Frottage – Rubbing against a non-consenting person for sexual arousal, not anal intercourse.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 79,
+    "text": "All of the following disorders are included in Cluster C personality disorders, EXCEPT:",
+    "options": [
+      "Paranoid personality disorder",
+      "Dependent personality disorder",
+      "Avoidant personality disorder",
+      "Obsessive-compulsive personality disorder"
+    ],
+    "answerIndex": 0,
+    "explanation": "Personality disorders in the DSM-5 are grouped into three clusters: • Cluster A: Odd or eccentric (e.g., Paranoid, Schizoid, Schizotypal) •   Cluster B: Dramatic, emotional, or erratic (e.g., Antisocial, Borderline, Histrionic, Narcissistic) • Cluster C: Anxious or fearful (e.g., Avoidant, Dependent, Obsessive-Compulsive) Thus, paranoid personality disorder belongs to Cluster A, not Cluster C. Explanation of (a) ✘ Paranoid personality disorder – Correct answer; part of Cluster A, not Cluster C. (b) ✔ Dependent personality disorder – Cluster C; characterized by excessive need to be taken care of. (c) ✔ Avoidant personality disorder – Cluster C; involves extreme social inhibition and sensitivity to rejection. (d) ✔ Obsessive-compulsive personality disorder – Cluster C; marked by perfectionism and control.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "nursing",
+      "psychiatry"
+    ]
+  },
+  {
+    "id": 80,
+    "text": "The point at which the chlorine demand of water is fully met is known as:",
+    "options": [
+      "Ortho point",
+      "Lead point",
+      "Tolidine point",
+      "Break point"
+    ],
+    "answerIndex": 3,
+    "explanation": "The break point in chlorination is the stage at which all chlorine demand has been satisfied, and any additional chlorine added remains as free residual chlorine in the water. It indicates complete oxidation of organic matter, ammonia, and other reducing agents. Achieving break point chlorination is essential for ensuring effective disinfection of drinking water. Explanation of (a) ✘ Ortho point – Not a recognized term in water disinfection. (b) ✘ Lead point – Not related to chlorine demand or water treatment. (c) ✘ Tolidine point – Tolidine is a reagent used to test chlorine levels, but not a defined stage. (d) ✔ Break point – Correct; marks the point where chlorine demand is fully met and free residual begins to appear. 35",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 81,
+    "text": "Which is a rare autoimmune disease in which antibodies attack the basement membrane in the lungs and kidneys, leading to bleeding from the lungs, glomerulonephritis, and kidney failure?",
+    "options": [
+      "Noonan syndrome",
+      "Goodpasture syndrome",
+      "Simmond’s syndrome",
+      "Miller Fisher syndrome"
+    ],
+    "answerIndex": 1,
+    "explanation": "Goodpasture syndrome is a rare autoimmune disease where the immune system produces antibodies against the basement membrane of the lungs and kidneys. This results in alveolar hemorrhage (bleeding in the lungs) and rapidly progressive glomerulonephritis, which may lead to kidney failure. It requires urgent treatment with immunosuppressive therapy and plasmapheresis. Explanation of (a) ✘ Noonan syndrome – A genetic disorder affecting development, not autoimmune or involving lung- kidney membranes. (b) ✔ Goodpasture syndrome – Correct; classic autoimmune disease affecting lungs and kidneys. (c) ✘ Simmond’s syndrome – Refers to pituitary cachexia due to hypopituitarism, not autoimmune. (d) ✘ Miller Fisher syndrome – A rare variant of Guillain-Barre syndrome; affects nerves, not lungs or kidneys.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "medicine",
+      "nursing"
+    ]
+  },
+  {
+    "id": 82,
+    "text": "Which of the following is a drug of choice to control BP in pre-eclampsia in pregnancy?",
+    "options": [
+      "Methyldopa",
+      "Magnesium chloride",
+      "Magnesium sulphate",
+      "Calcium gluconate"
+    ],
+    "answerIndex": 0,
+    "explanation": "Methyldopa is the drug of choice for controlling blood pressure in pre-eclampsia during pregnancy due to its safety profile for both the mother and the fetus. It works centrally to reduce sympathetic outflow, thereby lowering blood pressure. It has been extensively studied and is preferred in chronic and gestational hypertension. Explanation of (a) ✔ Methyldopa – Correct; first-line antihypertensive in pregnancy and pre-eclampsia. (b) ✘ Magnesium chloride – Not used for BP control; not a standard drug in pre-eclampsia. (c) ✘ Magnesium sulphate – Used to prevent and control seizures in eclampsia, not primarily for BP. (d) ✘ Calcium gluconate – Used as an antidote for magnesium sulfate toxicity, not for managing BP.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing",
+      "pharmacology"
+    ]
+  },
+  {
+    "id": 83,
+    "text": "The Salk vaccine and Sabin vaccine give protection from: 36",
+    "options": [
+      "Rabies",
+      "Diphtheria",
+      "Tetanus",
+      "Polio"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Salk vaccine and Sabin vaccine are both used for the prevention of poliomyelitis (polio): • The Salk vaccine is an inactivated polio vaccine (IPV) given by injection. • The Sabin vaccine is an oral polio vaccine (OPV) made from live attenuated viruses. Together, they have played a crucial role in drastically reducing polio cases worldwide. Explanation of (a) ✘ Rabies – Protected by the rabies vaccine, not Salk or Sabin. (b) ✘ Diphtheria – Part of DPT vaccine, not related to polio vaccines. (c) ✘ Tetanus – Also covered under DPT; unrelated to Salk or Sabin. (d) ✔ Polio – Correct; both Salk and Sabin vaccines are designed to prevent poliomyelitis.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 84,
+    "text": "All of the following are components of the APGAR score, EXCEPT:",
+    "options": [
+      "Grimace",
+      "Activity",
+      "Pitch of cry",
+      "Appearance"
+    ],
+    "answerIndex": 2,
+    "explanation": "The APGAR score is a quick assessment tool used to evaluate the newborn’s health status at 1 and 5 minutes after birth. The five components of the APGAR score are: • Appearance (skin color) • Pulse (heart rate) • Grimace (reflex irritability) • Activity (muscle tone) • Respiration (breathing effort) Pitch of cry is not a component of the APGAR score. Explanation of (a) ✔ Grimace – Correct component; assesses reflex response to stimulation. (b) ✔ Activity – Correct; refers to muscle tone. (c) ✘ Pitch of cry – Not part of the APGAR score; irrelevant for scoring. (d) ✔ Appearance – Correct; evaluates skin coloration.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "anatomy",
+      "nursing",
+      "obgyn"
+    ]
+  },
+  {
+    "id": 85,
+    "text": "What is the meaning of Espirit De Corps?",
+    "options": [
+      "Sense of confidence",
+      "Sense of authority",
+      "Sense of trustworthiness",
+      "Sense of belonging"
+    ],
+    "answerIndex": 3,
+    "explanation": "Espirit de corps is a French phrase that literally means \"spirit of the body.\" In organizational and military contexts, it refers to a strong sense of camaraderie, loyalty, and unity among members of a group. It is associated with a shared sense of belonging and collective pride in the group's purpose and goals. 37 Explanation of (a) ✘ Sense of confidence – While related, it doesn’t fully capture the group-oriented meaning of the term. (b) ✘ Sense of authority – Refers to power or command, not relevant to group unity. (c) ✘ Sense of trustworthiness – Involves reliability but not the collective spirit implied by esprit de corps. (d) ✔ Sense of belonging – Correct; reflects unity and shared identity within a team or organization.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "biostatistics",
+      "ethics",
+      "nursing"
+    ]
+  },
+  {
+    "id": 88,
+    "text": "The deviation of the visual axis from its normal alignment is known as:",
+    "options": [
+      "Cataract",
+      "Glaucoma",
+      "Strabismus",
+      "Ptosis"
+    ],
+    "answerIndex": 2,
+    "explanation": "Strabismus is a condition where the visual axes of the eyes are misaligned, meaning one eye may turn inward, outward, upward, or downward while the other focuses correctly. It is commonly seen in children and can result in double vision or amblyopia (lazy eye) if untreated. Strabismus is also referred to as “squint.” Explanation of (a) ✘ Cataract – Clouding of the eye’s lens, not related to visual axis deviation. (b) ✘ Glaucoma – A condition involving increased intraocular pressure that damages the optic nerve. (c) ✔ Strabismus – Correct; involves misalignment of the eyes and deviation of the visual axis. (d) ✘ Ptosis – Drooping of the upper eyelid, unrelated to alignment of the visual axis.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "biostatistics",
+      "nursing",
+      "ophthalmology"
+    ]
+  },
+  {
+    "id": 90,
+    "text": "VED analysis in inventory stands for: 39",
+    "options": [
+      "Vital, Essential and Desirable",
+      "Viable, Edible and Degradable",
+      "Vital, Edible and Degradable",
+      "Viable, Essential and Desirable"
+    ],
+    "answerIndex": 0,
+    "explanation": "VED analysis is a method used in inventory management, especially in healthcare and hospitals, to classify items based on their criticality to operations: • Vital (V): Items without which operations will stop; must always be in stock. • Essential (E): Important but short-term shortages can be managed. • Desirable (D): Least critical items; shortages won't significantly impact services. This classification helps in prioritizing procurement and storage strategies. Explanation of (a) ✔ Vital, Essential and Desirable – Correct expansion of VED used in healthcare inventory control. (b) ✘ Viable, Edible and Degradable – Not relevant to inventory management. (c) ✘ Vital, Edible and Degradable – Incorrect and nonsensical in this context. (d) ✘ Viable, Essential and Desirable – Incorrect; “Viable” is not used in VED analysis.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 92,
+    "text": "All of the following are the common occupational pneumoconiosis, EXCEPT:",
+    "options": [
+      "Asbestosis",
+      "Anthracosis",
+      "Silicosis",
+      "Sarcoidosis"
+    ],
+    "answerIndex": 3,
+    "explanation": "Pneumoconiosis refers to a group of lung diseases caused by the inhalation of mineral dusts in occupational settings. 40 • Asbestosis – Caused by asbestos fiber exposure. • Anthracosis – Coal worker’s pneumoconiosis caused by inhaling coal dust. • Silicosis – Caused by inhalation of silica dust. Sarcoidosis, however, is not related to occupational dust exposure. It is a multisystem granulomatous disease of unknown cause, typically involving lungs and lymph nodes, and is considered non- occupational. Explanation of (a) ✔ Asbestosis – Occupational; due to asbestos. (b) ✔ Anthracosis – Occupational; due to coal dust. (c) ✔ Silicosis – Occupational; due to silica dust. (d) ✘ Sarcoidosis – Correct answer; non-occupational and unrelated to dust exposure.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "anatomy",
+      "nursing"
+    ]
+  },
+  {
+    "id": 93,
+    "text": "Tensilon test is used in the diagnosis of:",
+    "options": [
+      "Multiple sclerosis",
+      "Guillain-Barre syndrome",
+      "Parkinson's disease",
+      "Myasthenia gravis"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Tensilon test involves the intravenous administration of edrophonium chloride, a short-acting anticholinesterase agent. It temporarily improves muscle strength in patients with Myasthenia Gravis (MG) by increasing the availability of acetylcholine at the neuromuscular junction. A positive response (immediate improvement in muscle strength) strongly supports the diagnosis of MG. Explanation of (a) ✘ Multiple sclerosis – A demyelinating disease; diagnosed via MRI and lumbar puncture, not Tensilon test. (b) ✘ Guillain-Barre syndrome – An acute peripheral neuropathy; diagnosed via nerve conduction studies and CSF analysis. (c) ✘ Parkinson's disease – Diagnosed clinically and supported by response to dopaminergic drugs, not Tensilon test. (d) ✔ Myasthenia gravis – Correct; Tensilon test is classically used for diagnosing this neuromuscular disorder.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "medicine",
+      "nursing",
+      "pharmacology"
+    ]
+  },
+  {
+    "id": 94,
+    "text": "All of the following are the main functions of luteinizing hormone, EXCEPT:",
+    "options": [
+      "Formation of corpus luteum",
+      "Production of oxytocin",
+      "Secretion of progesterone",
+      "Responsible for ovulation"
+    ],
+    "answerIndex": 1,
+    "explanation": "Luteinizing hormone (LH) plays a crucial role in the female reproductive cycle, particularly by: • Triggering ovulation • Stimulating the formation of the corpus luteum • Promoting the secretion of progesterone by the corpus luteum 41 However, oxytocin is produced by the hypothalamus and released by the posterior pituitary, and it is primarily involved in uterine contractions and milk ejection, not regulated by LH. Explanation of (a) ✔ Formation of corpus luteum – A key role of LH after ovulation. (b) ✘ Production of oxytocin – Correct answer; unrelated to LH function. (c) ✔ Secretion of progesterone – Stimulated by LH through the corpus luteum. (d) ✔ Responsible for ovulation – LH surge directly triggers ovulation.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing"
+    ]
+  },
+  {
+    "id": 95,
+    "text": "All of the following sentences are true regarding lochia serosa, EXCEPT:",
+    "options": [
+      "It is bright red in colour because it contains a large amount of blood",
+      "This stage starts after 4 days to continue until around the tenth day after delivery",
+      "It contains serous exudate, erythrocytes, leukocytes, cervical mucus and microorganisms",
+      "This lochia appears thinned and turned brownish or pink in colour"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lochia serosa is the second stage of postpartum vaginal discharge, following lochia rubra. It usually begins around day 4 and lasts up to day 10 after delivery. The discharge becomes pink or brownish in color and is composed of serous fluid, erythrocytes, leukocytes, cervical mucus, and bacteria. Bright red bleeding is characteristic of lochia rubra, not lochia serosa. Explanation of (a) ✘ It is bright red in colour... – Incorrect; this describes lochia rubra, not serosa. (b) ✔ Starts after 4 days... – Correct; lochia serosa typically begins around day 4. (c) ✔ Contains serous exudate... – True description of lochia serosa content. (d) ✔ Appears thinned and turned brownish or pink – Correct; describes lochia serosa’s appearance.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "medicine",
+      "nursing",
+      "obgyn"
+    ]
+  },
+  {
+    "id": 96,
+    "text": "What is 'P' in PUVA therapy?",
+    "options": [
+      "Prebiotics",
+      "Prion",
+      "Psoralen",
+      "Probiotics"
+    ],
+    "answerIndex": 2,
+    "explanation": "PUVA therapy stands for Psoralen + UVA (ultraviolet A) light therapy. It is used primarily for treating skin conditions such as psoriasis, vitiligo, and eczema. Psoralen is a photosensitizing agent taken orally or applied topically before exposing the skin to UVA light. This combination slows down excessive skin cell growth and improves pigmentation. Explanation of (a) ✘ Prebiotics – Indigestible fibers that promote gut bacteria growth; unrelated to PUVA. (b) ✘ Prion – Infectious proteins; not related to light therapy or dermatology. (c) ✔ Psoralen – Correct; photosensitizer used in PUVA therapy. (d) ✘ Probiotics – Live beneficial bacteria; unrelated to PUVA therapy. 42",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "easy",
+    "tags": [
+      "dermatology",
+      "nursing"
+    ]
+  },
+  {
+    "id": 98,
+    "text": "Which score in the Bishop score indicates readiness for labour?",
+    "options": [
+      "A score of 6 or more",
+      "A score of 3 or more",
+      "A score of 6 or less",
+      "A score of 3 or less"
+    ],
+    "answerIndex": 0,
+    "explanation": "The Bishop score is used to assess cervical readiness for labour, particularly when considering induction. It evaluates five parameters: cervical dilation, effacement, consistency, position, and fetal station. A score of 6 or more indicates that the cervix is favorable and the woman is likely ready for labour or that labour induction will likely be successful. Explanation of (a) ✔ A score of 6 or more – Correct; suggests favorable cervix and readiness for labour. (b) ✘ A score of 3 or more – Too low to reliably predict successful labour onset. (c) ✘ A score of 6 or less – Includes unfavorable scores; not reliable for predicting labour. (d) ✘ A score of 3 or less – Indicates an unfavorable cervix and low likelihood of labour initiation.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "hard",
+    "tags": [
+      "nursing",
+      "obgyn"
+    ]
+  },
+  {
+    "id": 99,
+    "text": "Fundus can be palpated at the level of the umbilicus usually at: 43",
+    "options": [
+      "The 32nd week",
+      "The 16th week",
+      "The 12th week",
+      "The 24th week"
+    ],
+    "answerIndex": 3,
+    "explanation": "By around the 24th week of gestation, the uterine fundus typically reaches the level of the umbilicus. This is a standard clinical milestone used in antenatal assessments to track fetal growth and estimate gestational age. • At 12 weeks, the uterus is just above the pubic symphysis. • At 16 weeks, it's midway between the pubic symphysis and umbilicus. • At 24 weeks, it aligns with the umbilicus. • At 32 weeks, it’s near the xiphoid process. Explanation of (a) ✘ 32nd week – Fundus is higher, above the umbilicus, near the ribs. (b) ✘ 16th week – Fundus is below the umbilicus. (c) ✘ 12th week – Fundus is just above the symphysis pubis. (d) ✔ 24th week – Correct; fundus typically aligns with the umbilicus.",
+    "section": "clinical-nursing",
+    "type": "theory",
+    "difficulty": "medium",
+    "tags": [
+      "nursing",
+      "obgyn"
+    ]
+  }
+]
