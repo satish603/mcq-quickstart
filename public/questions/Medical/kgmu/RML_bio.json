@@ -1,0 +1,164 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "For eradication/control of measles, immunization coverage should be at least",
+      "options": ["80%", "85%", "96%", "100%"],
+      "answerIndex": 2,
+      "tags": ["measles", "immunization", "public health", "herd-immunity"],
+      "explanation": "Measles has an R0 around 12–18, so herd-immunity thresholds are high. Programs generally aim for ≥95% coverage (≈96% in options) to interrupt transmission."
+    },
+    {
+      "id": 2,
+      "text": "Period of maximum infectivity in mumps is during",
+      "options": ["incubation period", "onset of swelling", "after swelling appears", "prodromal period"],
+      "answerIndex": 3,
+      "tags": ["mumps", "infectious period", "communicable diseases"],
+      "explanation": "Mumps is most infectious from ~2 days before to ~5 days after parotitis; peak transmissibility is just before/around onset (prodromal/early swelling)."
+    },
+    {
+      "id": 3,
+      "text": "Major epidemics of influenza A occur at intervals of",
+      "options": ["1 year", "2-3 years", "10-15 years", "20-25 years"],
+      "answerIndex": 1,
+      "tags": ["influenza", "epidemiology", "communicable diseases"],
+      "explanation": "Seasonal influenza A shows larger epidemic waves every ~2–3 years due to antigenic drift; pandemics (antigenic shift) are far less frequent."
+    },
+    {
+      "id": 4,
+      "text": "The most common source of infection for diphtheria is a",
+      "options": ["case", "sub clinical case", "carrier", "all of the above"],
+      "answerIndex": 2,
+      "tags": ["diphtheria", "sources of infection", "carriers"],
+      "explanation": "Although cases and subclinical infections transmit, chronic carriers are the most important reservoir and commonest source in the community."
+    },
+    {
+      "id": 5,
+      "text": "Schick test is done in",
+      "options": ["meningitis", "diphtheria", "pertussis", "polimyelitis"],
+      "answerIndex": 1,
+      "tags": ["diphtheria", "diagnostics", "immunity testing"],
+      "explanation": "The Schick test assesses susceptibility to diphtheria toxin (i.e., lack of antitoxin). It is not a test for meningitis, pertussis, or polio."
+    },
+    {
+      "id": 6,
+      "text": "Adjuvant present in DPT vaccine is",
+      "options": ["aluminium phosphate", "aluminium hydroxide", "zinc phosphate", "magnesium phosphate"],
+      "answerIndex": 0,
+      "tags": ["vaccines", "DPT", "adjuvants"],
+      "explanation": "DPT is an alum-adsorbed vaccine. Depending on formulation, aluminium phosphate or aluminium hydroxide may be used; many programs specify aluminium phosphate."
+    },
+    {
+      "id": 7,
+      "text": "Recommended site of administration of DPT in infants is",
+      "options": ["gluteal", "deltoid", "lateral aspect of thigh", "forearm"],
+      "answerIndex": 2,
+      "tags": ["vaccination technique", "DPT", "infants"],
+      "explanation": "Give IM in the anterolateral aspect of the thigh (vastus lateralis) in infants. Avoid gluteal site due to variable fat/nerve injury risk."
+    },
+    {
+      "id": 8,
+      "text": "The most severe complications following DPT are due to …….. component",
+      "options": ["diphtheria", "pertussis", "tetanus", "adjuvant"],
+      "answerIndex": 1,
+      "tags": ["DPT", "adverse events", "pertussis"],
+      "explanation": "Whole-cell pertussis component is associated with fever/rare neurological AEFIs. (Acellular pertussis has fewer reactions but is costlier.)"
+    },
+    {
+      "id": 9,
+      "text": "The vaccine usually given to pilgrims to the Middle East is",
+      "options": ["DPT", "influenza", "yellow fever", "meningitis"],
+      "answerIndex": 3,
+      "tags": ["travel medicine", "Hajj/Umrah", "meningococcal"],
+      "explanation": "Hajj/Umrah pilgrims require quadrivalent meningococcal (ACWY) vaccination as per Saudi regulations."
+    },
+    {
+      "id": 10,
+      "text": "Best index to estimate case load of T.B. in a community is",
+      "options": ["incidence of infection", "prevalence of infection", "incidence of disease", "prevalence of disease"],
+      "answerIndex": 3,
+      "tags": ["tuberculosis", "epidemiology", "indicators"],
+      "explanation": "‘Case load’ refers to the number of existing patients needing care—best reflected by prevalence of disease (not infection)."
+    },
+    {
+      "id": 11,
+      "text": "Prevalence of T.B. infection in a community is estimated by",
+      "options": ["tuberculin test", "sputum microscopy", "culture", "chest X-ray"],
+      "answerIndex": 0,
+      "tags": ["tuberculosis", "screening", "tuberculin test"],
+      "explanation": "Tuberculin skin testing (TST) estimates infection prevalence at the population level; microscopy/culture/X-ray reflect disease."
+    },
+    {
+      "id": 12,
+      "text": "The amount of PPD used in Mantoux test in India is",
+      "options": ["1 TU", "5 TU", "25 TU", "250 TU"],
+      "answerIndex": 0,
+      "tags": ["tuberculosis", "Mantoux", "PPD"],
+      "explanation": "India commonly uses 1 TU PPD RT23 with Tween 80 intradermally for Mantoux testing."
+    },
+    {
+      "id": 13,
+      "text": "Result of Mantoux test is read after",
+      "options": ["6 hours", "24 hours", "48 hours", "72 hours"],
+      "answerIndex": 2,
+      "tags": ["tuberculosis", "Mantoux", "reading time"],
+      "explanation": "Induration is read at 48–72 hours; if a single option must be chosen, 48 hours is commonly accepted in many MCQs."
+    },
+    {
+      "id": 14,
+      "text": "Present day BCG vaccine is supplied as",
+      "options": ["liquid vaccine", "freeze dried vaccine", "both", "none of the above"],
+      "answerIndex": 1,
+      "tags": ["BCG", "vaccine handling", "cold chain"],
+      "explanation": "BCG is supplied as a lyophilized (freeze-dried) vaccine that must be reconstituted with the correct diluent."
+    },
+    {
+      "id": 15,
+      "text": "The diluent used for reconstituting BCG vaccine is",
+      "options": ["normal saline", "distilled water", "dextrose", "none of the above"],
+      "answerIndex": 0,
+      "tags": ["BCG", "vaccine handling", "diluents"],
+      "explanation": "Use the manufacturer-provided normal saline diluent (not distilled water/dextrose) to ensure correct pH and stability."
+    },
+    {
+      "id": 16,
+      "text": "Reconstituted BCG vaccine should be used within",
+      "options": ["3 hours", "6 hours", "18 hours", "24 hours"],
+      "answerIndex": 1,
+      "tags": ["BCG", "open vial policy", "vaccine stability"],
+      "explanation": "After reconstitution, BCG potency falls quickly; use within 6 hours (discard remaining)."
+    },
+    {
+      "id": 17,
+      "text": "The age for BCG vaccination is recommended at",
+      "options": ["birth or at 6th week", "only 6th week", "6-8 weeks", "within 1 year"],
+      "answerIndex": 0,
+      "tags": ["BCG", "immunization schedule", "newborn"],
+      "explanation": "BCG is ideally given at birth (or at the earliest contact if missed). Programs also accept early infancy as catch-up."
+    },
+    {
+      "id": 18,
+      "text": "At the village level sputum for AFB is collected and fixed by",
+      "options": ["anganwadi worker", "village health guide", "health worker male", "health worker female"],
+      "answerIndex": 2,
+      "tags": ["tuberculosis", "RNTCP/NTETP", "program roles"],
+      "explanation": "Under field protocols, the multi-purpose male health worker typically handles sputum collection/fixation for microscopy."
+    },
+    {
+      "id": 19,
+      "text": "Source of most polio infections are",
+      "options": ["clinical cases", "sub clinical cases", "carrier", "both (b) & (c)"],
+      "answerIndex": 3,
+      "tags": ["polio", "epidemiology", "asymptomatic infection"],
+      "explanation": "Most poliovirus transmission arises from asymptomatic/subclinical infections and carriers, not just recognized paralytic cases."
+    },
+    {
+      "id": 20,
+      "text": "Risk factors for development of paralytic polio include",
+      "options": ["I/M injections", "Tonsillectomy", "DPT", "all of the above"],
+      "answerIndex": 3,
+      "tags": ["polio", "risk factors", "provocation poliomyelitis"],
+      "explanation": "‘Provocation’ polio has been associated with recent intramuscular injections; tonsillectomy relates to bulbar risk; hence all of the above."
+    }
+  ]
+}
