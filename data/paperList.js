@@ -6,6 +6,12 @@ const ALL_PAPERS = [
   // --- Nursing ---
   {
     tenant: 'nursing',
+    id: 'RML_BIO',
+    name: 'RML PREVIOUS Year Questions',
+    file: '/questions/Medical/kgmu/RML_bio.json',
+  },
+  {
+    tenant: 'nursing',
     id: 'nursing_officer_sample_questions',
     name: 'Nursing Officer Sample Questions',
     file: '/questions/Medical/kgmu/nursing_officer_sample_questions_full.json',
