@@ -11,6 +11,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.10.0",
     "next": "latest",
     "next-seo": "^6.8.0",
     "next-sitemap": "^4.2.3",

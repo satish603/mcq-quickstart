@@ -1,28 +1,21 @@
 // pages/api/get-scores.js
-import fs from 'fs';
-import path from 'path';
+import { getScores } from '../../lib/scoreStore';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { userId } = req.query;
-  const filePath = path.join(process.cwd(), 'data', 'scoreHistory.json');
-
-  let all = [];
   try {
-    all = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (_) {
-    all = [];
+    const { userId, limit } = req.query || {};
+    if (!userId) return res.status(400).json({ error: 'userId is required' });
+
+    const rows = await getScores(userId, Number(limit) || 50);
+    // Keep the same shape your UI expects:
+    return res.status(200).json({ rows });
+  } catch (err) {
+    console.error('get-scores error', err);
+    return res.status(500).json({ error: 'Failed to fetch scores' });
   }
-
-  const filtered = userId
-    ? all.filter((r) => r.userId === userId)
-    : all;
-
-  // newest first
-  filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-  return res.status(200).json({ rows: filtered });
 }

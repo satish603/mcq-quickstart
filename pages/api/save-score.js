@@ -1,36 +1,22 @@
 // pages/api/save-score.js
-import fs from 'fs';
-import path from 'path';
+import { saveScore } from '../../lib/scoreStore';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { userId, paper, score } = req.body;
-
-  const dataDir = path.join(process.cwd(), 'data');
-  const filePath = path.join(dataDir, 'scoreHistory.json');
-
-  // ensure data dir exists
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-
-  let history = [];
   try {
-    history = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (_) {
-    history = [];
+    const { userId, paper, score, meta } = req.body || {};
+    if (!userId || !paper || typeof score !== 'number') {
+      return res.status(400).json({ error: 'userId, paper, score are required' });
+    }
+
+    const record = await saveScore({ userId, paper, score, meta: meta || {} });
+    return res.status(200).json({ ok: true, record });
+  } catch (err) {
+    console.error('save-score error', err);
+    return res.status(500).json({ error: 'Failed to save score' });
   }
-
-  history.push({
-    userId: userId ?? '',
-    paper: paper ?? '',
-    score: Number.isFinite(score) ? score : 0,
-    timestamp: new Date().toISOString(),
-  });
-
-  fs.writeFileSync(filePath, JSON.stringify(history, null, 2), 'utf8');
-  return res.status(200).json({ success: true });
 }
