@@ -477,6 +477,7 @@ export default function Quiz() {
           peeked={peeked}
           bookmarked={bookmarked}
           questions={quizSet}
+          negativeMark={NEGATIVE_MARK}
           onRetry={() => router.push('/')}
         />
       </div>

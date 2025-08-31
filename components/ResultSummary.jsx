@@ -2,8 +2,8 @@
 import React from 'react';
 import ReviewAnswers from './ReviewAnswers';
 
-export default function ResultSummary({ selected, peeked = [], bookmarked = [], questions, onRetry }) {
-  const NEGATIVE_MARK = 0.25;
+export default function ResultSummary({ selected, peeked = [], bookmarked = [], questions, onRetry, negativeMark = 0.25 }) {
+  const NEGATIVE_MARK = Number(negativeMark ?? 0.25);
   const total = questions.length;
   const excluded = peeked.filter(Boolean).length;
   const effectiveTotal = Math.max(0, total - excluded);
