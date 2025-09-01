@@ -9,6 +9,10 @@ export default function AiMcqGenerator() {
   const [previewUrl, setPreviewUrl] = useState('');
   const [base64, setBase64] = useState('');
   const [mimeType, setMimeType] = useState('');
+  const [pdfBase64, setPdfBase64] = useState('');
+  const [pdfName, setPdfName] = useState('');
+  const [sourceType, setSourceType] = useState('image'); // image | prompt | pdf
+  const [promptText, setPromptText] = useState('');
   const [numQuestions, setNumQuestions] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -45,9 +49,14 @@ export default function AiMcqGenerator() {
     } catch {}
   }, [result]);
 
-  const canGenerate = useMemo(() => !!base64 && !!mimeType && !loading, [base64, mimeType, loading]);
+  const canGenerate = useMemo(() => {
+    if (loading) return false;
+    if (sourceType === 'prompt') return promptText.trim().length >= 8;
+    if (sourceType === 'pdf') return !!pdfBase64;
+    return !!base64 && !!mimeType; // image
+  }, [loading, sourceType, promptText, pdfBase64, base64, mimeType]);
 
-  const handleFileChange = (e) => {
+  const handleImageChange = (e) => {
     setError('');
     setResult(null);
     const f = e.target.files?.[0];
@@ -77,16 +86,52 @@ export default function AiMcqGenerator() {
     reader.readAsDataURL(f);
   };
 
+  const handlePdfChange = (e) => {
+    setError('');
+    setResult(null);
+    const f = e.target.files?.[0];
+    if (!f) {
+      setPdfBase64('');
+      setPdfName('');
+      return;
+    }
+    if (f.type !== 'application/pdf') {
+      setError('Please select a PDF file.');
+      return;
+    }
+    setPdfName(f.name);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result; // data:application/pdf;base64,....
+      const commaIdx = String(dataUrl).indexOf(',');
+      const b64 = commaIdx > -1 ? String(dataUrl).slice(commaIdx + 1) : '';
+      setPdfBase64(b64);
+    };
+    reader.onerror = () => setError('Failed to read PDF.');
+    reader.readAsDataURL(f);
+  };
+
   const handleGenerate = async () => {
     if (!canGenerate) return;
     setLoading(true);
     setError('');
     setResult(null);
     try {
+      const payload = { numQuestions: Number(numQuestions) || 10 };
+      if (sourceType === 'prompt') {
+        payload.prompt = promptText;
+      } else if (sourceType === 'pdf') {
+        payload.pdfBase64 = pdfBase64;
+        payload.mimeType = 'application/pdf';
+      } else {
+        payload.imageBase64 = base64;
+        payload.mimeType = mimeType;
+      }
+
       const res = await fetch('/api/generate-mcq', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: base64, mimeType, numQuestions: Number(numQuestions) || 10 }),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) {
         const msg = await res.text();
@@ -201,7 +246,7 @@ export default function AiMcqGenerator() {
 
   return (
     <section className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Left: Uploader */}
+      {/* Left: Source & Uploader */}
       <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-200/60 dark:bg-gray-900 dark:ring-gray-800">
         <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">AI MCQ Generator</h2>
         <p className="text-sm text-gray-500 mt-1 dark:text-gray-400">
@@ -211,16 +256,70 @@ export default function AiMcqGenerator() {
 
         <div className="mt-5 space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-            />
-            {previewUrl && (
-              <div className="mt-3">
-                <img src={previewUrl} alt="Preview" className="max-h-64 rounded-xl border border-gray-200 dark:border-gray-800" />
+            <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Source</label>
+            <div className="flex flex-wrap gap-2">
+              {['image','prompt','pdf'].map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setSourceType(t)}
+                  className={`rounded-2xl px-3 py-2 text-sm font-medium transition ring-1 ${
+                    sourceType === t
+                      ? 'bg-indigo-600 text-white ring-indigo-600'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 ring-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:ring-gray-700 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {t === 'image' ? 'Image' : t === 'prompt' ? 'Prompt/Topic' : 'PDF'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            {sourceType === 'image' && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                />
+                {previewUrl && (
+                  <div className="mt-3">
+                    <img src={previewUrl} alt="Preview" className="max-h-64 rounded-xl border border-gray-200 dark:border-gray-800" />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {sourceType === 'prompt' && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Topic / Prompt</label>
+                <textarea
+                  value={promptText}
+                  onChange={(e) => setPromptText(e.target.value)}
+                  placeholder="e.g., Operating Systems scheduling algorithms with focus on Round Robin and Priority Scheduling"
+                  rows={4}
+                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                />
+                <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Minimum 8 characters. Include topics, difficulty, and constraints if needed.</p>
+              </div>
+            )}
+
+            {sourceType === 'pdf' && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">PDF</label>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handlePdfChange}
+                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                />
+                {pdfName && (
+                  <div className="mt-2 text-xs text-gray-600 dark:text-gray-300">Selected: {pdfName}</div>
+                )}
+                <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Large PDFs may take longer. First ~20MB supported.</p>
               </div>
             )}
           </div>

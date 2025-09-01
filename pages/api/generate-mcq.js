@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '10mb',
+      sizeLimit: '20mb',
     },
   },
 };
@@ -67,16 +67,20 @@ export default async function handler(req, res) {
   if (!apiKey) {
     return res.status(500).send('Server missing GEMINI_API_KEY');
   }
-  const { imageBase64, mimeType, numQuestions = 10 } = req.body || {};
-  if (!imageBase64 || !mimeType || typeof imageBase64 !== 'string' || typeof mimeType !== 'string') {
-    return res.status(400).send('imageBase64 and mimeType are required');
-  }
+  const { imageBase64, pdfBase64, mimeType, prompt, numQuestions = 10 } = req.body || {};
+  const src = (() => {
+    if (prompt && typeof prompt === 'string' && !imageBase64 && !pdfBase64) return 'prompt';
+    if (pdfBase64 && mimeType === 'application/pdf') return 'pdf';
+    if (imageBase64 && mimeType && typeof imageBase64 === 'string') return 'image';
+    return null;
+  })();
+  if (!src) return res.status(400).send('Provide either prompt, imageBase64+mimeType, or pdfBase64+application/pdf');
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
-    const prompt = `You are an expert MCQ maker. Analyze the provided image and create strictly JSON with shape:
+    const basePrompt = `You are an expert MCQ maker. Create strictly JSON with shape:
 {
   "questions": [
     { "id": 1, "text": "...", "options": ["A", "B", "C", "D"], "answerIndex": 0, "explanation": "...", "tags": ["..."] },
@@ -85,13 +89,21 @@ export default async function handler(req, res) {
 }
 Rules:
 - Return ONLY JSON, no extra commentary.
-- Create up to ${Number(numQuestions) || 10} high-quality questions based on the image text.
+- Create up to ${Number(numQuestions) || 10} high-quality questions based on the given source.
 - Each question must have exactly 4 options and one correct answer.
 - Keep text concise and clear. Explanation is optional.
 `;
 
-    const imagePart = { inlineData: { data: imageBase64, mimeType } };
-    const result = await model.generateContent([{ text: prompt }, imagePart]);
+    let result;
+    if (src === 'prompt') {
+      result = await model.generateContent([{ text: `${basePrompt}\n\nTopic/Prompt:\n${prompt}` }]);
+    } else if (src === 'pdf') {
+      const pdfPart = { inlineData: { data: pdfBase64, mimeType: 'application/pdf' } };
+      result = await model.generateContent([{ text: `${basePrompt}\n\nSource: PDF document.` }, pdfPart]);
+    } else {
+      const imagePart = { inlineData: { data: imageBase64, mimeType } };
+      result = await model.generateContent([{ text: `${basePrompt}\n\nSource: Image.` }, imagePart]);
+    }
     const aiText = result?.response?.text?.();
     if (!aiText) throw new Error('Empty response from model');
 
@@ -107,4 +119,3 @@ Rules:
     return res.status(500).send(err?.message || 'Generation failed');
   }
 }
-

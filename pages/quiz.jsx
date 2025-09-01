@@ -64,7 +64,8 @@ const loadSaved = (key) => {
 
 export default function Quiz() {
   const router = useRouter();
-  const { paper, time, userId, mode = 'medium', random } = router.query;
+  const { paper, time, userId: userIdParam, mode = 'medium', random } = router.query;
+  const [uid, setUid] = useState('');
 
   // data + ui
   const [quizSet, setQuizSet] = useState([]);
@@ -98,11 +99,31 @@ export default function Quiz() {
 
   // session keys/flags
   const sessionKey = useMemo(() => {
-    if (!userId || !paper) return null;
-    return `mcq_session:${userId}:${paper}:${mode}:${randomize ? '1' : '0'}`;
-  }, [userId, paper, mode, randomize]);
+    if (!uid || !paper) return null;
+    return `mcq_session:${uid}:${paper}:${mode}:${randomize ? '1' : '0'}`;
+  }, [uid, paper, mode, randomize]);
   const scoredRef = useRef(false);
   const resumedRef = useRef(false);
+  const [needUserId, setNeedUserId] = useState(false);
+
+  // Initialize user ID from query or localStorage; sync URL if missing
+  useEffect(() => {
+    if (!router.isReady) return;
+    const q = String(userIdParam || '').trim();
+    if (q) {
+      setUid(q);
+      try { localStorage.setItem('mcq_user_id', q); } catch {}
+      return;
+    }
+    try {
+      const fromLs = localStorage.getItem('mcq_user_id');
+      if (fromLs) {
+        setUid(fromLs);
+        const newQuery = { ...router.query, userId: fromLs };
+        router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+      }
+    } catch {}
+  }, [router.isReady]);
 
   // load questions (from file or DB) with saved order restoration if present
   useEffect(() => {
@@ -258,7 +279,7 @@ export default function Quiz() {
         const payload = {
           version: 2,
           ts: Date.now(),
-          userId,
+          userId: uid,
           paper,
           mode,
           randomize,
@@ -280,7 +301,7 @@ export default function Quiz() {
     },
     [
       sessionKey,
-      userId,
+      uid,
       paper,
       mode,
       randomize,
@@ -314,9 +335,11 @@ export default function Quiz() {
   const hasSavedRef = useRef(false);
   const saveScore = useCallback(() => {
     if (scoredRef.current || !quizSet.length) return;
+    if (!uid) { setNeedUserId(true); return; }
     const meta = calc();
+    const paperName = (paperMeta?.name) || (paperMetaDb?.name) || String(paper || '');
     const payload = {
-      userId,
+      userId: uid,
       paper,
       score: meta.score,
       meta: {
@@ -327,18 +350,20 @@ export default function Quiz() {
         durationSec: initialTimeSec,
         timeLeftSec: timeLeft ?? 0,
         elapsedSec: Math.max(0, (initialTimeSec || 0) - (timeLeft ?? 0)),
+        paperName,
       },
     };
     fetch('/api/save-score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    }).catch(() => {});
-    scoredRef.current = true;
+    })
+      .then(() => { scoredRef.current = true; })
+      .catch(() => {});
     try {
       if (sessionKey) localStorage.removeItem(sessionKey);
     } catch {}
-  }, [userId, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
+  }, [uid, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
 
   // countdown
   useEffect(() => {
@@ -480,6 +505,43 @@ export default function Quiz() {
   if (isFinished) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-6 px-4">
+        {!uid && (
+          <div className="mx-auto max-w-5xl mb-4">
+            <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800 dark:bg-amber-900/20 dark:border-amber-900/30 dark:text-amber-200">
+              Enter your User ID to save this score.
+              <div className="mt-2 flex items-center gap-2">
+                <input
+                  placeholder="e.g., john01"
+                  className="flex-1 rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const v = e.currentTarget.value.trim();
+                      if (v) {
+                        setUid(v);
+                        try { localStorage.setItem('mcq_user_id', v); } catch {}
+                        const newQuery = { ...router.query, userId: v };
+                        router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                      }
+                    }
+                  }}
+                />
+                <button
+                  className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm"
+                  onClick={() => {
+                    const el = document.activeElement;
+                    const v = el && el.value ? String(el.value).trim() : '';
+                    if (v) {
+                      setUid(v);
+                      try { localStorage.setItem('mcq_user_id', v); } catch {}
+                      const newQuery = { ...router.query, userId: v };
+                      router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                    }
+                  }}
+                >Save</button>
+              </div>
+            </div>
+          </div>
+        )}
         <ResultSummary
           selected={selected}
           peeked={peeked}
@@ -523,6 +585,27 @@ export default function Quiz() {
               >
                 Map
               </button>
+              {!uid && (
+                <div className="hidden sm:flex items-center gap-2">
+                  <input
+                    placeholder="Enter User ID"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const v = e.currentTarget.value.trim();
+                        if (v) {
+                          setUid(v);
+                          try { localStorage.setItem('mcq_user_id', v); } catch {}
+                          setNeedUserId(false);
+                          const newQuery = { ...router.query, userId: v };
+                          router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                        }
+                      }
+                    }}
+                    className="rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-900"
+                  />
+                  <span className="text-xs text-gray-500 dark:text-gray-400">needed to save scores</span>
+                </div>
+              )}
               {timeLeft !== null ? (
                 <Timer timeLeft={timeLeft} />
               ) : (
@@ -572,10 +655,51 @@ export default function Quiz() {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-5xl px-4 pb-2">
-          <ProgressBar value={progress} />
+      <div className="mx-auto max-w-5xl px-4 pb-2">
+        <ProgressBar value={progress} />
+      </div>
+    </div>
+
+    {/* Ask for User ID when needed (mobile friendly) */}
+    {!uid && needUserId && (
+      <div className="mx-auto max-w-5xl px-4 mt-3">
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-900/20 dark:border-amber-900/30 dark:text-amber-200">
+          Enter your User ID to save progress & scores.
+          <div className="mt-2 flex items-center gap-2">
+            <input
+              placeholder="e.g., john01"
+              className="flex-1 rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const v = e.currentTarget.value.trim();
+                  if (v) {
+                    setUid(v);
+                    try { localStorage.setItem('mcq_user_id', v); } catch {}
+                    setNeedUserId(false);
+                    const newQuery = { ...router.query, userId: v };
+                    router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                  }
+                }
+              }}
+            />
+            <button
+              className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm"
+              onClick={() => {
+                const el = document.activeElement;
+                const v = el && el.value ? String(el.value).trim() : '';
+                if (v) {
+                  setUid(v);
+                  try { localStorage.setItem('mcq_user_id', v); } catch {}
+                  setNeedUserId(false);
+                  const newQuery = { ...router.query, userId: v };
+                  router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                }
+              }}
+            >Save</button>
+          </div>
         </div>
       </div>
+    )}
 
       {/* Body */}
       <div className="mx-auto max-w-5xl p-4">
