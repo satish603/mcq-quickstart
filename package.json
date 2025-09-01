@@ -11,6 +11,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.17.0",
     "@vercel/postgres": "^0.10.0",
     "next": "latest",
     "next-seo": "^6.8.0",
