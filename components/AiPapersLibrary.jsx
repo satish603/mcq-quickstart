@@ -2,6 +2,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TENANT } from '../lib/siteConfig';
 
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+const PREVIEW_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function readCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+function writeCache(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+
 export default function AiPapersLibrary({ userId = '' }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,18 +23,27 @@ export default function AiPapersLibrary({ userId = '' }) {
   const [mineOnly, setMineOnly] = useState(false);
   const [openPreviewId, setOpenPreviewId] = useState(null);
   const [previewCache, setPreviewCache] = useState({}); // id -> { questions: [] }
+  const cacheKey = `aiLibrary:${TENANT}`;
 
-  const load = async () => {
-    setLoading(true);
+  const load = async ({ force = false } = {}) => {
     setError('');
+    const cached = readCache(cacheKey);
+    const fresh = cached && Date.now() - (cached.ts || 0) < CACHE_TTL_MS;
+    if (cached) {
+      setRows(Array.isArray(cached.rows) ? cached.rows : []);
+      if (fresh && !force) return;
+    }
+    setLoading(true);
     try {
       const res = await fetch(`/api/papers/list?tenant=${encodeURIComponent(TENANT)}`);
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
-      setRows(Array.isArray(data?.rows) ? data.rows : []);
+      const list = Array.isArray(data?.rows) ? data.rows : [];
+      setRows(list);
+      writeCache(cacheKey, { ts: Date.now(), rows: list });
     } catch (e) {
       setError(e?.message || 'Failed to load');
-      setRows([]);
+      if (cached?.rows) setRows(cached.rows);
     } finally {
       setLoading(false);
     }
@@ -29,6 +51,22 @@ export default function AiPapersLibrary({ userId = '' }) {
 
   useEffect(() => {
     load();
+    // hydrate preview cache from localStorage
+    try {
+      const prefix = 'aiPreview:';
+      const keys = Object.keys(localStorage);
+      const entries = {};
+      for (const k of keys) {
+        if (k.startsWith(prefix)) {
+          const cached = readCache(k);
+          if (cached && Date.now() - (cached.ts || 0) < PREVIEW_TTL_MS) {
+            const id = k.slice(prefix.length);
+            entries[id] = { questions: cached.questions || [] };
+          }
+        }
+      }
+      if (Object.keys(entries).length) setPreviewCache(entries);
+    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,11 +90,19 @@ export default function AiPapersLibrary({ userId = '' }) {
     }
     setOpenPreviewId(id);
     if (previewCache[id]) return;
+    const localKey = `aiPreview:${id}`;
+    const cached = readCache(localKey);
+    if (cached && Date.now() - (cached.ts || 0) < PREVIEW_TTL_MS) {
+      setPreviewCache((prev) => ({ ...prev, [id]: { questions: cached.questions || [] } }));
+      return;
+    }
     try {
       const res = await fetch(`/api/papers/get?id=${encodeURIComponent(id)}`);
       if (res.ok) {
         const data = await res.json();
-        setPreviewCache((prev) => ({ ...prev, [id]: { questions: data?.questions || [] } }));
+        const entry = { questions: data?.questions || [] };
+        setPreviewCache((prev) => ({ ...prev, [id]: entry }));
+        writeCache(localKey, { ts: Date.now(), ...entry });
       }
     } catch {
       // ignore
@@ -81,10 +127,22 @@ export default function AiPapersLibrary({ userId = '' }) {
                 My papers
               </label>
             )}
-            <button onClick={load} className="rounded-xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200">Refresh</button>
+            <button onClick={() => load({ force: true })} className="rounded-xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200">Refresh</button>
           </div>
-        </div>
       </div>
+    </div>
+
+      {loading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200/60 dark:bg-gray-900 dark:ring-gray-800 animate-pulse">
+              <div className="h-4 w-2/3 bg-gray-200 dark:bg-gray-800 rounded"></div>
+              <div className="mt-2 h-3 w-1/3 bg-gray-200 dark:bg-gray-800 rounded"></div>
+              <div className="mt-4 h-8 w-full bg-gray-200 dark:bg-gray-800 rounded"></div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {loading && (
         <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200/60 dark:bg-gray-900 dark:ring-gray-800">Loading…</div>
@@ -153,4 +211,3 @@ export default function AiPapersLibrary({ userId = '' }) {
     </section>
   );
 }
-

@@ -279,12 +279,14 @@ export default function AiMcqGenerator() {
             {sourceType === 'image' && (
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-                />
+                <input id="imgInput" type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                <div className="flex items-center gap-3">
+                  <label htmlFor="imgInput" className="inline-flex cursor-pointer items-center gap-2 rounded-2xl bg-gray-900 text-white px-4 py-2 text-sm shadow-sm hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200">
+                    <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V8.4a2 2 0 00-.59-1.41l-3.4-3.4A2 2 0 0012.6 3H4zm2 6a3 3 0 116 0 3 3 0 01-6 0z"/></svg>
+                    Select Image
+                  </label>
+                  <span className="text-xs text-gray-600 dark:text-gray-300 truncate max-w-[220px]">{file?.name || 'No file selected'}</span>
+                </div>
                 {previewUrl && (
                   <div className="mt-3">
                     <img src={previewUrl} alt="Preview" className="max-h-64 rounded-xl border border-gray-200 dark:border-gray-800" />
@@ -310,15 +312,14 @@ export default function AiMcqGenerator() {
             {sourceType === 'pdf' && (
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">PDF</label>
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handlePdfChange}
-                  className="w-full rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-                />
-                {pdfName && (
-                  <div className="mt-2 text-xs text-gray-600 dark:text-gray-300">Selected: {pdfName}</div>
-                )}
+                <input id="pdfInput" type="file" accept="application/pdf" onChange={handlePdfChange} className="hidden" />
+                <div className="flex items-center gap-3">
+                  <label htmlFor="pdfInput" className="inline-flex cursor-pointer items-center gap-2 rounded-2xl bg-gray-900 text-white px-4 py-2 text-sm shadow-sm hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200">
+                    <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h7a1 1 0 00.7-.3l4-4A1 1 0 0014 12V5a2 2 0 00-2-2H4z"/></svg>
+                    Select PDF
+                  </label>
+                  <span className="text-xs text-gray-600 dark:text-gray-300 truncate max-w-[220px]">{pdfName || 'No file selected'}</span>
+                </div>
                 <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Large PDFs may take longer. First ~20MB supported.</p>
               </div>
             )}
