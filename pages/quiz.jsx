@@ -64,7 +64,8 @@ const loadSaved = (key) => {
 
 export default function Quiz() {
   const router = useRouter();
-  const { paper, time, userId, mode = 'medium', random } = router.query;
+  const { paper, time, userId: userIdParam, mode = 'medium', random } = router.query;
+  const [uid, setUid] = useState('');
 
   // data + ui
   const [quizSet, setQuizSet] = useState([]);
@@ -91,59 +92,85 @@ export default function Quiz() {
   const NEGATIVE_MARK = useMemo(() => getNegativeMark(String(paper || '')), [paper]);
   const paperMeta = useMemo(() => paperList.find((p) => p.id === paper), [paper]);
   const filePath = paperMeta ? paperMeta.file : null;
+  const isDbPaper = useMemo(() => !paperMeta && typeof paper === 'string' && paper.startsWith('db:'), [paperMeta, paper]);
+  const dbPaperId = useMemo(() => (isDbPaper ? String(paper).slice(3) : null), [isDbPaper, paper]);
+  const [paperMetaDb, setPaperMetaDb] = useState(null); // { name, createdBy }
   const randomize = random === '1' || random === 'true';
 
   // session keys/flags
   const sessionKey = useMemo(() => {
-    if (!userId || !paper) return null;
-    return `mcq_session:${userId}:${paper}:${mode}:${randomize ? '1' : '0'}`;
-  }, [userId, paper, mode, randomize]);
+    if (!uid || !paper) return null;
+    return `mcq_session:${uid}:${paper}:${mode}:${randomize ? '1' : '0'}`;
+  }, [uid, paper, mode, randomize]);
   const scoredRef = useRef(false);
   const resumedRef = useRef(false);
+  const [needUserId, setNeedUserId] = useState(false);
 
-  // load questions (with saved order restoration if present)
+  // Initialize user ID from query or localStorage; sync URL if missing
   useEffect(() => {
-    if (!filePath) {
-      setLoading(false);
-      setQuizSet([]);
-      setOrder([]);
-      setTimeLeft(null);
+    if (!router.isReady) return;
+    const q = String(userIdParam || '').trim();
+    if (q) {
+      setUid(q);
+      try { localStorage.setItem('mcq_user_id', q); } catch {}
       return;
     }
-    setLoading(true);
+    try {
+      const fromLs = localStorage.getItem('mcq_user_id');
+      if (fromLs) {
+        setUid(fromLs);
+        const newQuery = { ...router.query, userId: fromLs };
+        router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+      }
+    } catch {}
+  }, [router.isReady]);
 
-    fetch(filePath)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load question set');
-        return res.json();
-      })
-      .then((data) => {
+  // load questions (from file or DB) with saved order restoration if present
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        let data = null;
+        if (filePath) {
+          const res = await fetch(filePath);
+          if (!res.ok) throw new Error('Failed to load question set');
+          data = await res.json();
+        } else if (isDbPaper && dbPaperId) {
+          const res = await fetch(`/api/papers/get?id=${encodeURIComponent(dbPaperId)}`);
+          if (!res.ok) throw new Error('Failed to load DB paper');
+          const json = await res.json();
+          setPaperMetaDb({ name: json?.name, createdBy: json?.createdBy });
+          data = { questions: Array.isArray(json?.questions) ? json.questions : [] };
+        } else {
+          setQuizSet([]);
+          setOrder([]);
+          setTimeLeft(null);
+          setLoading(false);
+          return;
+        }
+
         const rawArr = Array.isArray(data?.questions)
           ? data.questions
           : Array.isArray(data)
           ? data
           : [];
 
-        // Try to restore exact order from saved session (if randomize)
         let final = rawArr;
         let finalOrder = makeOrder(rawArr);
 
         if (randomize) {
           const saved = sessionKey ? loadSaved(sessionKey) : null;
-
           if (
             saved &&
             saved.version === 2 &&
             saved.total === rawArr.length &&
             Array.isArray(saved.order)
           ) {
-            // build dict by stableKey for rawArr
             const dict = new Map(rawArr.map((q) => [stableKey(q), q]));
             const attempt = saved.order.map((k) => dict.get(k)).filter(Boolean);
-
             if (attempt.length === rawArr.length) {
               final = attempt;
-              finalOrder = [...saved.order]; // exact same order keys as saved
+              finalOrder = [...saved.order];
             } else {
               final = shuffle(rawArr);
               finalOrder = makeOrder(final);
@@ -160,17 +187,19 @@ export default function Quiz() {
         setPeeked(new Array(final.length).fill(false));
         setBookmarked(new Array(final.length).fill(false));
         setCurrentIdx(0);
-        setTimeLeft(null); // will be set by mode/custom or resume
+        setTimeLeft(null);
         resumedRef.current = false;
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
         setQuizSet([]);
         setOrder([]);
         setTimeLeft(null);
-      })
-      .finally(() => setLoading(false));
-  }, [filePath, randomize, sessionKey]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [filePath, isDbPaper, dbPaperId, randomize, sessionKey]);
 
   // initial total time
   const initialTimeSec = useMemo(() => {
@@ -250,7 +279,7 @@ export default function Quiz() {
         const payload = {
           version: 2,
           ts: Date.now(),
-          userId,
+          userId: uid,
           paper,
           mode,
           randomize,
@@ -272,7 +301,7 @@ export default function Quiz() {
     },
     [
       sessionKey,
-      userId,
+      uid,
       paper,
       mode,
       randomize,
@@ -306,9 +335,11 @@ export default function Quiz() {
   const hasSavedRef = useRef(false);
   const saveScore = useCallback(() => {
     if (scoredRef.current || !quizSet.length) return;
+    if (!uid) { setNeedUserId(true); return; }
     const meta = calc();
+    const paperName = (paperMeta?.name) || (paperMetaDb?.name) || String(paper || '');
     const payload = {
-      userId,
+      userId: uid,
       paper,
       score: meta.score,
       meta: {
@@ -319,18 +350,20 @@ export default function Quiz() {
         durationSec: initialTimeSec,
         timeLeftSec: timeLeft ?? 0,
         elapsedSec: Math.max(0, (initialTimeSec || 0) - (timeLeft ?? 0)),
+        paperName,
       },
     };
     fetch('/api/save-score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    }).catch(() => {});
-    scoredRef.current = true;
+    })
+      .then(() => { scoredRef.current = true; })
+      .catch(() => {});
     try {
       if (sessionKey) localStorage.removeItem(sessionKey);
     } catch {}
-  }, [userId, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
+  }, [uid, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
 
   // countdown
   useEffect(() => {
@@ -472,6 +505,43 @@ export default function Quiz() {
   if (isFinished) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-6 px-4">
+        {!uid && (
+          <div className="mx-auto max-w-5xl mb-4">
+            <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800 dark:bg-amber-900/20 dark:border-amber-900/30 dark:text-amber-200">
+              Enter your User ID to save this score.
+              <div className="mt-2 flex items-center gap-2">
+                <input
+                  placeholder="e.g., john01"
+                  className="flex-1 rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const v = e.currentTarget.value.trim();
+                      if (v) {
+                        setUid(v);
+                        try { localStorage.setItem('mcq_user_id', v); } catch {}
+                        const newQuery = { ...router.query, userId: v };
+                        router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                      }
+                    }
+                  }}
+                />
+                <button
+                  className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm"
+                  onClick={() => {
+                    const el = document.activeElement;
+                    const v = el && el.value ? String(el.value).trim() : '';
+                    if (v) {
+                      setUid(v);
+                      try { localStorage.setItem('mcq_user_id', v); } catch {}
+                      const newQuery = { ...router.query, userId: v };
+                      router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                    }
+                  }}
+                >Save</button>
+              </div>
+            </div>
+          </div>
+        )}
         <ResultSummary
           selected={selected}
           peeked={peeked}
@@ -493,11 +563,14 @@ export default function Quiz() {
             <div className="text-sm text-gray-600 dark:text-gray-300">
               <button className="hover:underline" onClick={() => router.push('/')}>Home</button>
               <span className="mx-1">/</span>
-              <span>{paperMeta?.name ?? 'Quiz'}</span>
+              <span>{paperMeta?.name ?? paperMetaDb?.name ?? 'Quiz'}</span>
               <span className="mx-1">/</span>
               <span>Q{currentIdx + 1}</span>
               <span className="mx-2 text-gray-400">•</span>
               <span>Mode: <strong className="capitalize">{String(mode)}</strong></span>
+              {paperMetaDb?.createdBy && (
+                <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">by {paperMetaDb.createdBy}</span>
+              )}
               {randomize && (
                 <span className="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300">
                   random
@@ -512,6 +585,27 @@ export default function Quiz() {
               >
                 Map
               </button>
+              {!uid && (
+                <div className="hidden sm:flex items-center gap-2">
+                  <input
+                    placeholder="Enter User ID"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        const v = e.currentTarget.value.trim();
+                        if (v) {
+                          setUid(v);
+                          try { localStorage.setItem('mcq_user_id', v); } catch {}
+                          setNeedUserId(false);
+                          const newQuery = { ...router.query, userId: v };
+                          router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                        }
+                      }
+                    }}
+                    className="rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-900"
+                  />
+                  <span className="text-xs text-gray-500 dark:text-gray-400">needed to save scores</span>
+                </div>
+              )}
               {timeLeft !== null ? (
                 <Timer timeLeft={timeLeft} />
               ) : (
@@ -561,10 +655,51 @@ export default function Quiz() {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-5xl px-4 pb-2">
-          <ProgressBar value={progress} />
+      <div className="mx-auto max-w-5xl px-4 pb-2">
+        <ProgressBar value={progress} />
+      </div>
+    </div>
+
+    {/* Ask for User ID when needed (mobile friendly) */}
+    {!uid && needUserId && (
+      <div className="mx-auto max-w-5xl px-4 mt-3">
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-900/20 dark:border-amber-900/30 dark:text-amber-200">
+          Enter your User ID to save progress & scores.
+          <div className="mt-2 flex items-center gap-2">
+            <input
+              placeholder="e.g., john01"
+              className="flex-1 rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const v = e.currentTarget.value.trim();
+                  if (v) {
+                    setUid(v);
+                    try { localStorage.setItem('mcq_user_id', v); } catch {}
+                    setNeedUserId(false);
+                    const newQuery = { ...router.query, userId: v };
+                    router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                  }
+                }
+              }}
+            />
+            <button
+              className="rounded-xl bg-indigo-600 text-white px-3 py-2 text-sm"
+              onClick={() => {
+                const el = document.activeElement;
+                const v = el && el.value ? String(el.value).trim() : '';
+                if (v) {
+                  setUid(v);
+                  try { localStorage.setItem('mcq_user_id', v); } catch {}
+                  setNeedUserId(false);
+                  const newQuery = { ...router.query, userId: v };
+                  router.replace({ pathname: router.pathname, query: newQuery }, undefined, { shallow: true });
+                }
+              }}
+            >Save</button>
+          </div>
         </div>
       </div>
+    )}
 
       {/* Body */}
       <div className="mx-auto max-w-5xl p-4">

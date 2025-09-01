@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import 'tailwindcss/tailwind.css';
 import { paperList } from '../data/paperList';
 import ScoreHistory from '../components/ScoreHistory';
+import AiMcqGenerator from '../components/AiMcqGenerator';
+import AiPapersLibrary from '../components/AiPapersLibrary';
 import ThemeToggle from '../components/ThemeToggle';
 import { NextSeo } from 'next-seo';
 import { SITE_NAME, TAGLINE, SITE_URL, TENANT, GSC_VERIFICATION } from '../lib/siteConfig';
@@ -13,7 +15,7 @@ export default function Home() {
   const router = useRouter();
 
   // state
-  const [activeTab, setActiveTab] = useState('quiz'); // 'quiz' | 'scores'
+  const [activeTab, setActiveTab] = useState('quiz'); // 'quiz' | 'scores' | 'ai' | 'library'
   const [userId, setUserId] = useState('');
   const [selectedPaper, setSelectedPaper] = useState('');
   const [mode, setMode] = useState('medium');       // easy | medium | hard | custom
@@ -192,9 +194,32 @@ export default function Home() {
             >
               My Scores
             </button>
+            <button
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
+                activeTab === 'ai'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+              }`}
+              onClick={() => setActiveTab('ai')}
+              aria-pressed={activeTab === 'ai'}
+            >
+              AI Generator
+            </button>
+            <button
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
+                activeTab === 'library'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+              }`}
+              onClick={() => setActiveTab('library')}
+              aria-pressed={activeTab === 'library'}
+            >
+              AI Library
+            </button>
           </div>
 
-          {/* Shared User ID */}
+          {/* Shared User ID (hide on AI Generator only) */}
+          {activeTab !== 'ai' && (
           <div className="mt-4">
             <label className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-200">
               User ID
@@ -218,6 +243,7 @@ export default function Home() {
               This ID is used to save & fetch your scores on this device.
             </p>
           </div>
+          )}
         </div>
 
         {/* Tab Content */}
@@ -348,6 +374,12 @@ export default function Home() {
           <section className="mt-6">
             <ScoreHistory userId={userId} rows={scores} loading={loadingScores} onRefresh={fetchScores} />
           </section>
+        )}
+        {activeTab === 'ai' && (
+          <AiMcqGenerator />
+        )}
+        {activeTab === 'library' && (
+          <AiPapersLibrary userId={userId} />
         )}
       </main>
 
