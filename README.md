@@ -186,5 +186,5 @@ Community papers (AI Library) are stored in Postgres. After saving via AI Genera
 
 ---
 
-Copyright © THEBRCHUB.
+Copyright © [THEBRCHUB](https://www.thebrchub.tech/).
 
