@@ -91,6 +91,9 @@ export default function Quiz() {
   const NEGATIVE_MARK = useMemo(() => getNegativeMark(String(paper || '')), [paper]);
   const paperMeta = useMemo(() => paperList.find((p) => p.id === paper), [paper]);
   const filePath = paperMeta ? paperMeta.file : null;
+  const isDbPaper = useMemo(() => !paperMeta && typeof paper === 'string' && paper.startsWith('db:'), [paperMeta, paper]);
+  const dbPaperId = useMemo(() => (isDbPaper ? String(paper).slice(3) : null), [isDbPaper, paper]);
+  const [paperMetaDb, setPaperMetaDb] = useState(null); // { name, createdBy }
   const randomize = random === '1' || random === 'true';
 
   // session keys/flags
@@ -101,49 +104,52 @@ export default function Quiz() {
   const scoredRef = useRef(false);
   const resumedRef = useRef(false);
 
-  // load questions (with saved order restoration if present)
+  // load questions (from file or DB) with saved order restoration if present
   useEffect(() => {
-    if (!filePath) {
-      setLoading(false);
-      setQuizSet([]);
-      setOrder([]);
-      setTimeLeft(null);
-      return;
-    }
-    setLoading(true);
+    const load = async () => {
+      try {
+        setLoading(true);
+        let data = null;
+        if (filePath) {
+          const res = await fetch(filePath);
+          if (!res.ok) throw new Error('Failed to load question set');
+          data = await res.json();
+        } else if (isDbPaper && dbPaperId) {
+          const res = await fetch(`/api/papers/get?id=${encodeURIComponent(dbPaperId)}`);
+          if (!res.ok) throw new Error('Failed to load DB paper');
+          const json = await res.json();
+          setPaperMetaDb({ name: json?.name, createdBy: json?.createdBy });
+          data = { questions: Array.isArray(json?.questions) ? json.questions : [] };
+        } else {
+          setQuizSet([]);
+          setOrder([]);
+          setTimeLeft(null);
+          setLoading(false);
+          return;
+        }
 
-    fetch(filePath)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load question set');
-        return res.json();
-      })
-      .then((data) => {
         const rawArr = Array.isArray(data?.questions)
           ? data.questions
           : Array.isArray(data)
           ? data
           : [];
 
-        // Try to restore exact order from saved session (if randomize)
         let final = rawArr;
         let finalOrder = makeOrder(rawArr);
 
         if (randomize) {
           const saved = sessionKey ? loadSaved(sessionKey) : null;
-
           if (
             saved &&
             saved.version === 2 &&
             saved.total === rawArr.length &&
             Array.isArray(saved.order)
           ) {
-            // build dict by stableKey for rawArr
             const dict = new Map(rawArr.map((q) => [stableKey(q), q]));
             const attempt = saved.order.map((k) => dict.get(k)).filter(Boolean);
-
             if (attempt.length === rawArr.length) {
               final = attempt;
-              finalOrder = [...saved.order]; // exact same order keys as saved
+              finalOrder = [...saved.order];
             } else {
               final = shuffle(rawArr);
               finalOrder = makeOrder(final);
@@ -160,17 +166,19 @@ export default function Quiz() {
         setPeeked(new Array(final.length).fill(false));
         setBookmarked(new Array(final.length).fill(false));
         setCurrentIdx(0);
-        setTimeLeft(null); // will be set by mode/custom or resume
+        setTimeLeft(null);
         resumedRef.current = false;
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
         setQuizSet([]);
         setOrder([]);
         setTimeLeft(null);
-      })
-      .finally(() => setLoading(false));
-  }, [filePath, randomize, sessionKey]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [filePath, isDbPaper, dbPaperId, randomize, sessionKey]);
 
   // initial total time
   const initialTimeSec = useMemo(() => {
@@ -493,11 +501,14 @@ export default function Quiz() {
             <div className="text-sm text-gray-600 dark:text-gray-300">
               <button className="hover:underline" onClick={() => router.push('/')}>Home</button>
               <span className="mx-1">/</span>
-              <span>{paperMeta?.name ?? 'Quiz'}</span>
+              <span>{paperMeta?.name ?? paperMetaDb?.name ?? 'Quiz'}</span>
               <span className="mx-1">/</span>
               <span>Q{currentIdx + 1}</span>
               <span className="mx-2 text-gray-400">•</span>
               <span>Mode: <strong className="capitalize">{String(mode)}</strong></span>
+              {paperMetaDb?.createdBy && (
+                <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">by {paperMetaDb.createdBy}</span>
+              )}
               {randomize && (
                 <span className="ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300">
                   random
