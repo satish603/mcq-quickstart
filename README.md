@@ -2,7 +2,6 @@
 
 A production‑ready Next.js app for creating, practicing, and sharing multiple‑choice questions across tenants (IT, Nursing). Includes an AI MCQ Generator (image / prompt / PDF), a shared AI Library, resilient quiz engine with local session resume, and score history via API.
 
-> Screenshots below use placeholders — add your real images under `docs/screenshots/` and keep the filenames consistent.
 
 ## Table of Contents
 - [Overview](#overview)
