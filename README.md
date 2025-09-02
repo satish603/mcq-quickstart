@@ -29,7 +29,7 @@ A productionâ€‘ready Next.js app for creating, practicing, and sharing multipleâ
 - Strong UX: editing/previewing AI output, map/search/peek during quiz, session resume
 
 ## Screenshots
-> Replace these placeholders with real images in `docs/screenshots/`.
+
 
 - Home: ![Home](docs/screenshots/home.png)
 - Quiz: ![Quiz](docs/screenshots/quiz.png)
