@@ -9,7 +9,9 @@ export const config = {
   },
 };
 
-const MODEL_NAME = 'gemini-1.5-flash';
+
+// const MODEL_NAME = 'gemini-1.5-flash';
+const MODEL_NAME = 'gemini-2.0-flash';
 
 function extractJson(text) {
   if (!text || typeof text !== 'string') return null;
