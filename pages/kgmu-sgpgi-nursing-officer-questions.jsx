@@ -27,7 +27,7 @@ export default function KGMU_SGPGI_Landing() {
       {
         '@type': 'Question',
         name: 'Is negative marking applied after peeking?',
-        acceptedAnswer: { '@type': 'Answer', text: 'No. Peeked questions are excluded from scoring and negative marking.' }
+        acceptedAnswer: { '@type': 'Answer', text: 'No. Peeked questions count toward total marks but do not incur negative marking.' }
       }
     ],
   };

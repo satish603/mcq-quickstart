@@ -5,8 +5,7 @@ import ReviewAnswers from './ReviewAnswers';
 export default function ResultSummary({ selected, peeked = [], bookmarked = [], questions, onRetry, negativeMark = 0.25 }) {
   const NEGATIVE_MARK = Number(negativeMark ?? 0.25);
   const total = questions.length;
-  const excluded = peeked.filter(Boolean).length;
-  const effectiveTotal = Math.max(0, total - excluded);
+  const peekCount = peeked.filter(Boolean).length;
 
   const attempted = selected.reduce(
     (acc, ans, idx) => (!peeked[idx] && ans !== undefined ? acc + 1 : acc), 0
@@ -17,7 +16,8 @@ export default function ResultSummary({ selected, peeked = [], bookmarked = [], 
   const wrong = attempted - correct;
   const negative = wrong * NEGATIVE_MARK;
   const rawScore = correct - negative;
-  const percent = effectiveTotal > 0 ? ((rawScore / effectiveTotal) * 100).toFixed(2) : '0.00';
+  // Peeked questions count toward total marks; no negative applied for them
+  const percent = total > 0 ? ((rawScore / total) * 100).toFixed(2) : '0.00';
 
   return (
     <div className="w-full max-w-5xl mx-auto">
@@ -25,13 +25,12 @@ export default function ResultSummary({ selected, peeked = [], bookmarked = [], 
         <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">Quiz Complete!</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm mt-2 text-gray-700 dark:text-gray-300">
           <div><span className="font-medium">Total:</span> {total}</div>
-          <div><span className="font-medium">Peeked (excluded):</span> {excluded}</div>
-          <div><span className="font-medium">Counted:</span> {effectiveTotal}</div>
+          <div><span className="font-medium">Peeked (no negative):</span> {peekCount}</div>
           <div><span className="font-medium">Attempted:</span> {attempted}</div>
           <div><span className="font-medium">Correct:</span> {correct}</div>
           <div><span className="font-medium">Wrong:</span> {wrong}</div>
           <div className="col-span-2 sm:col-span-3">
-            <span className="font-medium">Score:</span> {rawScore.toFixed(2)} / {effectiveTotal} ({percent}%)
+            <span className="font-medium">Score:</span> {rawScore.toFixed(2)} / {total} ({percent}%)
           </div>
         </div>
 

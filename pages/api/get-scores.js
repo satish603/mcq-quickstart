@@ -1,5 +1,5 @@
 // pages/api/get-scores.js
-import { getScores } from '../../lib/scoreStore';
+import { getScores, getScoresAfter } from '../../lib/scoreStore';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -8,10 +8,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { userId, limit } = req.query || {};
+    const { userId, limit, afterId } = req.query || {};
     if (!userId) return res.status(400).json({ error: 'userId is required' });
 
-    const rows = await getScores(userId, Number(limit) || 50);
+    const lim = Number(limit) || 50;
+    const after = Number(afterId);
+    const rows = Number.isFinite(after) && after > 0
+      ? await getScoresAfter(userId, after, lim)
+      : await getScores(userId, lim);
     // Keep the same shape your UI expects:
     return res.status(200).json({ rows });
   } catch (err) {

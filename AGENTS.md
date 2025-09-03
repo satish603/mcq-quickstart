@@ -129,7 +129,7 @@ Question files live under `public/questions/**` and are referenced by `data/pape
 - Start with `npm run dev`. Validate:
   - Home loads; can select paper and start quiz.
   - Quiz loads questions from `public/questions/...` and timer runs.
-  - “Peek” excludes questions from scoring; bookmarking/search/map working.
+  - “Peek”: no negative marking, but peeked questions still count toward total marks; bookmarking/search/map working.
   - Completing quiz shows `ResultSummary`; a row appears via `GET /api/get-scores`.
 - If encoding artifacts (weird replacement characters) appear in UI text, prefer plain ASCII or proper UTF-8 literals.
 

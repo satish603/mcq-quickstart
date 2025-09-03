@@ -149,7 +149,7 @@ Community papers (AI Library) are stored in Postgres. After saving via AI Genera
 - Session keys: `mcq_session:${userId}:${paper}:${mode}:${random}`
 - Resume logic validates signature, length, and age (< 7 days)
 - Negative marking taken from `data/papers.config.js`
-- Peeked questions excluded from scoring
+- Peeked questions count toward total; no negative marking
 
 ## Score History API
 - Save: `POST /api/save-score` → `{ userId, paper, score, meta }`

@@ -102,7 +102,7 @@ export default function ReviewAnswers({ questions, selected, peeked = [], bookma
               <span className="font-medium text-gray-700 dark:text-gray-300">Your answer:&nbsp;</span>
               <span className={`font-semibold ${answerColor(wasPeeked, userChoice, isCorrect)}`}>
                 {wasPeeked
-                  ? 'Peeked (not counted)'
+                  ? 'Peeked (no negative)'
                   : userChoice !== undefined
                   ? q.options[userChoice]
                   : 'Unanswered'}
