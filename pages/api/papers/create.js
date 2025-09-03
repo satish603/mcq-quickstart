@@ -28,10 +28,21 @@ export default async function handler(req, res) {
   const id = genPaperId();
   try {
     await insertPaper({ id, tenant: tenant || TENANT, name: name.trim(), created_by: userId.trim(), questions: cleaned });
+
+    // Non-blocking sitemap ping (best-effort)
+    try {
+      const base = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/+$/, '');
+      if (base) {
+        const sitemapUrl = `${base}/sitemap-db.xml`;
+        // Fire and forget pings
+        fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`).catch(() => {});
+        fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`).catch(() => {});
+      }
+    } catch {}
+
     return res.status(200).json({ id, slug: id });
   } catch (e) {
     console.error('create paper error:', e);
     return res.status(500).send('failed to save paper');
   }
 }
-

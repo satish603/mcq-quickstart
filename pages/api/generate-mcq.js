@@ -10,8 +10,12 @@ export const config = {
 };
 
 
-// const MODEL_NAME = 'gemini-1.5-flash';
-const MODEL_NAME = 'gemini-2.0-flash';
+// Preferred models in fallback order; override with GEMINI_MODEL
+const MODEL_CANDIDATES = [
+  process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+  'gemini-1.5-flash',
+  'gemini-1.5-flash-8b',
+];
 
 function extractJson(text) {
   if (!text || typeof text !== 'string') return null;
@@ -80,7 +84,6 @@ export default async function handler(req, res) {
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
     const basePrompt = `You are an expert MCQ maker. Create strictly JSON with shape:
 {
@@ -96,18 +99,46 @@ Rules:
 - Keep text concise and clear. Explanation is optional.
 `;
 
-    let result;
+    // Build content parts once
+    let parts;
     if (src === 'prompt') {
-      result = await model.generateContent([{ text: `${basePrompt}\n\nTopic/Prompt:\n${prompt}` }]);
+      parts = [{ text: `${basePrompt}\n\nTopic/Prompt:\n${prompt}` }];
     } else if (src === 'pdf') {
       const pdfPart = { inlineData: { data: pdfBase64, mimeType: 'application/pdf' } };
-      result = await model.generateContent([{ text: `${basePrompt}\n\nSource: PDF document.` }, pdfPart]);
+      parts = [{ text: `${basePrompt}\n\nSource: PDF document.` }, pdfPart];
     } else {
       const imagePart = { inlineData: { data: imageBase64, mimeType } };
-      result = await model.generateContent([{ text: `${basePrompt}\n\nSource: Image.` }, imagePart]);
+      parts = [{ text: `${basePrompt}\n\nSource: Image.` }, imagePart];
     }
-    const aiText = result?.response?.text?.();
-    if (!aiText) throw new Error('Empty response from model');
+
+    // Try models with simple retry logic
+    let aiText = null;
+    const errors = [];
+    for (const modelName of MODEL_CANDIDATES) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        // up to 2 attempts per model
+        for (let attempt = 0; attempt < 2; attempt++) {
+          try {
+            const result = await model.generateContent(parts);
+            aiText = result?.response?.text?.();
+            if (aiText) break;
+          } catch (e) {
+            if (attempt === 0) await new Promise((r) => setTimeout(r, 300 + Math.random() * 400));
+            else throw e;
+          }
+        }
+        if (aiText) break;
+      } catch (e) {
+        errors.push(`${modelName}: ${e?.message || e}`);
+      }
+    }
+
+    if (!aiText) {
+      const hint = `Generation failed. Check network and GEMINI_API_KEY. Tried models: ${MODEL_CANDIDATES.join(', ')}`;
+      const detail = errors.length ? ` Errors: ${errors.join(' | ')}` : '';
+      throw new Error(hint + detail);
+    }
 
     const parsed = extractJson(aiText);
     if (!parsed) throw new Error('Failed to parse JSON from model output');
@@ -118,6 +149,11 @@ Rules:
     return res.status(200).json({ questions });
   } catch (err) {
     console.error('generate-mcq error:', err);
-    return res.status(500).send(err?.message || 'Generation failed');
+    const message = String(err?.message || 'Generation failed');
+    // Normalize library fetch error into a clearer hint for UI
+    if (/Error fetching from/i.test(message)) {
+      return res.status(502).json({ error: 'Upstream AI call failed. Verify GEMINI_API_KEY, model access, and server network.', detail: message });
+    }
+    return res.status(500).json({ error: message });
   }
 }

@@ -7,6 +7,11 @@ module.exports = {
   exclude: ['/quiz', '/api/*', '/404', '/500'],
   changefreq: 'weekly',
   priority: 0.7,
+  robotsTxtOptions: {
+    additionalSitemaps: [
+      `${siteUrl}/sitemap-db.xml`,
+    ],
+  },
   additionalPaths: async () => {
     const { paperList } = require('./data/paperList');
     const extra = [];
