@@ -16,6 +16,8 @@ const MODEL_CANDIDATES = [
   'gemini-1.5-flash',
   'gemini-1.5-flash-8b',
 ];
+const MAX_PER_CALL = 50;        // cap per model call to avoid truncation
+const MAX_TOTAL = 200;          // absolute upper bound server-side
 
 function extractJson(text) {
   if (!text || typeof text !== 'string') return null;
@@ -85,7 +87,7 @@ export default async function handler(req, res) {
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
 
-    const basePrompt = `You are an expert MCQ maker. Create strictly JSON with shape:
+    const basePromptTmpl = (count) => `You are an expert MCQ maker. Create strictly JSON with shape:
 {
   "questions": [
     { "id": 1, "text": "...", "options": ["A", "B", "C", "D"], "answerIndex": 0, "explanation": "...", "tags": ["..."] },
@@ -93,59 +95,88 @@ export default async function handler(req, res) {
   ]
 }
 Rules:
-- Return ONLY JSON, no extra commentary.
-- Create up to ${Number(numQuestions) || 10} high-quality questions based on the given source.
-- Each question must have exactly 4 options and one correct answer.
-- Keep text concise and clear. Explanation is optional.
+ - Return ONLY JSON, no extra commentary.
+ - Create up to ${count} high-quality questions based on the given source.
+ - Each question must have exactly 4 options and one correct answer.
+ - Keep text concise and clear. Explanation is optional.
 `;
-
-    // Build content parts once
-    let parts;
-    if (src === 'prompt') {
-      parts = [{ text: `${basePrompt}\n\nTopic/Prompt:\n${prompt}` }];
-    } else if (src === 'pdf') {
-      const pdfPart = { inlineData: { data: pdfBase64, mimeType: 'application/pdf' } };
-      parts = [{ text: `${basePrompt}\n\nSource: PDF document.` }, pdfPart];
-    } else {
-      const imagePart = { inlineData: { data: imageBase64, mimeType } };
-      parts = [{ text: `${basePrompt}\n\nSource: Image.` }, imagePart];
-    }
-
-    // Try models with simple retry logic
-    let aiText = null;
-    const errors = [];
-    for (const modelName of MODEL_CANDIDATES) {
-      try {
-        const model = genAI.getGenerativeModel({ model: modelName });
-        // up to 2 attempts per model
-        for (let attempt = 0; attempt < 2; attempt++) {
-          try {
-            const result = await model.generateContent(parts);
-            aiText = result?.response?.text?.();
-            if (aiText) break;
-          } catch (e) {
-            if (attempt === 0) await new Promise((r) => setTimeout(r, 300 + Math.random() * 400));
-            else throw e;
-          }
-        }
-        if (aiText) break;
-      } catch (e) {
-        errors.push(`${modelName}: ${e?.message || e}`);
+    const callOnce = async (count) => {
+      // Build content parts for this batch
+      let parts;
+      if (src === 'prompt') {
+        parts = [{ text: `${basePromptTmpl(count)}\n\nTopic/Prompt:\n${prompt}` }];
+      } else if (src === 'pdf') {
+        const pdfPart = { inlineData: { data: pdfBase64, mimeType: 'application/pdf' } };
+        parts = [{ text: `${basePromptTmpl(count)}\n\nSource: PDF document.` }, pdfPart];
+      } else {
+        const imagePart = { inlineData: { data: imageBase64, mimeType } };
+        parts = [{ text: `${basePromptTmpl(count)}\n\nSource: Image.` }, imagePart];
       }
+
+      let aiText = null;
+      const errors = [];
+      for (const modelName of MODEL_CANDIDATES) {
+        try {
+          const model = genAI.getGenerativeModel({
+            model: modelName,
+            generationConfig: {
+              responseMimeType: 'application/json',
+              maxOutputTokens: 8192,
+              temperature: 0.3,
+            },
+          });
+          // up to 2 attempts per model
+          for (let attempt = 0; attempt < 2; attempt++) {
+            try {
+              const result = await model.generateContent(parts);
+              aiText = result?.response?.text?.();
+              if (aiText) break;
+            } catch (e) {
+              if (attempt === 0) await new Promise((r) => setTimeout(r, 300 + Math.random() * 400));
+              else throw e;
+            }
+          }
+          if (aiText) break;
+        } catch (e) {
+          errors.push(`${modelName}: ${e?.message || e}`);
+        }
+      }
+      if (!aiText) {
+        const hint = `Generation failed. Check network and GEMINI_API_KEY. Tried models: ${MODEL_CANDIDATES.join(', ')}`;
+        const detail = errors.length ? ` Errors: ${errors.join(' | ')}` : '';
+        throw new Error(hint + detail);
+      }
+      const parsed = extractJson(aiText);
+      if (!parsed) throw new Error('Failed to parse JSON from model output');
+      const qs = normalizeQuestions(parsed);
+      return qs;
+    };
+
+    // Aggregate in safe batches for large requests
+    const target = Math.max(1, Math.min(MAX_TOTAL, Number(numQuestions) || 10));
+    const seen = new Set();
+    const all = [];
+    let guard = 0;
+    while (all.length < target && guard < 10) {
+      const need = Math.min(MAX_PER_CALL, target - all.length);
+      const batch = await callOnce(need);
+      for (const q of batch) {
+        const sig = `${q.text}||${Array.isArray(q.options) ? q.options.join('|') : ''}`.toLowerCase();
+        if (!seen.has(sig)) {
+          seen.add(sig);
+          all.push(q);
+          if (all.length >= target) break;
+        }
+      }
+      // stop if model returns nothing new
+      if (!batch.length) break;
+      guard++;
     }
 
-    if (!aiText) {
-      const hint = `Generation failed. Check network and GEMINI_API_KEY. Tried models: ${MODEL_CANDIDATES.join(', ')}`;
-      const detail = errors.length ? ` Errors: ${errors.join(' | ')}` : '';
-      throw new Error(hint + detail);
-    }
+    if (!all.length) throw new Error('No valid questions extracted');
 
-    const parsed = extractJson(aiText);
-    if (!parsed) throw new Error('Failed to parse JSON from model output');
-
-    const questions = normalizeQuestions(parsed);
-    if (!questions.length) throw new Error('No valid questions extracted');
-
+    // Re-id sequentially
+    const questions = all.map((q, idx) => ({ ...q, id: idx + 1 }));
     return res.status(200).json({ questions });
   } catch (err) {
     console.error('generate-mcq error:', err);
