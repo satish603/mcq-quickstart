@@ -42,7 +42,7 @@ See AGENTS.md for a deeper technical guide and code touchpoints.
 - Home page loads; tenant branding/SEO looks correct.
 - Can select a paper and start a quiz.
 - Timer counts down; random order persists across refresh.
-- Option selection locks; “Peek” excludes from scoring.
+- Option selection locks; “Peek” does not incur negative marking, but peeked questions still count toward total marks.
 - Map, bookmarks, and in-paper search work.
 - Finish shows `ResultSummary`; score matches expectations given negative mark.
 - Score history row appears via `/api/get-scores?userId=...`.

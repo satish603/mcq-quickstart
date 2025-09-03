@@ -1,5 +1,5 @@
 // components/AiMcqGenerator.jsx
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { TENANT } from '../lib/siteConfig';
 import QuizQuestion from './QuizQuestion';
 import ResultSummary from './ResultSummary';
@@ -22,6 +22,11 @@ export default function AiMcqGenerator() {
   const [saveBusy, setSaveBusy] = useState(false);
   const [savedId, setSavedId] = useState('');
   const [tab, setTab] = useState('json'); // json | edit | preview
+  // progress UI for generation
+  const [genProgress, setGenProgress] = useState(0);
+  const [genMessage, setGenMessage] = useState('');
+  const progTimerRef = useRef(null);
+  const msgTimerRef = useRef(null);
 
   // preview/test state
   const [pvIdx, setPvIdx] = useState(0);
@@ -51,10 +56,13 @@ export default function AiMcqGenerator() {
 
   const canGenerate = useMemo(() => {
     if (loading) return false;
+    const n = parseInt(numQuestions, 10);
+    const validCount = Number.isFinite(n) && n >= 1 && n <= 200;
+    if (!validCount) return false;
     if (sourceType === 'prompt') return promptText.trim().length >= 8;
     if (sourceType === 'pdf') return !!pdfBase64;
     return !!base64 && !!mimeType; // image
-  }, [loading, sourceType, promptText, pdfBase64, base64, mimeType]);
+  }, [loading, numQuestions, sourceType, promptText, pdfBase64, base64, mimeType]);
 
   const handleImageChange = (e) => {
     setError('');
@@ -116,8 +124,92 @@ export default function AiMcqGenerator() {
     setLoading(true);
     setError('');
     setResult(null);
+    // start progress and rotating messages
+    try { if (progTimerRef.current) clearInterval(progTimerRef.current); } catch {}
+    try { if (msgTimerRef.current) clearInterval(msgTimerRef.current); } catch {}
+    setGenProgress(2);
+    const messages = [
+      'Warming up the model…',
+      'Drafting questions…',
+      'Validating options…',
+      'Adding explanations…',
+      'Polishing JSON…',
+      'Almost there…',
+    ];
+    const messagesList =[
+        "Connecting to AI...",
+        "Understanding your topic...",
+        "Extracting key concepts...",
+        "Drafting questions...",
+        "Balancing easy/medium/hard...",
+        "Validating options...",
+        "Checking correct answers...",
+        "Writing concise explanations...",
+        "Checking for duplicates...",
+        "Ensuring exactly 4 options...",
+        "Removing duplicates...",
+        "Adding explanations...",
+        "Adding Tags...",
+        "Adding finishing touches...",
+        "Formatting JSON output...",
+        "Almost done...",
+        "Scanning for topic relevance...",
+        "Analyzing semantic relationships...",
+        "Refining question prompts...",
+        "Generating plausible distractors...",
+        "Cross-referencing knowledge graphs...",
+        "Fact-checking against a vast database...",
+        "Tuning for optimal question variety...",
+        "Finalizing quiz structure...",
+        "Synthesizing a summary...",
+        "Optimizing for user experience...",
+        "Preparing the final download...",
+        "Almost there...",
+        "Loading quiz data...",
+        "Rendering quiz questions...",
+        "Thinking up questions...",
+        "Scouring the knowledge base...",
+        "Synthesizing information...",
+        "Crafting the quiz...",
+        "Polishing the final questions...",
+        "Filtering for clarity and accuracy...",
+        "Ensuring options are plausible...",
+        "Verifying correct answers...",
+        "Checking for ambiguity...",
+        "Fact-checking the data...",
+        "Assembling the final quiz...",
+        "Adding explanations to each answer...",
+        "Categorizing questions with tags...",
+        "Getting the JSON ready for download...",
+        "Finalizing the output...",
+        "Learning the topic's nuances...",
+        "Finding the perfect balance of easy and hard questions...",
+        "Refining questions for clarity and precision...",
+        "Ensuring every question has a unique explanation...",
+        "Checking for any potential biases in the questions...",
+        "Optimizing the quiz for mobile and desktop...",
+        "Running a final quality assurance scan...",
+        "Just a moment more...",
+        "The quiz is taking shape...",
+        "Thanks for your patience!"
+      ];
+    setGenMessage(messagesList[0]);
+    progTimerRef.current = setInterval(() => {
+      setGenProgress((p) => {
+        const cap = 90;
+        if (p >= cap) return p;
+        const inc = 1 + Math.random() * 2.5; // 1-3.5
+        return Math.min(cap, p + inc);
+      });
+    }, 800);
+    msgTimerRef.current = setInterval(() => {
+      setGenMessage((prev) => {
+        const idx = messagesList.indexOf(prev);
+        return messagesList[(idx + 1) % messagesList.length];
+      });
+    }, 1200);
     try {
-      const payload = { numQuestions: Number(numQuestions) || 10 };
+      const payload = { numQuestions: Math.max(1, Math.min(200, Number(numQuestions) || 10)) };
       if (sourceType === 'prompt') {
         payload.prompt = promptText;
       } else if (sourceType === 'pdf') {
@@ -134,7 +226,13 @@ export default function AiMcqGenerator() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
-        const msg = await res.text();
+        let msg = 'Failed to generate MCQs.';
+        const ct = res.headers.get('Content-Type') || '';
+        if (ct.includes('application/json')) {
+          try { const j = await res.json(); msg = j?.error || j?.detail || msg; } catch {}
+        } else {
+          try { msg = await res.text(); } catch {}
+        }
         throw new Error(msg || 'Failed to generate MCQs.');
       }
       const data = await res.json();
@@ -143,10 +241,14 @@ export default function AiMcqGenerator() {
       }
       setResult({ questions: data.questions });
       setTab('edit');
+      setGenProgress(100);
+      setGenMessage('All set! Rendering results…');
     } catch (e) {
       setError(e?.message || 'Something went wrong.');
     } finally {
       setLoading(false);
+      try { if (progTimerRef.current) clearInterval(progTimerRef.current); } catch {}
+      try { if (msgTimerRef.current) clearInterval(msgTimerRef.current); } catch {}
     }
   };
 
@@ -330,11 +432,24 @@ export default function AiMcqGenerator() {
             <input
               type="number"
               min="1"
-              max="50"
+              max="200"
               value={numQuestions}
-              onChange={(e) => setNumQuestions(e.target.value)}
-              className="w-40 rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+              onChange={(e) => {
+                // Allow empty while editing; clamp on blur
+                setNumQuestions(e.target.value);
+              }}
+              onBlur={(e) => {
+                const n = parseInt(e.target.value, 10);
+                if (!Number.isFinite(n)) {
+                  setNumQuestions('');
+                } else {
+                  const clamped = Math.max(1, Math.min(200, n));
+                  setNumQuestions(String(clamped));
+                }
+              }}
+              className="no-spinner w-40 rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
             />
+            <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Up to 200 questions. Large sets generate in batches of 50 and may take longer.</p>
           </div>
 
           {error && (
@@ -352,6 +467,18 @@ export default function AiMcqGenerator() {
           >
             {loading ? 'Generating…' : 'Generate MCQs'}
           </button>
+          {(loading || genProgress > 0) && (
+            <div className="mt-3 rounded-xl bg-gray-50 p-3 text-xs text-gray-700 dark:bg-gray-800/50 dark:text-gray-200">
+              <div className="flex items-center justify-between mb-1">
+                <span>AI progress</span>
+                <span>{Math.min(100, Math.max(0, Math.round(genProgress)))}%</span>
+              </div>
+              <div className="h-2 rounded-full bg-gray-200 overflow-hidden dark:bg-gray-700">
+                <div className="h-2 bg-indigo-600 transition-all" style={{ width: `${Math.min(100, Math.max(0, genProgress))}%` }} />
+              </div>
+              <div className="mt-1 opacity-80">{genMessage}</div>
+            </div>
+          )}
         </div>
       </div>
 

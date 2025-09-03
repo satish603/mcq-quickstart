@@ -25,9 +25,35 @@ export default function Home() {
   // scores state
   const [scores, setScores] = useState([]);
   const [loadingScores, setLoadingScores] = useState(false);
+  const [primedFromCache, setPrimedFromCache] = useState(false);
+
+  const SCORES_TTL_MS = 10 * 60 * 1000; // 10 minutes
+  const cacheKey = (uid) => `mcq_scores_cache:${uid}`;
+  const loadScoresCache = (uid) => {
+    try {
+      const s = localStorage.getItem(cacheKey(uid));
+      if (!s) return null;
+      const obj = JSON.parse(s);
+      if (!obj || typeof obj.ts !== 'number' || !Array.isArray(obj.rows)) return null;
+      if (Date.now() - obj.ts > SCORES_TTL_MS) return null;
+      return obj.rows;
+    } catch {
+      return null;
+    }
+  };
+  const saveScoresCache = (uid, rows) => {
+    try {
+      localStorage.setItem(cacheKey(uid), JSON.stringify({ ts: Date.now(), rows }));
+    } catch {}
+  };
 
   // hydrate from localStorage
   useEffect(() => {
+    // initial tab from URL query
+    try {
+      const tab = String(router.query?.tab || '').toLowerCase();
+      if (['quiz','scores','ai','library'].includes(tab)) setActiveTab(tab);
+    } catch {}
     const savedUID = localStorage.getItem('mcq_user_id');
     if (savedUID) setUserId(savedUID);
     const savedMode = localStorage.getItem('mcq_mode');
@@ -36,7 +62,7 @@ export default function Home() {
     if (savedCustom) setCustomMinutes(parseInt(savedCustom, 10) || 10);
     const savedRandom = localStorage.getItem('mcq_random_order');
     if (savedRandom) setRandomOrder(savedRandom === '1');
-  }, []);
+  }, [router.query?.tab]);
   useEffect(() => {
     if (userId) localStorage.setItem('mcq_user_id', userId);
   }, [userId]);
@@ -76,16 +102,45 @@ export default function Home() {
     router.push(`/quiz?${params.toString()}`);
   };
 
-  const fetchScores = async () => {
+  const fetchScores = async (opts = {}) => {
+    const { incremental = true } = opts;
     if (!userId.trim()) {
       setScores([]);
+      setPrimedFromCache(false);
       return;
     }
     setLoadingScores(true);
     try {
-      const res = await fetch(`/api/get-scores?userId=${encodeURIComponent(userId)}`);
-      const data = await res.json();
-      setScores(Array.isArray(data?.rows) ? data.rows : []);
+      let base = [];
+      if (incremental) {
+        base = scores && scores.length ? scores : [];
+      }
+
+      let newRows = [];
+      if (incremental && base.length > 0 && Number.isFinite(base[0]?.id)) {
+        const afterId = base[0].id;
+        const res = await fetch(`/api/get-scores?userId=${encodeURIComponent(userId)}&afterId=${afterId}&limit=100`);
+        const data = await res.json();
+        newRows = Array.isArray(data?.rows) ? data.rows : [];
+      } else {
+        const res = await fetch(`/api/get-scores?userId=${encodeURIComponent(userId)}&limit=50`);
+        const data = await res.json();
+        base = Array.isArray(data?.rows) ? data.rows : [];
+      }
+
+      let merged = base;
+      if (newRows.length) {
+        const seen = new Set(base.map((r) => r.id));
+        const additions = newRows.filter((r) => !seen.has(r.id));
+        merged = [...additions, ...base];
+      }
+      // sort by id desc if id present, else by timestamp desc
+      merged.sort((a, b) => {
+        if (Number.isFinite(a?.id) && Number.isFinite(b?.id)) return b.id - a.id;
+        return String(b.timestamp).localeCompare(String(a.timestamp));
+      });
+      setScores(merged);
+      saveScoresCache(userId, merged);
     } catch (e) {
       console.error(e);
       setScores([]);
@@ -95,7 +150,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (activeTab === 'scores' && userId) fetchScores();
+    if (activeTab !== 'scores' || !userId) return;
+    // show cache instantly if available once per user
+    if (!primedFromCache) {
+      const cached = loadScoresCache(userId);
+      if (cached) setScores(cached);
+      setPrimedFromCache(true);
+    }
+    fetchScores({ incremental: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, userId]);
 
@@ -356,17 +418,20 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: Pro Tips */}
+            {/* Right: Quick Guide */}
             <div className="rounded-3xl bg-gradient-to-br from-indigo-600 to-fuchsia-600 text-white p-6 shadow-sm">
-              <h3 className="text-lg font-bold">Pro tips</h3>
+              <h3 className="text-lg font-bold">Quick guide</h3>
               <ul className="mt-3 space-y-2 text-sm leading-relaxed">
-                <li>• <strong>Use the Map</strong> to jump to any question instantly.</li>
-                <li>• <strong>Search inside paper</strong> (header) to find questions by keywords.</li>
-                <li>• <strong>Bookmark</strong> tough questions and filter them in review.</li>
-                <li>• <strong>Peek</strong> shows the correct answer & explanation and <em>excludes</em> that question from scoring.</li>
-                <li>• Toggle <strong>Dark Mode</strong> anytime (top-right) — it’s saved for next time.</li>
+                <li>• <strong>Map:</strong> Jump to any question instantly.</li>
+                <li>• <strong>Search:</strong> Use the header search to find keywords in the paper.</li>
+                <li>• <strong>Peek:</strong> Reveal the answer and explanation. No negative marking; still counted in total.</li>
+                <li>• <strong>User ID:</strong> Save it to track scores and open “View attempt” later from <em>My Scores</em>.</li>
+                <li>• <strong>Resume:</strong> Your quiz auto-saves for 7 days; continue anytime.</li>
+                <li>• <strong>Random &amp; Modes:</strong> Shuffle questions and choose Easy/Medium/Hard, or set a custom timer.</li>
+                <li>• <strong>Dark Mode:</strong> Toggle from the header; your preference is saved.</li>
               </ul>
             </div>
+
           </section>
         )}
 

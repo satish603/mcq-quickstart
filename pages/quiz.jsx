@@ -338,6 +338,20 @@ export default function Quiz() {
     if (!uid) { setNeedUserId(true); return; }
     const meta = calc();
     const paperName = (paperMeta?.name) || (paperMetaDb?.name) || String(paper || '');
+    // capture per-question responses for later review
+    const responses = quizSet.map((q, idx) => {
+      const sel = selected[idx];
+      const wasPeeked = !!peeked[idx];
+      return {
+        key: order[idx] || stableKey(q),
+        id: q?.id ?? null,
+        selectedIdx: sel === undefined ? null : sel,
+        correctIdx: q?.answerIndex ?? null,
+        peeked: wasPeeked,
+        bookmarked: !!bookmarked[idx],
+        isCorrect: !wasPeeked && sel !== undefined && sel === q?.answerIndex,
+      };
+    });
     const payload = {
       userId: uid,
       paper,
@@ -345,6 +359,10 @@ export default function Quiz() {
       meta: {
         ...meta,
         total: quizSet.length,
+        negativeMark: Number(NEGATIVE_MARK || 0),
+        orderKeys: order,
+        responses,
+        policies: { peek: { countInTotal: true, noNegative: true } },
         mode,
         randomize,
         durationSec: initialTimeSec,
@@ -363,7 +381,22 @@ export default function Quiz() {
     try {
       if (sessionKey) localStorage.removeItem(sessionKey);
     } catch {}
-  }, [uid, paper, calc, quizSet.length, mode, randomize, initialTimeSec, timeLeft, sessionKey]);
+  }, [
+    uid,
+    paper,
+    calc,
+    quizSet.length,
+    mode,
+    randomize,
+    initialTimeSec,
+    timeLeft,
+    sessionKey,
+    order,
+    selected,
+    peeked,
+    bookmarked,
+    NEGATIVE_MARK,
+  ]);
 
   // countdown
   useEffect(() => {
@@ -705,7 +738,7 @@ export default function Quiz() {
       <div className="mx-auto max-w-5xl p-4">
         <div className="rounded-3xl bg-white dark:bg-gray-900 p-6 shadow-sm ring-1 ring-gray-200/60 dark:ring-gray-800">
           <div className="mb-3 text-sm text-gray-600 dark:text-gray-300">
-            Negative marking: <strong>{NEGATIVE_MARK}</strong> (peeked questions excluded)
+            Negative marking: <strong>{NEGATIVE_MARK}</strong> (peeked: no negative; counted in total)
           </div>
           <QuizQuestion
             question={quizSet[currentIdx]}
