@@ -1,4 +1,4 @@
-// components/VirtualInterviewer.jsx
+﻿// components/VirtualInterviewer.jsx
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 export default function VirtualInterviewer({ userId: initialUserId = '' }) {
@@ -46,6 +46,8 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
   const prepTimerRef = useRef(null);
   const answerBufferRef = useRef('');
   const submitScheduledRef = useRef(false);
+
+  // (Keyboard shortcuts effect defined after canStart)
 
   // Load TTS voices
   useEffect(() => {
@@ -121,6 +123,36 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
     const t = topic?.trim() || 'general';
     return `ai_interview_session:${uid}:${t}`;
   }, [userId, topic]);
+  // Keyboard shortcuts: s=start, m=mic, r=repeat (avoid when typing)
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      try {
+        const tag = String(e?.target?.tagName || '').toLowerCase();
+        const isTyping = tag === 'input' || tag === 'textarea' || (e?.target?.isContentEditable);
+        if (isTyping || e.metaKey || e.ctrlKey || e.altKey) return;
+        const key = String(e.key || '').toLowerCase();
+        if (key === 's') {
+          if (!busy && canStart && transcript.length === 0) {
+            e.preventDefault();
+            handleStart();
+          }
+        } else if (key === 'm') {
+          if (!busy && !sessionStopped && supportsASR && transcript.length > 0) {
+            e.preventDefault();
+            if (listening) stopListening(); else startListeningFullAnswer();
+          }
+        } else if (key === 'r') {
+          if (!busy && ttsEnabled && lastQuestionRef.current) {
+            e.preventDefault();
+            speakNow(lastQuestionRef.current);
+          }
+        }
+      } catch {}
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [busy, canStart, transcript.length, sessionStopped, supportsASR, listening, ttsEnabled]);
 
   // hydrate existing session
   useEffect(() => {
@@ -392,7 +424,7 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
         clearPrepCountdown();
         if (!recognizedRef.current && autoAdvanceOnSilence) {
           // add a local note then move on
-          setTranscript((prev) => [...prev, { role: 'interviewer', content: 'No answer detected. Moving on…' }]);
+          setTranscript((prev) => [...prev, { role: 'interviewer', content: 'No answer detected. Moving onâ€¦' }]);
           startOrNext('');
         }
       };
@@ -483,38 +515,28 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-3 flex-wrap">
+        {/* Primary action bar */}
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
             onClick={handleStart}
             disabled={!canStart || busy}
             className={`rounded-2xl px-4 py-2 font-semibold shadow-sm transition ${
               canStart && !busy ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400'
             }`}
+            aria-label="Start Interview (S)"
+            title="Start (S)"
           >
-            {busy && transcript.length === 0 ? 'Starting…' : 'Start Interview'}
+            {busy && transcript.length === 0 ? 'Starting...' : 'Start Interview'}
           </button>
-          {/* no precondition on topic now, so no disabled hint */}
-          {avgScorePct != null && (
-            <div className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200">
-              Avg score: {avgScorePct}%
-            </div>
-          )}
-          {transcript.length > 0 && (
-            <button
-              onClick={resetSession}
-              disabled={busy}
-              className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200"
-            >
-              Reset Session
-            </button>
-          )}
           {transcript.length > 0 && !sessionStopped && (
             <button
               onClick={stopInterview}
               disabled={busy}
               className="rounded-2xl px-3 py-2 text-sm bg-rose-600 text-white hover:bg-rose-700"
+              aria-label="Stop interview"
+              title="Stop interview"
             >
-              Stop Interview
+              <span aria-hidden>⛔</span><span className="sr-only">Stop</span>
             </button>
           )}
           {transcript.length > 0 && sessionStopped && (
@@ -522,65 +544,98 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
               onClick={resumeInterview}
               disabled={busy}
               className="rounded-2xl px-3 py-2 text-sm bg-emerald-600 text-white hover:bg-emerald-700"
+              aria-label="Resume interview"
+              title="Resume"
             >
               Resume
             </button>
           )}
-          {/* Voice toggles */}
-          {supportsTTS && (
-            <label className="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <input type="checkbox" checked={ttsEnabled} onChange={(e) => setTtsEnabled(e.target.checked)} />
-              Speak questions
-            </label>
-          )}
-          {supportsTTS && ttsEnabled && (
-            <label className="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <input type="checkbox" checked={speakFeedback} onChange={(e) => setSpeakFeedback(e.target.checked)} />
-              Speak feedback
-            </label>
-          )}
-          {supportsTTS && ttsEnabled && (
-            <button onClick={stopSpeaking} className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200">Stop speaking</button>
-          )}
-          {supportsTTS && ttsEnabled && (
-            <button onClick={() => speakNow(lastQuestionRef.current)} className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200">Repeat question</button>
-          )}
-          {supportsASR && (
+          {transcript.length > 0 && (
             <button
-              onClick={listening ? stopListening : startListeningFullAnswer}
-              disabled={busy || transcript.length === 0}
-              className={`rounded-2xl px-3 py-2 text-sm ${listening ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200'}`}
+              onClick={resetSession}
+              disabled={busy}
+              className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200"
+              aria-label="Reset session"
+              title="Reset"
             >
-              {listening ? 'Listening…' : 'Answer by voice'}
+              Reset
             </button>
           )}
-          {/* Auto listen / silence advance */}
-          {supportsASR && (
-            <label className="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <input type="checkbox" checked={autoListen} onChange={(e) => setAutoListen(e.target.checked)} />
-              Auto listen after question
-            </label>
-          )}
-          {supportsASR && (
-            <label className="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-              <input type="checkbox" checked={autoAdvanceOnSilence} onChange={(e) => setAutoAdvanceOnSilence(e.target.checked)} />
-              Auto-advance on silence
-            </label>
-          )}
-          {prepCountdownSec > 0 && (
-            <div className="inline-flex items-center gap-2 text-sm rounded-full bg-indigo-50 text-indigo-700 px-3 py-1 dark:bg-indigo-900/30 dark:text-indigo-200">
-              Listening starts in {prepCountdownSec}s
-              <button onClick={() => { clearPrepCountdown(); startListeningFullAnswer(); }} className="underline">Skip wait</button>
+          {avgScorePct != null && (
+            <div className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+              Avg {avgScorePct}%
             </div>
+          )}
+          {supportsTTS && ttsEnabled && (
+            <button
+              onClick={() => speakNow(lastQuestionRef.current)}
+              className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200"
+              aria-label="Repeat question (R)"
+              title="Repeat (R)"
+            >
+              <span aria-hidden>🔁</span><span className="sr-only">Repeat question</span>
+            </button>
           )}
         </div>
 
-        {/* Error banner */}
-        {/* error banner shown below once; avoid duplicates */}
+        {/* Collapsible Settings */}
+        <details className="mt-3">
+          <summary className="cursor-pointer select-none text-sm text-gray-700 dark:text-gray-300">Settings</summary>
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Voice toggles */}
+            {supportsTTS && (
+              <div className="flex items-center gap-2">
+                <input id="set-tts" type="checkbox" checked={ttsEnabled} onChange={(e) => setTtsEnabled(e.target.checked)} />
+                <label htmlFor="set-tts" className="text-sm text-gray-700 dark:text-gray-300">TTS (speak questions)</label>
+              </div>
+            )}
+            {supportsTTS && (
+              <div className="flex items-center gap-2">
+                <input id="set-feedback" type="checkbox" checked={speakFeedback} onChange={(e) => setSpeakFeedback(e.target.checked)} disabled={!ttsEnabled} />
+                <label htmlFor="set-feedback" className="text-sm text-gray-700 dark:text-gray-300">Feedback (voice)</label>
+              </div>
+            )}
+            {supportsASR && (
+              <div className="flex items-center gap-2">
+                <input id="set-autolisten" type="checkbox" checked={autoListen} onChange={(e) => setAutoListen(e.target.checked)} />
+                <label htmlFor="set-autolisten" className="text-sm text-gray-700 dark:text-gray-300">Auto listen after question</label>
+              </div>
+            )}
+            {supportsASR && (
+              <div className="flex items-center gap-2">
+                <input id="set-auto-advance" type="checkbox" checked={autoAdvanceOnSilence} onChange={(e) => setAutoAdvanceOnSilence(e.target.checked)} />
+                <label htmlFor="set-auto-advance" className="text-sm text-gray-700 dark:text-gray-300">Auto-advance on silence</label>
+              </div>
+            )}
+            {supportsASR && (
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-300">Prep time (sec)</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  value={prepTimeSec}
+                  onChange={(e) => setPrepTimeSec(parseInt(e.target.value || 0, 10))}
+                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                />
+              </div>
+            )}
+            {supportsASR && (
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-300">Silence timeout (ms)</label>
+                <input
+                  type="number"
+                  min="2000"
+                  max="20000"
+                  step="500"
+                  value={silenceMs}
+                  onChange={(e) => setSilenceMs(e.target.value)}
+                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+                />
+              </div>
+            )}
 
-        {/* Language and Voice selection */}
-        {(supportsTTS || supportsASR) && (
-          <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Language and Voice selection */}
             {supportsASR && (
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-300">Language</label>
@@ -615,22 +670,17 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
                 </select>
               </div>
             )}
-            {supportsASR && (
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-300">Silence timeout (ms)</label>
-                <input
-                  type="number"
-                  min="2000"
-                  max="20000"
-                  step="500"
-                  value={silenceMs}
-                  onChange={(e) => setSilenceMs(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-                />
+
+            {supportsTTS && (
+              <div className="flex items-center gap-2">
+                <button onClick={stopSpeaking} className="rounded-2xl px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200">Stop speaking</button>
               </div>
             )}
           </div>
-        )}
+        </details>
+
+        {/* Error banner */}
+        {/* error banner shown below once; avoid duplicates */}
 
         {error && (
           <div className="mt-3 rounded-2xl border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-800 dark:border-rose-900/50 dark:bg-rose-900/20 dark:text-rose-200">
@@ -652,7 +702,7 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
             </div>
           ))}
           {busy && (
-            <div className="text-xs text-gray-500">Interviewer is thinking…</div>
+            <div className="text-xs text-gray-500" aria-live="polite">Interviewer is thinking...</div>
           )}
           <div ref={endRef} />
         </div>
@@ -679,26 +729,46 @@ export default function VirtualInterviewer({ userId: initialUserId = '' }) {
           </div>
         )}
 
-        {/* Text Input fallback */}
-        <div className="mt-3 flex items-center gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your answer and press Send"
-            onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
-            disabled={busy || transcript.length === 0}
-            className="flex-1 rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
-          />
-          <button
-            onClick={handleSend}
-            disabled={busy || !input.trim() || transcript.length === 0}
-            className={`rounded-2xl px-4 py-2 font-semibold shadow-sm transition ${
-              !busy && input.trim() && transcript.length > 0 ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400'
-            }`}
-          >
-            Send
-          </button>
+        {/* Sticky Composer: Mic + Text + Send */}
+        <div className="mt-3 sticky bottom-2 z-10 rounded-2xl border border-gray-200 bg-white/90 p-2 backdrop-blur dark:border-gray-800 dark:bg-gray-900/90">
+          <div className="flex items-center gap-2">
+            {supportsASR && transcript.length > 0 && (
+              <button
+                onClick={listening ? stopListening : startListeningFullAnswer}
+                disabled={busy || transcript.length === 0}
+                className={`rounded-2xl px-3 py-2 text-sm ${listening ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200'}`}
+                aria-label={listening ? 'Stop voice capture (M)' : 'Answer by voice (M)'}
+                title={listening ? 'Stop (M)' : 'Mic (M)'}
+              >
+                <span aria-hidden>{listening ? '⏹️' : '🎤'}</span>
+                <span className="sr-only">{listening ? 'Stop voice capture' : 'Answer by voice'}</span>
+              </button>
+            )}
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your answer and press Enter"
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+              disabled={busy || transcript.length === 0}
+              className="flex-1 rounded-2xl border border-gray-300 bg-white px-4 py-2.5 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+            />
+            <button
+              onClick={handleSend}
+              disabled={busy || !input.trim() || transcript.length === 0}
+              className={`rounded-2xl px-4 py-2 font-semibold shadow-sm transition ${
+                !busy && input.trim() && transcript.length > 0 ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400'
+              }`}
+            >
+              Send
+            </button>
+          </div>
+          {prepCountdownSec > 0 && (
+            <div className="mt-2 inline-flex items-center gap-2 text-xs rounded-full bg-indigo-50 text-indigo-700 px-3 py-1 dark:bg-indigo-900/30 dark:text-indigo-200">
+              Listening starts in {prepCountdownSec}s
+              <button onClick={() => { clearPrepCountdown(); startListeningFullAnswer(); }} className="underline">Skip</button>
+            </div>
+          )}
         </div>
       </div>
     </section>
