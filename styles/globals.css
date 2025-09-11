@@ -11,3 +11,6 @@
 .no-spinner {
   -moz-appearance: textfield; /* Firefox */
 }
+/* Utility: hide scrollbars while preserving scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

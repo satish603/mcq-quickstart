@@ -234,62 +234,70 @@ export default function Home() {
       <main className="mx-auto max-w-6xl px-4 py-8">
         {/* Tabs Card */}
         <div className="rounded-3xl bg-white shadow-sm ring-1 ring-gray-200/60 p-4 sm:p-6 dark:bg-gray-900 dark:ring-gray-800">
-          <div className="flex items-center gap-2">
-            <button
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
-                activeTab === 'quiz'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setActiveTab('quiz')}
-              aria-pressed={activeTab === 'quiz'}
-            >
-              Take Quiz
-            </button>
-            <button
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
-                activeTab === 'scores'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setActiveTab('scores')}
-              aria-pressed={activeTab === 'scores'}
-            >
-              My Scores
-            </button>
-            <button
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
-                activeTab === 'ai'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setActiveTab('ai')}
-              aria-pressed={activeTab === 'ai'}
-            >
-              AI Generator
-            </button>
-            <button
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
-                activeTab === 'library'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setActiveTab('library')}
-              aria-pressed={activeTab === 'library'}
-            >
-              AI Library
-            </button>
-            <button
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
-                activeTab === 'interview'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
-              }`}
-              onClick={() => setActiveTab('interview')}
-              aria-pressed={activeTab === 'interview'}
-            >
-              AI Interview
-            </button>
+          {/* Scrollable tab bar (compact, no emojis) */}
+          <div className="-mx-1">
+            <div role="tablist" aria-label="Sections" className="flex gap-2 overflow-x-auto whitespace-nowrap no-scrollbar px-1">
+              <button
+                role="tab"
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
+                  activeTab === 'quiz' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                onClick={() => setActiveTab('quiz')}
+                aria-pressed={activeTab === 'quiz'}
+                aria-selected={activeTab === 'quiz'}
+                title="Quiz"
+              >
+                Quiz
+              </button>
+              <button
+                role="tab"
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
+                  activeTab === 'scores' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                onClick={() => setActiveTab('scores')}
+                aria-pressed={activeTab === 'scores'}
+                aria-selected={activeTab === 'scores'}
+                title="Scores"
+              >
+                Scores
+              </button>
+              <button
+                role="tab"
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
+                  activeTab === 'ai' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                onClick={() => setActiveTab('ai')}
+                aria-pressed={activeTab === 'ai'}
+                aria-selected={activeTab === 'ai'}
+                title="AI Generator"
+              >
+                AI Gen
+              </button>
+              <button
+                role="tab"
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
+                  activeTab === 'library' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                onClick={() => setActiveTab('library')}
+                aria-pressed={activeTab === 'library'}
+                aria-selected={activeTab === 'library'}
+                title="AI Library"
+              >
+                Library
+              </button>
+              <button
+                role="tab"
+                className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition ${
+                  activeTab === 'interview' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+                onClick={() => setActiveTab('interview')}
+                aria-pressed={activeTab === 'interview'}
+                aria-selected={activeTab === 'interview'}
+                title="Interview"
+              >
+                Interview
+              </button>
+            </div>
           </div>
 
           {/* Shared User ID (hide on AI Generator only) */}
