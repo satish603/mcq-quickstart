@@ -6,6 +6,7 @@ import { paperList } from '../data/paperList';
 import ScoreHistory from '../components/ScoreHistory';
 import AiMcqGenerator from '../components/AiMcqGenerator';
 import AiPapersLibrary from '../components/AiPapersLibrary';
+import VirtualInterviewer from '../components/VirtualInterviewer';
 import ThemeToggle from '../components/ThemeToggle';
 import { NextSeo } from 'next-seo';
 import { SITE_NAME, TAGLINE, SITE_URL, TENANT, GSC_VERIFICATION } from '../lib/siteConfig';
@@ -15,7 +16,7 @@ export default function Home() {
   const router = useRouter();
 
   // state
-  const [activeTab, setActiveTab] = useState('quiz'); // 'quiz' | 'scores' | 'ai' | 'library'
+  const [activeTab, setActiveTab] = useState('quiz'); // 'quiz' | 'scores' | 'ai' | 'library' | 'interview'
   const [userId, setUserId] = useState('');
   const [selectedPaper, setSelectedPaper] = useState('');
   const [mode, setMode] = useState('medium');       // easy | medium | hard | custom
@@ -52,7 +53,7 @@ export default function Home() {
     // initial tab from URL query
     try {
       const tab = String(router.query?.tab || '').toLowerCase();
-      if (['quiz','scores','ai','library'].includes(tab)) setActiveTab(tab);
+      if (['quiz','scores','ai','library','interview'].includes(tab)) setActiveTab(tab);
     } catch {}
     const savedUID = localStorage.getItem('mcq_user_id');
     if (savedUID) setUserId(savedUID);
@@ -278,6 +279,17 @@ export default function Home() {
             >
               AI Library
             </button>
+            <button
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
+                activeTab === 'interview'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
+              }`}
+              onClick={() => setActiveTab('interview')}
+              aria-pressed={activeTab === 'interview'}
+            >
+              AI Interview
+            </button>
           </div>
 
           {/* Shared User ID (hide on AI Generator only) */}
@@ -445,6 +457,9 @@ export default function Home() {
         )}
         {activeTab === 'library' && (
           <AiPapersLibrary userId={userId} />
+        )}
+        {activeTab === 'interview' && (
+          <VirtualInterviewer userId={userId} />
         )}
       </main>
 
