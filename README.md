@@ -13,6 +13,7 @@ A productionâ€‘ready Next.js app for creating, practicing, and sharing multipleâ
 - [Data Model (Questions)](#data-model-questions)
 - [Add or Edit Papers](#add-or-edit-papers)
 - [AI MCQ Generator](#ai-mcq-generator)
+- [AI Interviewer](#ai-interviewer)
 - [AI Library](#ai-library)
 - [Quiz Engine](#quiz-engine)
 - [Score History API](#score-history-api)
@@ -26,6 +27,7 @@ A productionâ€‘ready Next.js app for creating, practicing, and sharing multipleâ
 - Multiâ€‘tenant (IT and Nursing) MCQ practice app
 - Question sets as plain JSON files, plus community papers stored in Postgres
 - AI generation (Gemini) from image, prompt/topic, or PDF
+- Virtual AI Interviewer (Gemini) for adaptive Q&A with instant feedback
 - Strong UX: editing/previewing AI output, map/search/peek during quiz, session resume
 
 ## Screenshots
@@ -97,7 +99,7 @@ Tip: For Neon, you may also have compatible aliases (DATABASE_URL, etc.). The co
 ## Project Structure
 - `pages/`
   - `_app.jsx`, `_document.jsx`: global styles, base HTML
-  - `index.jsx`: Home with tabs (Take Quiz, Scores, AI Generator, AI Library)
+  - `index.jsx`: Home with tabs (Take Quiz, Scores, AI Generator, AI Library, AI Interview)
   - `quiz.jsx`: Quiz engine (timer, search, map, bookmarks, peek, scoring)
   - `papers/[id].jsx`: SSG SEO pages per paper
   - `api/*.js`: Scores + AI + community paper endpoints
@@ -138,6 +140,14 @@ Community papers (AI Library) are stored in Postgres. After saving via AI Genera
 - Server API: `POST /api/generate-mcq`
   - Only returns JSON MCQ shape; invalid questions are filtered out
 - Client autosaves a draft to `localStorage` (`ai_mcq_draft`)
+
+## AI Interviewer
+- Tab: AI Interview (on Home)
+- Start by providing a topic, level, and style (technical/behavioral). The interviewer asks one question at a time and evaluates each answer with concise feedback.
+- Server API: `POST /api/interview`
+  - Body: `{ topic, level, style, transcript: [{ role: 'interviewer'|'candidate', content }], maxQuestions }`
+  - Response: `{ next: { question, difficulty, followups[] }, evaluation: { lastAnswerScore, feedback, strengths[], weaknesses[], corrections }, done, summary }`
+  - Uses the same Gemini key (`GEMINI_API_KEY`) as the MCQ generator; no extra env needed.
 
 ## AI Library
 - Lists shared papers for the active tenant
