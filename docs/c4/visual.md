@@ -12,18 +12,19 @@ Reference: https://c4model.com/
 flowchart TB
   classDef person fill:#fef3c7,stroke:#d97706,color:#92400e;
   classDef system fill:#e0e7ff,stroke:#4338ca,color:#1e3a8a;
-  classDef ext fill:#eef2ff,stroke:#94a3b8,color:#0f172a,stroke-dasharray: 3 3;
+  classDef ext fill:#eef2ff,stroke:#94a3b8,color:#0f172a;
 
-  user([Candidate]):::person
-  se[(Search Engines)]:::ext
-  ga[(GA4)]:::ext
-  ai[(Google Gemini API)]:::ext
-  fs[(scoreHistory.json)]:::ext
-  ls[(localStorage)]:::ext
+  user(["Candidate"]):::person
+  se["Search Engines"]:::ext
+  ga["GA4"]:::ext
+  ai["Google Gemini API"]:::ext
+  fs["scoreHistory.json"]:::ext
+  ls["localStorage"]:::ext
 
-  subgraph System[MCQ App (Next.js)]
-    web[Web App (SSR/SSG + SPA)]:::system
-    api[/API Routes/]:::system
+  subgraph System
+    direction TB
+    web["Web App (SSR/SSG + SPA)"]:::system
+    api["API Routes"]:::system
   end
 
   user -->|Uses| web
@@ -33,6 +34,7 @@ flowchart TB
   api -->|AI Generation| ai
   se -->|Crawls| web
   web -->|Events| ga
+
 ```
 
 ---
@@ -43,22 +45,24 @@ flowchart TB
 flowchart LR
   classDef container fill:#e0f2fe,stroke:#0369a1,color:#075985;
   classDef data fill:#ecfccb,stroke:#65a30d,color:#365314;
-  classDef svc fill:#f1f5f9,stroke:#64748b,color:#0f172a,stroke-dasharray: 3 3;
+  classDef svc fill:#f1f5f9,stroke:#64748b,color:#0f172a;
 
   subgraph Browser
-    UI[Next.js App (SPA)]:::container
-    LS[(localStorage)]:::data
+    direction TB
+    UI["Next.js App (SPA)"]:::container
+    LS["localStorage"]:::data
   end
 
-  subgraph Server[Next.js]
-    P[Pages (SSR/SSG)]:::container
-    API[/API Routes/]:::container
+  subgraph Server["Next.js"]
+    direction TB
+    P["Pages (SSR/SSG)"]:::container
+    API["API Routes"]:::container
   end
 
-  DB[(data/scoreHistory.json)]:::data
-  AI[(Google Gemini)]:::svc
-  SE[(Search Engines)]:::svc
-  GA[(GA4)]:::svc
+  DB["data/scoreHistory.json"]:::data
+  AI["Google Gemini"]:::svc
+  SE["Search Engines"]:::svc
+  GA["GA4"]:::svc
 
   UI <--> P
   UI <--> API
@@ -77,7 +81,7 @@ flowchart LR
 flowchart TB
   classDef comp fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95;
   classDef data fill:#ecfccb,stroke:#65a30d,color:#365314;
-  classDef svc fill:#f1f5f9,stroke:#64748b,color:#0f172a,stroke-dasharray: 3 3;
+  classDef svc fill:#f1f5f9,stroke:#64748b,color:#0f172a;
 
   subgraph Client[Browser]
     Quiz[Quiz Runtime]:::comp
