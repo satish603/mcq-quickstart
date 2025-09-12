@@ -27,6 +27,8 @@ export default function Home() {
   const [scores, setScores] = useState([]);
   const [loadingScores, setLoadingScores] = useState(false);
   const [primedFromCache, setPrimedFromCache] = useState(false);
+  // Track which user the current `scores` belong to to avoid cross-user bleed.
+  const [scoresUserId, setScoresUserId] = useState('');
 
   const SCORES_TTL_MS = 10 * 60 * 1000; // 10 minutes
   const cacheKey = (uid) => `mcq_scores_cache:${uid}`;
@@ -108,12 +110,14 @@ export default function Home() {
     if (!userId.trim()) {
       setScores([]);
       setPrimedFromCache(false);
+      setScoresUserId('');
       return;
     }
     setLoadingScores(true);
     try {
+      // Only reuse existing rows if they match the current user
       let base = [];
-      if (incremental) {
+      if (incremental && scoresUserId === userId) {
         base = scores && scores.length ? scores : [];
       }
 
@@ -141,6 +145,7 @@ export default function Home() {
         return String(b.timestamp).localeCompare(String(a.timestamp));
       });
       setScores(merged);
+      setScoresUserId(userId);
       saveScoresCache(userId, merged);
     } catch (e) {
       console.error(e);
@@ -149,6 +154,20 @@ export default function Home() {
       setLoadingScores(false);
     }
   };
+
+  // When the userId changes, reset and show that user's cached rows immediately (if any)
+  useEffect(() => {
+    const uid = userId?.trim();
+    // Clear current view to avoid showing previous user's data
+    setScores([]);
+    setScoresUserId(uid || '');
+    setPrimedFromCache(false);
+    if (uid) {
+      const cached = loadScoresCache(uid);
+      if (cached) setScores(cached);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   useEffect(() => {
     if (activeTab !== 'scores' || !userId) return;
@@ -473,7 +492,7 @@ export default function Home() {
 
       <footer className="border-t bg-white/70 dark:bg-gray-900/70 dark:border-gray-800">
         <div className="mx-auto max-w-6xl px-4 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-          Made with <span className="text-red-500">❤</span> in India
+          {/* Made with <span className="text-red-500">❤</span> in India */}
         </div>
       </footer>
     </div>
