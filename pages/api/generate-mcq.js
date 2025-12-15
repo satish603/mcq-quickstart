@@ -10,12 +10,23 @@ export const config = {
 };
 
 
-// Preferred models in fallback order; override with GEMINI_MODEL
-const MODEL_CANDIDATES = [
-  process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+// Preferred models in fallback order; override with GEMINI_MODEL (first entry wins)
+// API versions: 2.5/2.0 use v1beta; 1.5 uses v1.
+const DEFAULT_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-2.0-flash',
   'gemini-1.5-flash',
+  'gemini-1.5-flash-latest',
   'gemini-1.5-flash-8b',
 ];
+
+const MODEL_CANDIDATES = Array.from(
+  new Set([process.env.GEMINI_MODEL, ...DEFAULT_MODELS].filter(Boolean))
+).map((model) => ({
+  model,
+  apiVersion: /2\.5|2\.0/.test(model) ? 'v1beta' : 'v1',
+}));
 const MAX_PER_CALL = 50;        // cap per model call to avoid truncation
 const MAX_TOTAL = 200;          // absolute upper bound server-side
 
@@ -115,16 +126,20 @@ Rules:
 
       let aiText = null;
       const errors = [];
-      for (const modelName of MODEL_CANDIDATES) {
+      for (const { model: modelName, apiVersion } of MODEL_CANDIDATES) {
         try {
+          const generationConfig = {
+            maxOutputTokens: 8192,
+            temperature: 0.3,
+          };
+          // responseMimeType is only accepted on v1beta; it 400s on v1.
+          if (apiVersion === 'v1beta') {
+            generationConfig.responseMimeType = 'application/json';
+          }
           const model = genAI.getGenerativeModel({
             model: modelName,
-            generationConfig: {
-              responseMimeType: 'application/json',
-              maxOutputTokens: 8192,
-              temperature: 0.3,
-            },
-          });
+            generationConfig,
+          }, { apiVersion });
           // up to 2 attempts per model
           for (let attempt = 0; attempt < 2; attempt++) {
             try {
@@ -142,9 +157,15 @@ Rules:
         }
       }
       if (!aiText) {
-        const hint = `Generation failed. Check network and GEMINI_API_KEY. Tried models: ${MODEL_CANDIDATES.join(', ')}`;
+        const quotaIssues = errors.some((msg) =>
+          /quota|Too Many Requests|limit: 0|exceeded your current quota/i.test(msg || '')
+        );
+        const baseHint = quotaIssues
+          ? 'Generation failed due to Gemini quota/plan limits for the attempted models. Try a model available on your plan (set GEMINI_MODEL, e.g., gemini-1.5-flash) or update billing/quota.'
+          : 'Generation failed. Check network and GEMINI_API_KEY.';
         const detail = errors.length ? ` Errors: ${errors.join(' | ')}` : '';
-        throw new Error(hint + detail);
+        const modelList = MODEL_CANDIDATES.map(({ model, apiVersion }) => `${model}(${apiVersion})`).join(', ');
+        throw new Error(`${baseHint} Tried models: ${modelList}.${detail}`);
       }
       const parsed = extractJson(aiText);
       if (!parsed) throw new Error('Failed to parse JSON from model output');
